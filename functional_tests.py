@@ -1,8 +1,9 @@
 from selenium import webdriver
-from django.test import SimpleTestCase
+from django.test import LiveServerTestCase
+from django.urls import reverse
 
-class FirstTest(SimpleTestCase):
+class FirstTest(LiveServerTestCase):
     def test_first(self):
         browser = webdriver.Firefox()
-        browser.get('http://localhost:8000')
+        browser.get(self.live_server_url + reverse('debug'))
         assert 'Django' in browser.title
