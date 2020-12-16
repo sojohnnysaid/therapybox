@@ -1,7 +1,8 @@
-from django.urls import reverse
-from .base import FunctionalTest
-from selenium.webdriver.common.by import By
 import django
+from django.urls import reverse
+from selenium.webdriver.common.by import By
+
+from .base import FunctionalTest
 
 
 class DjangoInstallationTest(FunctionalTest):
@@ -14,3 +15,5 @@ class DjangoInstallationTest(FunctionalTest):
         self.browser.get(self.live_server_url + reverse('debug'))
         assert 'Django' in self.browser.title
         assert 'django' in self.browser.find_elements(By.TAG_NAME, 'h2')[0].text
+        header = self.browser.find_elements(By.TAG_NAME, 'header')[0]
+        assert 'u-clearfix' in header.get_attribute('class')

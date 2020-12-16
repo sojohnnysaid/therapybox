@@ -11,11 +11,12 @@ class UsersTest(FunctionalTest):
 
         # he is greeted by the registration title and header
         assert 'Register' in self.browser.title
-        assert 'Register' in self.browser.find_elements(By.TAG_NAME, 'h1')
+        assert 'Register' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
 
-        # he sees the form
-
+        # he sees the register form and starts filling it out...
         # enters his first name
+        input = self.browser.find_elements(By.ID, 'first-name')[0]
+        assert input.get_attribute('placeholder') == 'first name'
 
         # enters his email
 
