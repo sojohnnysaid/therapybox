@@ -1,11 +1,17 @@
+from unittest.case import skip
 from .base import FunctionalTest
+from selenium.webdriver.common.by import By
 
 class UsersTest(FunctionalTest):
 
+    @skip
     def test_user_can_create_account(self):
         # John goes to the registration page
+        self.browser.get(self.live_server_url + '/register/')
 
         # he is greeted by the registration title and header
+        assert 'Register' in self.browser.title
+        assert 'Register' in self.browser.find_elements(By.TAG_NAME, 'h1')
 
         # he sees the form
 
@@ -25,4 +31,3 @@ class UsersTest(FunctionalTest):
 
         # There is a message that welcomes him personally
 
-        
