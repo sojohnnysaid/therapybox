@@ -14,6 +14,6 @@ class DjangoInstallationTest(FunctionalTest):
         # django install is working properly and shows welcome page
         self.browser.get(self.live_server_url + reverse('debug'))
         assert 'Django' in self.browser.title
-        assert 'django' in self.browser.find_elements(By.TAG_NAME, 'h2')[0].text
+        assert 'The install worked successfully! Congratulations!' in self.browser.find_elements(By.TAG_NAME, 'h2')[1].text
         header = self.browser.find_elements(By.TAG_NAME, 'header')[0]
         assert 'u-clearfix' in header.get_attribute('class')
