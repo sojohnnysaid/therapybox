@@ -1,12 +1,10 @@
-from selenium import webdriver
-from django.test import LiveServerTestCase
 from django.urls import reverse
+from .base import FunctionalTest
 
-class FirstTest(LiveServerTestCase):
+class DjangoInstallationTest(FunctionalTest):
 
-    def test_first(self):
-    # our django install is working properly
-        browser = webdriver.Firefox()
-        browser.get(self.live_server_url + reverse('debug'))
-        assert 'Django' in browser.title
+    def test_shows_success_page(self):
+        # django install is working properly and shows welcome page
+        self.browser.get(self.live_server_url + reverse('debug'))
+        assert 'Django' in self.browser.title
 
