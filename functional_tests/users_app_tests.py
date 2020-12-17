@@ -14,7 +14,7 @@ class UsersTest(FunctionalTest):
     
     def test_user_can_reach_register_page(self):
         # John goes to the registration page
-        self.browser.get(self.live_server_url + '/register/')
+        self.browser.get(self.live_server_url + '/users/register/')
 
         # he is greeted by the registration title and header
         assert 'Register' in self.browser.title

@@ -15,7 +15,6 @@ from django.test import TestCase, RequestFactory
 from users.views import UsersRegisterView
 
 
-
 class UsersRegisterPageTest(TestCase):
 
     def test_url_resolves_to_register_page_view(self):
@@ -25,9 +24,7 @@ class UsersRegisterPageTest(TestCase):
     
     def test_register_page_returns_correct_html(self):
         request = RequestFactory().get(reverse('users_register'))
-        view = UsersRegisterView()
-        view.setup(request)
-        response = view.render_to_response({})
+        response = UsersRegisterView.as_view()(request)
         html = response.rendered_content
 
         self.assertTrue(html.startswith('<html>'))

@@ -10,10 +10,6 @@ class test(models.Model):
 class UsersRegisterView(CreateView):
     fields = []
     model = test
-
-    def render_to_response(self, context, **response_kwargs) :
-        response = HttpResponse('<html><title>Register</title></html>')
-        response.rendered_content = response.content.decode('utf8')
-        return response
-
-  
+    template_name = 'users/users_register.html'
+    extra_context = {'name': 'john'}
+    
