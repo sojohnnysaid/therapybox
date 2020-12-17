@@ -11,8 +11,9 @@ We test two things:
 '''
 
 from django.urls import reverse, resolve
-from django.test import TestCase
+from django.test import TestCase, RequestFactory
 from users.views import RegisterView
+
 
 
 class RegisterPageTest(TestCase):
@@ -22,3 +23,13 @@ class RegisterPageTest(TestCase):
         view = resolve(url).func.view_class
         self.assertEqual(view, RegisterView)
     
+    def test_register_page_returns_correct_html(self):
+        request = RequestFactory().get(reverse('users_register'))
+        view = RegisterView()
+        view.setup(request)
+        response = view.render_to_response({})
+        html = response.rendered_content
+
+        self.assertTrue(html.startswith('<html>'))
+        self.assertIn('<title>Register</title>', html)
+        self.assertTrue(html.endswith('</html>'))
