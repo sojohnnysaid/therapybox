@@ -5,4 +5,5 @@ from django.views.debug import default_urlconf
 urlpatterns = [
     path('debug/', default_urlconf, name='debug'),
     path('admin/', admin.site.urls),
+    path('users/', include('users.urls'))
 ]

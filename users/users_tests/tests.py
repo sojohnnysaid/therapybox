@@ -10,14 +10,15 @@ We test two things:
 2. Can we make this view function return HTML which will get the functional test to pass?
 '''
 
-from django.urls import resolve
-from django.test import RequestFactory, TestCase
+from django.urls import reverse, resolve
+from django.test import TestCase
 from users.views import RegisterView
 
 
 class RegisterPageTest(TestCase):
 
     def test_url_resolves_to_register_page_view(self):
-        resolver = resolve('/register')
-        self.assertEqual(resolver.func.view_class, RegisterView)
+        url = reverse('users_register')
+        view = resolve(url).func.view_class
+        self.assertEqual(view, RegisterView)
     
