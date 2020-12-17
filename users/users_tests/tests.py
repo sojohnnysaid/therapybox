@@ -12,24 +12,23 @@ We test two things:
 
 from django.urls import reverse, resolve
 from django.test import TestCase, RequestFactory
-from users.views import RegisterView
+from users.views import UsersRegisterView
 
 
 
-class RegisterPageTest(TestCase):
+class UsersRegisterPageTest(TestCase):
 
     def test_url_resolves_to_register_page_view(self):
         url = reverse('users_register')
         view = resolve(url).func.view_class
-        self.assertEqual(view, RegisterView)
+        self.assertEqual(view, UsersRegisterView)
     
     def test_register_page_returns_correct_html(self):
         request = RequestFactory().get(reverse('users_register'))
-        view = RegisterView()
+        view = UsersRegisterView()
         view.setup(request)
         response = view.render_to_response({})
         html = response.rendered_content
-        #html = response.content.decode('utf8')
 
         self.assertTrue(html.startswith('<html>'))
         self.assertIn('<title>Register</title>', html)

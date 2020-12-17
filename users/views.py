@@ -7,11 +7,9 @@ class test(models.Model):
     pass
 
 # Create your views here.
-class RegisterView(CreateView):
+class UsersRegisterView(CreateView):
     fields = []
     model = test
-
-
 
     def render_to_response(self, context, **response_kwargs) :
         response = HttpResponse('<html><title>Register</title></html>')
