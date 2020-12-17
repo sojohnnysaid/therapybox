@@ -14,6 +14,8 @@ class RegisterView(CreateView):
 
 
     def render_to_response(self, context, **response_kwargs) :
-        return HttpResponse('<html><title>Register</title></html>')
+        response = HttpResponse('<html><title>Register</title></html>')
+        response.rendered_content = response.content.decode('utf8')
+        return response
 
   

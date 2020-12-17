@@ -28,8 +28,8 @@ class RegisterPageTest(TestCase):
         view = RegisterView()
         view.setup(request)
         response = view.render_to_response({})
-        #html = response.rendered_content
-        html = response.content.decode('utf8')
+        html = response.rendered_content
+        #html = response.content.decode('utf8')
 
         self.assertTrue(html.startswith('<html>'))
         self.assertIn('<title>Register</title>', html)
