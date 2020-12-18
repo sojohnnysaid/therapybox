@@ -12,7 +12,6 @@ We test two things:
 
 from django.urls import reverse
 from django.test import TestCase
-from users.views import UsersRegisterView
 
 
 class UsersRegisterPageTest(TestCase):

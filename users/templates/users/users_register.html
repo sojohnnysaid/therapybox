@@ -7,7 +7,11 @@
 </head>
 <body>
     <h1>Register</h1>
-    <input type="text" id="user-registration-form-first-name-field" placeholder="first name">
-    <input type="text" id="user-registration-form-email-field" placeholder="email">
+    <form method="POST">    
+        <input name="first_name" type="text" id="user-registration-form-first-name-field" placeholder="first name">
+        <input name="email" type="text" id="user-registration-form-email-field" placeholder="email">
+        <input type="submit" value="register">
+        {% csrf_token %}
+    </form>
 </body>
 </html>

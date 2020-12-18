@@ -1,7 +1,8 @@
 from django.views.generic.edit import CreateView
-from django.http import HttpResponse
-from django.db.models import QuerySet
+from django.shortcuts import redirect
+from django.urls import reverse
 from django.db import models
+
 
 class test(models.Model):
     pass
