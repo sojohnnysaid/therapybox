@@ -20,10 +20,11 @@ class UsersTest(FunctionalTest):
         assert 'Register' in self.browser.title
         assert 'Register' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
 
-    @skip
+    
     def test_user_can_register(self):
 
         # John then fills out the registration form...
+        self.browser.get(self.live_server_url + '/users/register/')
         
         # he starts filling out his first name
         input = self.browser.find_elements(By.ID, 'user-registration-form-first-name-field')[0]
