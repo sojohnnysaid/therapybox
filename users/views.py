@@ -11,5 +11,4 @@ class UsersRegisterView(CreateView):
     fields = []
     model = test
     template_name = 'users/users_register.html'
-    extra_context = {'name': 'john'}
     
