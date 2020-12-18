@@ -12,7 +12,8 @@ TEST_USER_NAME = 'John'
 class UsersTest(FunctionalTest):
 
     
-    def test_user_can_reach_register_page(self):
+    def test_user_can_register(self):
+
         # John goes to the registration page
         self.browser.get(self.live_server_url + '/users/register/')
 
@@ -20,13 +21,8 @@ class UsersTest(FunctionalTest):
         assert 'Register' in self.browser.title
         assert 'Register' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
 
-    
-    def test_user_can_register(self):
-
-        # John then fills out the registration form...
-        self.browser.get(self.live_server_url + '/users/register/')
-        
-        # he starts filling out his first name
+        # John starts filling out the registration form...
+        # enters his first name
         input = self.browser.find_elements(By.ID, 'user-registration-form-first-name-field')[0]
         assert input.get_attribute('placeholder') == 'first name'
         
