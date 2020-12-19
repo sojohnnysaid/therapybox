@@ -10,24 +10,44 @@ We test two things:
 2. Can we make this view function return HTML which will get the functional test to pass?
 '''
 
+from unittest.case import skip
 from django.urls import reverse
 from django.test import TestCase
 
-REGISTER_FORM_TEST_DATA = {'first_name': 'John', 'email': 'sojohnnysaid@gmail.com'}
+from users import views, forms, models
 
-class UsersRegisterPageTest(TestCase):
+USERS_REGISTER_FORM_TEST_DATA = {'first_name': 'John', 'email': 'sojohnnysaid@gmail.com'}
+
+
+class UsersRegisterViewTest(TestCase):
+    
+    def test_users_register_view_uses_testModel(self):
+        view = views.UsersRegisterView()
+        assert view.model == models.TestModel
         
-    def test_uses_register_template(self):
-        response = self.client.get(reverse('users_register'))
+    def test_users_register_view_uses_UsersRegisterForm(self):
+        response = self.client.get(reverse('users:users_register'))
+        view = response.context_data['view']
+        assert view.form_class == forms.UsersRegisterForm
+    
+    def test_users_register_view_uses_register_template(self):
+        response = self.client.get(reverse('users:users_register'))
         self.assertTemplateUsed(response, 'users/users_register.html')
 
-    def test_register_view_uses_UsersRegisterForm_form_class(self):
-        response = self.client.get(reverse('users_register'))
-        view_class = response.context_data['view']
-        users_register_form_class = UsersRegisterForm()
-        assert view.form_class == users_register_form_class
+    
+class UsersRegisterFormTest(TestCase):
 
-
+    def test_user_register_form_accepts_valid_data(self):
+        form = forms.UsersRegisterForm(USERS_REGISTER_FORM_TEST_DATA)
+        self.assertTrue(form.is_valid())
+    
     def test_form_redirects_on_POST_request(self):
-        response = self.client.post(reverse('users_register'), REGISTER_FORM_TEST_DATA, follow=True)
-        print(response.__dict__)
+        response = self.client.post(reverse('users:users_register'), USERS_REGISTER_FORM_TEST_DATA, follow=True)
+        self.assertRedirects(response, reverse('users:users_register_form_submitted'))
+    
+
+class UsersModelTest(TestCase):
+
+    def test_string_is_email(self):
+        user_object = models.TestModel(first_name='John', email='sojohnnysaid@gmail.com')
+        self.assertEqual(str(user_object), user_object.email)

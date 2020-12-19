@@ -7,11 +7,10 @@
 </head>
 <body>
     <h1>Register</h1>
-    <form action="" method="POST">    
-        <input name="first_name" type="text" id="user-registration-form-first-name-field" placeholder="first name">
-        <input name="email" type="text" id="user-registration-form-email-field" placeholder="email">
-        <input type="submit" value="register">
+    <form action="{% url 'users:users_register' %}" method="POST">    
+        {{form}}
         {% csrf_token %}
+        <input type="submit" value="submit">
     </form>
 </body>
 </html>
