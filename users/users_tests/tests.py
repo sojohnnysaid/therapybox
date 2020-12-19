@@ -35,6 +35,8 @@ class UsersRegisterViewTest(TestCase):
         self.assertTemplateUsed(response, 'users/users_register.html')
 
     
+
+
 class UsersRegisterFormTest(TestCase):
 
     def test_user_register_form_accepts_valid_data(self):
@@ -44,6 +46,11 @@ class UsersRegisterFormTest(TestCase):
     def test_form_redirects_on_POST_request(self):
         response = self.client.post(reverse('users:users_register'), USERS_REGISTER_FORM_TEST_DATA, follow=True)
         self.assertRedirects(response, reverse('users:users_register_form_submitted'))
+
+    # todo write unit test for custom id in forms.py UsersRegisterForm widget
+    @skip
+    def test_form_field_contains_custom_widget(self):
+        pass
     
 
 class UsersModelTest(TestCase):

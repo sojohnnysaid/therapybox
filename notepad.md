@@ -12,3 +12,9 @@ response = Client().post(reverse('users:users_register'), USERS_REGISTER_FORM_TE
 view = response.context_data['view']
 form = response.context_data['form']
 view.form_valid(form)
+
+
+
+from users import forms
+USERS_REGISTER_FORM_TEST_DATA = {'first_name': 'John', 'email': 'sojohnnysaid@gmail.com'}
+form = forms.UsersRegisterForm(USERS_REGISTER_FORM_TEST_DATA)

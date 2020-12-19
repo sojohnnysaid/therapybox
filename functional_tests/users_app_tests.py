@@ -50,15 +50,17 @@ class UsersTest(FunctionalTest):
         email = mail.outbox[0]
         assert 'Here is your activation link' in email.subject
         
-        # and clicks the link
         url_search = re.search(r'http://.+/.+$', email.body)
         
         if not url_search:
             self.fail(f'Could not find url in email body:\n{email.body}')
+
         activate_account_url = url_search.group(0)
-        
         assert self.live_server_url in activate_account_url
 
+        # and clicks the link
+        self.browser.get(activate_account_url )
+        
         # John is taken to his account page
         navbar = self.browser.find_elements(By.TAG_NAME, 'nav')[0]
         assert TEST_USER_NAME in navbar
