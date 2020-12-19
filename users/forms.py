@@ -7,5 +7,10 @@ class UsersRegisterForm(ModelForm):
         model = models.TestModel
         fields = ['first_name', 'email'] # model fields you want in the form go in here
         widgets = {
-            'first_name': widgets.TextInput(attrs={'id': 'user-registration-form-first-name-field'})
-        } #needs test!
+            'first_name': widgets.TextInput(attrs={
+                'placeholder': 'first name'
+            }),
+            'email': widgets.EmailInput(attrs={
+                'placeholder': 'email'
+            })
+        }

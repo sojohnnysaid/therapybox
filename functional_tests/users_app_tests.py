@@ -22,28 +22,29 @@ class UsersTest(FunctionalTest):
         assert 'Register' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
 
         # John starts filling out the registration form...
+
         # enters his first name
-        input = self.browser.find_elements(By.ID, 'user-registration-form-first-name-field')[0]
+        input = self.browser.find_elements(By.ID, 'id_first_name')[0]
         assert input.get_attribute('placeholder') == 'first name'
         
         # enters his first name
         input.send_keys(TEST_USER_NAME)
 
         # then he starts filling out his email
-        input = self.browser.find_elements(By.ID, 'user-registration-form-email-field')[0]
+        input = self.browser.find_elements(By.ID, 'id_email')[0]
         assert input.get_attribute('placeholder') == 'email'
         
         # enters his email
         input.send_keys(TEST_EMAIL)
 
         # submits the form
-        input.submit()
+        self.browser.find_elements(By.ID, 'users_register_form_submit_button')[0].click()
 
         # he is taken to a new page
-        assert '/register-form-submitted/' in self.browser.current_url
+        assert 'users/register-form-submitted/' in self.browser.current_url
 
         # the page tells him an email has been sent with a confirmation link
-        form_submitted_message = self.browser.find_elements(By.ID, 'register-form-submitted-message')[0].text
+        form_submitted_message = self.browser.find_elements(By.ID, 'users-register-form-submitted-message')[0].text
         assert 'Form submitted. Check your email to activate your new account' in form_submitted_message
 
         # John goes to his email...

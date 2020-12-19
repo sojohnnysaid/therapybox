@@ -13,5 +13,5 @@ class UsersRegisterView(CreateView):
     success_url = reverse_lazy('users:users_register_form_submitted')
 
 
-class UsersRegisterFormSubmittedView(TemplateView):
+class UsersRegisterFormSubmittedView(TemplateView):    
     template_name = 'users/users_register_form_submitted.html'
