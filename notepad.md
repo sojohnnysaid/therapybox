@@ -21,8 +21,8 @@ the user will be set active=false
 
 
 
-stuff we're going to have to do
-create a custom user model
+steps required to create a custom user model:
+1. update app settings
 
 we need to test that our user model is our custom user model
 
@@ -30,3 +30,5 @@ from django.conf import settings
 settings.AUTH_USER_MODEL == 'users.CustomUser'
 TODO read about spiking de-spiking and create branch
 to mess with custom user models
+
+
