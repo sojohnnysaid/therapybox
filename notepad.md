@@ -9,4 +9,24 @@ from users import views, forms, models
 
 
 response = Client().get(reverse('users:users_register'))
-alias djshell='python manage.py shell -c "import code;from rich import pretty;pretty.install();from rich import inspect;code.interact(local=locals())"'
+
+# John goes to his email...
+>       email = mail.outbox[0]
+
+Once the form is submitted:
+If the fields are vaild:
+the user will be created
+the user will be set active=false
+
+
+
+
+stuff we're going to have to do
+create a custom user model
+
+we need to test that our user model is our custom user model
+
+from django.conf import settings
+settings.AUTH_USER_MODEL == 'users.CustomUser'
+TODO read about spiking de-spiking and create branch
+to mess with custom user models
