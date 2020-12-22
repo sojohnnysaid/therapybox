@@ -20,9 +20,9 @@ from django.test import TestCase
 
 class UsersRegisterViewTest(TestCase):
     
-    def test_uses_testModel(self):
+    def test_uses_CustomUser(self):
         view = views.UsersRegisterView()
-        assert view.model == models.TestModel
+        assert view.model == models.CustomUser
         
     def test_uses_UsersRegisterForm(self):
         response = self.client.get(reverse('users:users_register'))

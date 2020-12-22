@@ -32,15 +32,15 @@ TEST_MODEL_EMAIL = 'sojohnnysaid@gmail.com'
 class UsersModelTest(TestCase):
 
     def test_UsersModel_object_created_properly(self):
-        user_object = models.TestModel(first_name=TEST_MODEL_FIRST_NAME, email=TEST_MODEL_EMAIL)
+        user_object = models.CustomUser(first_name=TEST_MODEL_FIRST_NAME, email=TEST_MODEL_EMAIL)
         self.assertEqual(user_object.first_name, 'John')
         self.assertEqual(user_object.email, 'sojohnnysaid@gmail.com')
 
     def test_UsersModel_object_persists_in_database_when_saved(self):
-        user_object = models.TestModel(first_name=TEST_MODEL_FIRST_NAME, email=TEST_MODEL_EMAIL)
+        user_object = models.CustomUser(first_name=TEST_MODEL_FIRST_NAME, email=TEST_MODEL_EMAIL)
         user_object.save()
-        self.assertEqual(1, len(models.TestModel.objects.all()))
+        self.assertEqual(1, len(models.CustomUser.objects.all()))
 
     def test_str_of_user_object_is_email(self):
-        user_object = models.TestModel(first_name=TEST_MODEL_FIRST_NAME, email=TEST_MODEL_EMAIL)
+        user_object = models.CustomUser(first_name=TEST_MODEL_FIRST_NAME, email=TEST_MODEL_EMAIL)
         self.assertEqual(str(user_object), user_object.email)
