@@ -26,21 +26,21 @@ We test:
 from django.test import TestCase
 from users import models
 
-TEST_MODEL_FIRST_NAME = 'John'
-TEST_MODEL_EMAIL = 'sojohnnysaid@gmail.com'
+CUSTOM_USER_MODEL_FIRST_NAME = 'John'
+CUSTOM_USER_MODEL_EMAIL = 'sojohnnysaid@gmail.com'
 
-class UsersModelTest(TestCase):
+class CustomUserTest(TestCase):
 
-    def test_UsersModel_object_created_properly(self):
-        user_object = models.CustomUser(first_name=TEST_MODEL_FIRST_NAME, email=TEST_MODEL_EMAIL)
+    def test_CustomUser_object_created_properly(self):
+        user_object = models.CustomUser(first_name=CUSTOM_USER_MODEL_FIRST_NAME, email=CUSTOM_USER_MODEL_EMAIL)
         self.assertEqual(user_object.first_name, 'John')
         self.assertEqual(user_object.email, 'sojohnnysaid@gmail.com')
 
-    def test_UsersModel_object_persists_in_database_when_saved(self):
-        user_object = models.CustomUser(first_name=TEST_MODEL_FIRST_NAME, email=TEST_MODEL_EMAIL)
+    def test_CustomUser_object_persists_in_database_when_saved(self):
+        user_object = models.CustomUser(first_name=CUSTOM_USER_MODEL_FIRST_NAME, email=CUSTOM_USER_MODEL_EMAIL)
         user_object.save()
         self.assertEqual(1, len(models.CustomUser.objects.all()))
 
     def test_str_of_user_object_is_email(self):
-        user_object = models.CustomUser(first_name=TEST_MODEL_FIRST_NAME, email=TEST_MODEL_EMAIL)
+        user_object = models.CustomUser(first_name=CUSTOM_USER_MODEL_FIRST_NAME, email=CUSTOM_USER_MODEL_EMAIL)
         self.assertEqual(str(user_object), user_object.email)
