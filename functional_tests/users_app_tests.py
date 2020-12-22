@@ -24,19 +24,25 @@ class UsersTest(FunctionalTest):
 
         # John starts filling out the registration form...
 
+        # enters his email
+        input = self.browser.find_elements(By.ID, 'id_email')[0]
+        assert input.get_attribute('placeholder') == 'email'
+        input.send_keys('john@gmail.com')
+        
         # enters his first name
         input = self.browser.find_elements(By.ID, 'id_first_name')[0]
         assert input.get_attribute('placeholder') == 'first name'
-        
-        # enters his first name
         input.send_keys('John')
 
-        # then he starts filling out his email
-        input = self.browser.find_elements(By.ID, 'id_email')[0]
-        assert input.get_attribute('placeholder') == 'email'
-        
-        # enters his email
-        input.send_keys('john@gmail.com')
+        # enters his password
+        input = self.browser.find_elements(By.ID, 'id_password1')[0]
+        assert input.get_attribute('placeholder') == 'password'
+        input.send_keys('p@assW00rd')
+
+        # enters his password to confirm
+        input = self.browser.find_elements(By.ID, 'id_password2')[0]
+        assert input.get_attribute('placeholder') == 'confirm password'
+        input.send_keys('p@assW00rd')
 
         # submits the form
         self.browser.find_elements(By.ID, 'users_register_form_submit_button')[0].click()
@@ -86,19 +92,25 @@ class UsersTest(FunctionalTest):
 
         # Jane starts filling out the registration form...
 
+        # enters her email
+        input = self.browser.find_elements(By.ID, 'id_email')[0]
+        assert input.get_attribute('placeholder') == 'email'
+        input.send_keys('jane@gmail.com')
+        
         # enters her first name
         input = self.browser.find_elements(By.ID, 'id_first_name')[0]
         assert input.get_attribute('placeholder') == 'first name'
-        
-        # enters her first name
         input.send_keys('Jane')
 
-        # then she starts filling out her email
-        input = self.browser.find_elements(By.ID, 'id_email')[0]
-        assert input.get_attribute('placeholder') == 'email'
-        
-        # enters her email
-        input.send_keys('jane@gmail.com')
+        # enters her password
+        input = self.browser.find_elements(By.ID, 'id_password1')[0]
+        assert input.get_attribute('placeholder') == 'password'
+        input.send_keys('$$$p@assW00rd$$$')
+
+        # enters her password to confirm
+        input = self.browser.find_elements(By.ID, 'id_password2')[0]
+        assert input.get_attribute('placeholder') == 'confirm password'
+        input.send_keys('$$$p@assW00rd$$$')
 
         # submits the form
         self.browser.find_elements(By.ID, 'users_register_form_submit_button')[0].click()

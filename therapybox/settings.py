@@ -125,5 +125,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
 # Activate Django-Heroku.
 django_heroku.settings(locals())

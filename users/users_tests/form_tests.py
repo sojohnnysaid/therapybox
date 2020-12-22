@@ -22,8 +22,8 @@ from django.test import TestCase
 
 from users import forms
 
-USERS_REGISTER_FORM_FIELDNAMES = ['first_name', 'email']
-USERS_REGISTER_FORM_TEST_DATA = {'first_name': 'John', 'email': 'john@gmail.com'}
+USERS_REGISTER_FORM_FIELDNAMES = ['email', 'first_name', 'password1', 'password2']
+USERS_REGISTER_FORM_TEST_DATA = {'email': ['johnsmith@gmail.com'], 'first_name': ['John'], 'password1': ['p@assW0rd'], 'password2': ['p@assW0rd']}
 
 class UsersRegisterFormTest(TestCase):
 

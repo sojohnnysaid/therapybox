@@ -34,7 +34,7 @@ class UsersRegisterViewTest(TestCase):
         self.assertTemplateUsed(response, 'users/users_register.html')
 
     def test_email_sent_on_POST_request(self):
-        self.client.post(reverse('users:users_register'),{'first_name': ['John'], 'email': ['johnsmith@gmail.com']})
+        self.client.post(reverse('users:users_register'),{'email': ['johnsmith@gmail.com'], 'first_name': ['John'], 'password1': ['p@assW0rd'], 'password2': ['p@assW0rd']})
         email = mail.outbox[0]
         assert 'Here is your activation link' in email.subject
 
