@@ -1,4 +1,4 @@
-# Tasks 
+# TODOs 
 Grab files, notes and todo.md needed and move to functional_tests/spikes
 
 write out steps for account activation
