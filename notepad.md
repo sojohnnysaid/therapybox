@@ -22,7 +22,7 @@ How account activation works:
     Unit
         1. user registers...
             - post request to users_register 
-            - UsersRegisterView form_valid method called: 
+            - UsersRegisterView form_valid method called:
                 - creates user
                 - variables: link, url safe primary key, and token
                 - insert variables into send_mail function
@@ -39,3 +39,18 @@ How account activation works:
                 - save the user
                 - pass success message 'Your account has been activated! You can now login'
                 - redirect to users_login page displaying success message
+
+
+########shell scratchpad
+
+from django.test import RequestFactory
+from users.views import UsersRegisterView
+
+view_obj = UsersRegisterView()
+user_register_form_data = {
+    'email': 'johnsmitsafsdh@gmail.com', 
+    'first_name': 'John', 
+    'password1': 'p@assW0rd', 
+    'password2': 'p@assW0rd'}
+request = RequestFactory().post(user_register_form_data)
+response = view_obj.post(request)

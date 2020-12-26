@@ -13,43 +13,49 @@ We test:
 '''
 
 from unittest.case import skip
-from users import views, models, forms
 from django.urls import reverse
 from django.core import mail
-
 from django.test import TestCase
+from django.test import RequestFactory
+
+from unittest.mock import patch, Mock
+import pytest
+
+from users import views, models, forms
 
 class UsersRegisterViewTest(TestCase):
-    
+
+    def setUp(self):
+        self.request = RequestFactory().post(reverse('users:users_register'), {
+            'email': 'johnsmith@gmail.com', 
+            'first_name': 'John', 
+            'password1': 'p@assW0rd', 
+            'password2': 'p@assW0rd'})
+
     def test_uses_CustomUser(self):
-        view = views.UsersRegisterView()
-        assert view.model == models.CustomUser
+        assert views.UsersRegisterView.model == models.CustomUser
         
     def test_uses_UsersRegisterForm(self):
-        response = self.client.get(reverse('users:users_register'))
-        view = response.context_data['view']
-        assert view.form_class == forms.UsersRegisterForm
-    
+        assert views.UsersRegisterView.form_class == forms.UsersRegisterForm
+
     def test_uses_expected_template(self):
-        response = self.client.get(reverse('users:users_register'))
-        self.assertTemplateUsed(response, 'users/users_register.html')
+        assert views.UsersRegisterView.template_name == 'users/users_register.html'
 
-    def test_email_sent_on_POST_request(self):
-        self.client.post(reverse('users:users_register'),{'email': ['johnsmith@gmail.com'], 'first_name': ['John'], 'password1': ['p@assW0rd'], 'password2': ['p@assW0rd']})
-        email = mail.outbox[0]
-        assert 'Here is your activation link' in email.subject
+    @patch('users.views.send_mail', autospec=True)
+    def test_email_sent_on_POST_request(self, mock_send_mail):
+        views.UsersRegisterView.as_view()(self.request)
+        print('\nmock_send_email:', mock_send_mail.call_args)
+        # email = mail.outbox[0]
+        # assert 'Here is your activation link' in email.subject
 
-    def test_redirects_on_POST_request(self):
-        USERS_REGISTER_FORM_TEST_DATA = {
-            'email': ['johnsmith@gmail.com'], 
-            'first_name': ['John'], 
-            'password1': ['p@assW0rd'], 
-            'password2': ['p@assW0rd']}
-        response = self.client.post(reverse('users:users_register'), USERS_REGISTER_FORM_TEST_DATA, follow=True)
-        self.assertRedirects(response, reverse('users:users_register_form_submitted'))
+    # def test_redirects_on_POST_request(self):
+    #     response = self.client.post(reverse('users:users_register'), self.user_register_form_data, follow=True)
+    #     self.assertRedirects(response, reverse('users:users_register_form_submitted'))
 
+    # def test_calls_send_mail(self):
+    #     pass
 
-
+    
 
 class UsersRegisterFormSubmittedViewTest(TestCase):
     
@@ -59,20 +65,5 @@ class UsersRegisterFormSubmittedViewTest(TestCase):
 
 
 
-@skip
-class UsersAccountActivationView(TestCase):
 
-    # - pull token, and url safe primary key from url query params
-    # - get the user using the primary key
-    # - if the token is not good guard and return error
-    # - otherwise set the user is_active to True
-    # - save the user
-    # - pass success message 'Your account has been activated! You can now login'
-    # - redirect to users_login page displaying success message
 
-    def test_redirect_to_users_login_page(self):
-        # todo url safe user pk, token
-        uid = ''
-        token = ''
-        response = self.client.get(reverse('users:users_account_activation'), {'uid': uid, 'token': token}, follow=True)
-        self.assertRedirects(response, reverse('users:users_login'))
