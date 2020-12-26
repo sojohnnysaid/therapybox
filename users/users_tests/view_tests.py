@@ -12,6 +12,7 @@ We test:
 3. Can we access the correct model when we create a view instance?
 '''
 
+from unittest.case import skip
 from users import views, models, forms
 from django.urls import reverse
 from django.core import mail
@@ -38,6 +39,15 @@ class UsersRegisterViewTest(TestCase):
         email = mail.outbox[0]
         assert 'Here is your activation link' in email.subject
 
+    def test_redirects_on_POST_request(self):
+        USERS_REGISTER_FORM_TEST_DATA = {
+            'email': ['johnsmith@gmail.com'], 
+            'first_name': ['John'], 
+            'password1': ['p@assW0rd'], 
+            'password2': ['p@assW0rd']}
+        response = self.client.post(reverse('users:users_register'), USERS_REGISTER_FORM_TEST_DATA, follow=True)
+        self.assertRedirects(response, reverse('users:users_register_form_submitted'))
+
 
 
 
@@ -49,9 +59,20 @@ class UsersRegisterFormSubmittedViewTest(TestCase):
 
 
 
+@skip
+class UsersAccountActivationView(TestCase):
 
-class UsersAccountViewTest(TestCase):
+    # - pull token, and url safe primary key from url query params
+    # - get the user using the primary key
+    # - if the token is not good guard and return error
+    # - otherwise set the user is_active to True
+    # - save the user
+    # - pass success message 'Your account has been activated! You can now login'
+    # - redirect to users_login page displaying success message
 
-    def test_uses_expected_template(self):
-        response = self.client.get(reverse('users:users_account'))
-        self.assertTemplateUsed(response, 'users/users_account.html')
+    def test_redirect_to_users_login_page(self):
+        # todo url safe user pk, token
+        uid = ''
+        token = ''
+        response = self.client.get(reverse('users:users_account_activation'), {'uid': uid, 'token': token}, follow=True)
+        self.assertRedirects(response, reverse('users:users_login'))

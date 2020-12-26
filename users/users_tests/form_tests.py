@@ -36,11 +36,4 @@ class UsersRegisterFormTest(TestCase):
         self.assertIn('placeholder="first name"', response.rendered_content)
         self.assertIn('placeholder="email"', response.rendered_content)
         
-    def test_form_redirects_on_POST_request(self):
-        USERS_REGISTER_FORM_TEST_DATA = {
-            'email': ['johnsmith@gmail.com'], 
-            'first_name': ['John'], 
-            'password1': ['p@assW0rd'], 
-            'password2': ['p@assW0rd']}
-        response = self.client.post(reverse('users:users_register'), USERS_REGISTER_FORM_TEST_DATA, follow=True)
-        self.assertRedirects(response, reverse('users:users_register_form_submitted'))
+    

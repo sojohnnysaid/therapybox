@@ -1,6 +1,4 @@
-from django.forms import ModelForm, widgets
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import reverse, redirect
 
 from . import models
 
