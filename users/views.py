@@ -3,8 +3,9 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 
-from . import forms, models
+from users import forms, models
 
+from users.services.account_activation import send_activation_link
 
 # Create your views here.
 class UsersRegisterView(CreateView):
@@ -13,17 +14,11 @@ class UsersRegisterView(CreateView):
     template_name = 'users/users_register.html'
     success_url = reverse_lazy('users:users_register_form_submitted')
 
-    def post(self, request, *args, **kwargs):
-        user_email_address = request.POST['email']
-        link = request.build_absolute_uri(reverse_lazy('users:users_account'))
-        send_mail(
-            'Here is your activation link',
-            f'{link}?token=blahblahblah',
-            'from@example.com',
-            [user_email_address],
-            fail_silently=False,
-        )
-        return super().post(request, *args, **kwargs)
+    def form_valid(self, form):
+        """If the form is valid, save self.object, which is the user."""
+        self.object = form.save()
+        send_activation_link(self.request, self.object)
+        return super().form_valid(form)
 
 
 class UsersRegisterFormSubmittedView(TemplateView):

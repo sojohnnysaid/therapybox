@@ -12,25 +12,33 @@ We test:
 3. Can we access the correct model when we create a view instance?
 '''
 
-from unittest.case import skip
+from django.test.testcases import LiveServerTestCase
 from django.urls import reverse
-from django.core import mail
 from django.test import TestCase
 from django.test import RequestFactory
+from django.contrib.auth import get_user_model
 
-from unittest.mock import patch, Mock
-import pytest
+from unittest.mock import patch
 
 from users import views, models, forms
 
-class UsersRegisterViewTest(TestCase):
+class UsersRegisterViewTest(LiveServerTestCase):
 
     def setUp(self):
+        super().setUp()
+        self.email = 'johnsmith@gmail.com'
+        self.first_name = 'John'
+        self.password = 'p@assW0rd'
+
         self.request = RequestFactory().post(reverse('users:users_register'), {
-            'email': 'johnsmith@gmail.com', 
-            'first_name': 'John', 
-            'password1': 'p@assW0rd', 
-            'password2': 'p@assW0rd'})
+            'email': self.email,
+            'first_name': self.first_name,
+            'password1': self.password,
+            'password2': self.password
+        })
+
+    def tearDown(self):
+        return super().tearDown()
 
     def test_uses_CustomUser(self):
         assert views.UsersRegisterView.model == models.CustomUser
@@ -41,19 +49,27 @@ class UsersRegisterViewTest(TestCase):
     def test_uses_expected_template(self):
         assert views.UsersRegisterView.template_name == 'users/users_register.html'
 
-    @patch('users.views.send_mail', autospec=True)
-    def test_email_sent_on_POST_request(self, mock_send_mail):
-        views.UsersRegisterView.as_view()(self.request)
-        print('\nmock_send_email:', mock_send_mail.call_args)
-        # email = mail.outbox[0]
-        # assert 'Here is your activation link' in email.subject
+    def test_redirects_on_post_request(self):
+        view_instance = views.UsersRegisterView.as_view()
+        response = view_instance(self.request)
+        assert response.url == reverse('users:users_register_form_submitted')
 
-    # def test_redirects_on_POST_request(self):
-    #     response = self.client.post(reverse('users:users_register'), self.user_register_form_data, follow=True)
-    #     self.assertRedirects(response, reverse('users:users_register_form_submitted'))
+    @patch('users.views.send_activation_link')
+    def test_on_POST_send_activation_link_called(self, mock_send_activation_link):
+        view_instance = views.UsersRegisterView.as_view()
+        response = view_instance(self.request)
+        user = get_user_model().objects.get(email=self.email)
+        mock_send_activation_link.assert_called_once()
 
-    # def test_calls_send_mail(self):
-    #     pass
+    @patch('users.views.send_activation_link')
+    def test_on_POST_correct_arguments_passed_to_send_activation_link(self, mock_send_activation_link):
+        view_instance = views.UsersRegisterView.as_view()
+        response = view_instance(self.request)
+        user = get_user_model().objects.get(email=self.email)
+        mock_send_activation_link.assert_called_once_with(self.request, user)
+
+
+    
 
     
 

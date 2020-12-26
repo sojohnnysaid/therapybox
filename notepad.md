@@ -7,7 +7,7 @@ expected failure:
 [✅] Grab files, notes and todo.md needed and move to functional_tests/spikes
 [✅] write out functional steps for account activation
 [✅] write functional tests
-[ ] write out unit steps for account activation
+[✅] write out unit steps for account activation
 [ ] write unit tests
 [ ] see if functional test passes 100%
 
@@ -44,14 +44,20 @@ How account activation works:
 ########shell scratchpad
 
 from django.test import RequestFactory
-from users.views import UsersRegisterView
+from users import views
+from django.urls import reverse
 
 
-user_register_form_data = {
-    'email': 'johnsmitsafsdh@gmail.com', 
-    'first_name': 'John', 
-    'password1': 'p@assW0rd', 
-    'password2': 'p@assW0rd'}
-request = RequestFactory().post('/users/register/', user_register_form_data)
-view_instance = UsersRegisterView.as_view()
-response = view_instance(request)
+email = 'asdfjohnssdsdffdasdfsmith@gmail.com'
+first_name = 'John'
+password = 'p@assW0rd'
+
+self.request = RequestFactory().post(reverse('users:users_register'), {
+    'email': email,
+    'first_name': first_name,
+    'password1': password,
+    'password2': password
+})
+
+view_instance = views.UsersRegisterView.as_view()
+response = view_instance(self.request)
