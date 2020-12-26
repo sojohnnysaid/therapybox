@@ -54,30 +54,7 @@ class UsersTest(FunctionalTest):
         form_submitted_message = self.browser.find_elements(By.ID, 'users-register-form-submitted-message')[0].text
         assert 'Form submitted. Check your email to activate your new account' in form_submitted_message
 
-        # John goes to his email...
-        email = mail.outbox[0]
-        assert 'Here is your activation link' in email.subject
         
-        url_search = re.search(r'http://.+/users/account/\?token=.+$', email.body)
-        
-        if not url_search:
-            self.fail(f'Could not find url in email body:\n{email.body}')
-
-        activate_account_url = url_search.group(0)
-        assert self.live_server_url in activate_account_url
-
-        # and clicks the link
-        self.browser.get(activate_account_url)
-        
-        # John is taken to his account page
-        assert '/users/account/' in self.browser.current_url
-        navbar = self.browser.find_elements(By.TAG_NAME, 'nav')[0].text
-        assert 'John' in navbar
-
-
-        # There is a message that welcomes him personally
-        welcome_message = self.browser.find_elements(By.CLASS_NAME, 'alert-success')[0].text
-        assert 'Welcome to your new account John!' == welcome_message
 
         #################################
         ####### Jane's User Story #######
@@ -122,7 +99,14 @@ class UsersTest(FunctionalTest):
         form_submitted_message = self.browser.find_elements(By.ID, 'users-register-form-submitted-message')[0].text
         assert 'Form submitted. Check your email to activate your new account' in form_submitted_message
 
-        # Jane goes to her email...
+
+
+
+    def test_user_can_activate_account_using_link_once(self):
+
+        self.register_user('John')
+
+        # John goes to his email...
         email = mail.outbox[0]
         assert 'Here is your activation link' in email.subject
         
@@ -137,12 +121,7 @@ class UsersTest(FunctionalTest):
         # and clicks the link
         self.browser.get(activate_account_url)
         
-        # Jane is taken to her account page
-        assert '/users/account/' in self.browser.current_url
-        navbar = self.browser.find_elements(By.TAG_NAME, 'nav')[0].text
-        assert 'Jane' in navbar
-
-
-        # There is a message that welcomes her personally
-        welcome_message = self.browser.find_elements(By.CLASS_NAME, 'alert-success')[0].text
-        assert 'Welcome to your new account Jane!' == welcome_message
+        # John is taken to the login page
+        assert '/users/login/' in self.browser.current_url
+        navbar = self.browser.find_elements(By.CLASS_NAME, 'message')[0].text
+        assert 'Your account has been activated! You can now login' in navbar

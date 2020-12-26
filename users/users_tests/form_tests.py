@@ -22,7 +22,6 @@ from django.test import TestCase
 
 from users import forms
 
-USERS_REGISTER_FORM_FIELDNAMES = ['email', 'first_name', 'password1', 'password2']
 USERS_REGISTER_FORM_TEST_DATA = {'email': ['johnsmith@gmail.com'], 'first_name': ['John'], 'password1': ['p@assW0rd'], 'password2': ['p@assW0rd']}
 
 class UsersRegisterFormTest(TestCase):
@@ -30,7 +29,7 @@ class UsersRegisterFormTest(TestCase):
     def test_UsersRegisterForm_renders_correct_fields(self):
         form = forms.UsersRegisterForm
         field_names = list(form.base_fields.keys())
-        self.assertEqual(USERS_REGISTER_FORM_FIELDNAMES, field_names)
+        self.assertEqual(['email', 'first_name', 'password1', 'password2'], field_names)
 
     def test_UsersRegisterForm_fields_use_placeholder_attributes(self):
         response = self.client.get(reverse('users:users_register'))
@@ -38,5 +37,10 @@ class UsersRegisterFormTest(TestCase):
         self.assertIn('placeholder="email"', response.rendered_content)
         
     def test_form_redirects_on_POST_request(self):
+        USERS_REGISTER_FORM_TEST_DATA = {
+            'email': ['johnsmith@gmail.com'], 
+            'first_name': ['John'], 
+            'password1': ['p@assW0rd'], 
+            'password2': ['p@assW0rd']}
         response = self.client.post(reverse('users:users_register'), USERS_REGISTER_FORM_TEST_DATA, follow=True)
         self.assertRedirects(response, reverse('users:users_register_form_submitted'))
