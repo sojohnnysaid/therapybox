@@ -46,11 +46,12 @@ How account activation works:
 from django.test import RequestFactory
 from users.views import UsersRegisterView
 
-view_obj = UsersRegisterView()
+
 user_register_form_data = {
     'email': 'johnsmitsafsdh@gmail.com', 
     'first_name': 'John', 
     'password1': 'p@assW0rd', 
     'password2': 'p@assW0rd'}
-request = RequestFactory().post(user_register_form_data)
-response = view_obj.post(request)
+request = RequestFactory().post('/users/register/', user_register_form_data)
+view_instance = UsersRegisterView.as_view()
+response = view_instance(request)
