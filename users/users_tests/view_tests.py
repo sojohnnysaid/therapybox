@@ -36,7 +36,7 @@ class UsersRegisterViewTest(TestCase):
         self.first_name = 'John'
         self.password = 'p@assW0rd'
 
-        self.request = RequestFactory().post(reverse('users:users_register'), {
+        self.request = RequestFactory().post(reverse('users:register_form'), {
             'email': self.email,
             'first_name': self.first_name,
             'password1': self.password,
@@ -58,7 +58,7 @@ class UsersRegisterViewTest(TestCase):
     def test_redirects_on_post_request(self):
         view_instance = views.UsersRegisterView.as_view()
         response = view_instance(self.request)
-        assert response.url == reverse('users:users_register_form_submitted')
+        assert response.url == reverse('users:register_form_submitted')
 
 
 
@@ -71,53 +71,22 @@ class SendActivationLinkTest(TestCase):
         self.first_name = 'John'
         self.password = 'p@assW0rd'
 
-        self.request = RequestFactory().post(reverse('users:users_register'), {
+        self.request = RequestFactory().post(reverse('users:register_form'), {
             'email': self.email,
             'first_name': self.first_name,
             'password1': self.password,
             'password2': self.password
         })
-
-    def test_get_account_activation_email_subject(self):
-        subject = services.account_activation.get_account_activation_email_subject()
-        assert subject == 'Here is your activation link'
-
-    def test_get_url_safe_user_pk(self):
-        views.UsersRegisterView.as_view()(self.request)
-        user = get_user_model().objects.get(email=self.email)
-        url_safe_user_pk = urlsafe_base64_encode(force_bytes(user.pk))
-        assert url_safe_user_pk == 'MQ'
-
-    def test_get_account_activation_token(self):
-        views.UsersRegisterView.as_view()(self.request)
-        user = get_user_model().objects.get(email=self.email)
-        timestamp = timezone.now()
-        token_hash_value = token_generator._make_hash_value(user, timestamp)
-        assert token_hash_value == (str(user.pk) + str(timestamp) + str(user.is_active))
-
-    def test_get_account_activation_email_message(self):
-        views.UsersRegisterView.as_view()(self.request)
-        message = services.account_activation.test_get_account_activation_email_message(self.request)
-        self.assertRegex(message, r'http://.+/users/account-activation/\?uid=.+&token=.+$')
-
-    def test_get_account_activation_from_email(self):
-        from_email = services.account_activation.get_account_activation_from_email()
-        assert from_email == 'noreply@example.com'
-
-    def test_get_account_activation_user_email(self):
-        user_email = services.account_activation.get_account_activation_user_email(self.request)
-        assert user_email == self.email
         
-    @patch('users.services.account_activation.send_mail')
+    @patch('users.services.send_mail')
     def test_calls_send_mail(self, mock_send_mail):
         view_instance = views.UsersRegisterView.as_view()
         view_instance(self.request)
         mock_send_mail.assert_called_once()
 
-    @patch('users.services.account_activation.send_mail')
+    @patch('users.services.send_mail')
     def test_correct_arguments_passed_to_send_mail(self, mock_send_mail):
-        view_instance = views.UsersRegisterView.as_view()
-        view_instance(self.request)
+        views.UsersRegisterView.as_view()(self.request)
         link = mock_send_mail.call_args[0][1]
         url = re.search(r'http://.+/users/account-activation/\?uid=.+&token=.+$', link)
         mock_send_mail.assert_called_once_with(

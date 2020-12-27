@@ -7,7 +7,7 @@ from users.views import (
 
 app_name = 'users'
 urlpatterns = [
-    path('register/', UsersRegisterView.as_view(), name='users_register'),
-    path('register-form-submitted/', UsersRegisterFormSubmittedView.as_view(), name='users_register_form_submitted'),
-    path('account-activation/', UsersAccountActivationView.as_view(), name='users_account_activation'),
+    path('register/', UsersRegisterView.as_view(), name='register_form'),
+    path('register-form-submitted/', UsersRegisterFormSubmittedView.as_view(), name='register_form_submitted'),
+    path('account-activation/', UsersAccountActivationView.as_view(), name='account_activation'),
 ]

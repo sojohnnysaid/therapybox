@@ -17,14 +17,17 @@ We test:
 3. Can we redirect the form after the submission is successful?
 '''
 
-from django.urls import reverse
 from django.test import TestCase
+from django.urls import reverse
 
-from users import forms
+from users import forms, models
 
-USERS_REGISTER_FORM_TEST_DATA = {'email': ['johnsmith@gmail.com'], 'first_name': ['John'], 'password1': ['p@assW0rd'], 'password2': ['p@assW0rd']}
 
 class UsersRegisterFormTest(TestCase):
+
+    def test_UsersRegisterForm_uses_CustomUser_model(self):
+        form = forms.UsersRegisterForm
+        self.assertEqual(form._meta.model, models.CustomUser)
 
     def test_UsersRegisterForm_renders_correct_fields(self):
         form = forms.UsersRegisterForm
@@ -32,7 +35,7 @@ class UsersRegisterFormTest(TestCase):
         self.assertEqual(['email', 'first_name', 'password1', 'password2'], field_names)
 
     def test_UsersRegisterForm_fields_use_placeholder_attributes(self):
-        response = self.client.get(reverse('users:users_register'))
+        response = self.client.get(reverse('users:register_form'))
         self.assertIn('placeholder="first name"', response.rendered_content)
         self.assertIn('placeholder="email"', response.rendered_content)
         

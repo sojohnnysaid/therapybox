@@ -12,6 +12,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
     
     objects = CustomUserManager()
 
@@ -26,7 +27,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = 'users'
 
     def has_perm(self, perm, obj=None):
-        return True
+        if self.is_superuser:
+            return True
+        return False
 
     def has_module_perms(self, app_label):
-        return True
+        if self.is_superuser:
+            return True
+        return False

@@ -18,29 +18,28 @@ How this class works
 
 '''
 We test:
-1. Can we create an object with the correct fields?
-2. If we save the object will it persist in the database?
-3. Does the string represention of the object return the field we expect?
+Does the string represention of the object return the field we expect?
 '''
 
 from django.test import TestCase
-from users import models
+from users.models import CustomUser
+from django.contrib.auth.models import Permission
 
-CUSTOM_USER_MODEL_FIRST_NAME = 'John'
-CUSTOM_USER_MODEL_EMAIL = 'sojohnnysaid@gmail.com'
 
 class CustomUserTest(TestCase):
 
-    def test_CustomUser_object_created_properly(self):
-        user_object = models.CustomUser(first_name=CUSTOM_USER_MODEL_FIRST_NAME, email=CUSTOM_USER_MODEL_EMAIL)
-        self.assertEqual(user_object.first_name, 'John')
-        self.assertEqual(user_object.email, 'sojohnnysaid@gmail.com')
-
-    def test_CustomUser_object_persists_in_database_when_saved(self):
-        user_object = models.CustomUser(first_name=CUSTOM_USER_MODEL_FIRST_NAME, email=CUSTOM_USER_MODEL_EMAIL)
-        user_object.save()
-        self.assertEqual(1, len(models.CustomUser.objects.all()))
-
     def test_str_of_user_object_is_email(self):
-        user_object = models.CustomUser(first_name=CUSTOM_USER_MODEL_FIRST_NAME, email=CUSTOM_USER_MODEL_EMAIL)
-        self.assertEqual(str(user_object), user_object.email)
+        custom_user_instance = CustomUser.objects.create_user(email='test@gmail.com', password='pP@assw0rd')
+        self.assertEqual(str(custom_user_instance), custom_user_instance.email)
+
+    def test_created_user_has_no_permissions(self):
+        user_instance = CustomUser.objects.create_user(email='test@gmail.com', password='pP@assw0rd')
+        user_permissions = user_instance.get_user_permissions()
+        self.assertSetEqual(user_permissions, set())
+
+    def test_created_super_user_has_all_permissions(self):
+        permissions = Permission.objects.all()
+        permissions_list = [perm.content_type.app_label + '.' + perm.codename for perm in permissions]
+        user_instance = CustomUser.objects.create_superuser(email='test@gmail.com', password='pP@assw0rd')
+        user_permissions = list(user_instance.get_user_permissions())
+        self.assertSetEqual(set(user_permissions), set(permissions_list))
