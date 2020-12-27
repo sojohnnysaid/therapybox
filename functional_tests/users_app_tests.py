@@ -110,7 +110,7 @@ class UsersTest(FunctionalTest):
         email = mail.outbox[0]
         assert 'Here is your activation link' in email.subject
         
-        url_search = re.search(r'http://.+/users/account/\?token=.+$', email.body)
+        url_search = re.search(r'http://.+/users/account-activation/\?uid=.+&token=.+$', email.body)
         
         if not url_search:
             self.fail(f'Could not find url in email body:\n{email.body}')

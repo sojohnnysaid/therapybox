@@ -1,13 +1,6 @@
+# John is taken to the login page
+>       assert '/users/login/' in self.browser.current_url
+E       AssertionError: assert '/users/login/' in 'http://localhost:53865/users/account-activation/?uid=MQ&token=afir19-f89539853bd8a7402d51cf6dad22e88b'
 
-[✅] - TODO LIST
-
-- [✅] Create login page. This app does not have a traditional home page. The home page is either
-the account page or the login page.
-
-- [] create a services folder with account_activation.py to skinny up UserRegisterView
-and UserAccountActivationView
-
-- [] remove extra user from urls name. Namespace already has user in it
-
-- [] Create account page. This app does not have a traditional home page. The home page is either
-the account page or the login page.
+✅ TODO LIST 
+[] 
