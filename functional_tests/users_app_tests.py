@@ -154,7 +154,7 @@ class UsersTest(FunctionalTest):
 
 
 
-    
+    # TODO
     def test_user_can_reset_forgotten_password_using_email(self):
 
         self.user_registers_and_activates_account('John')
@@ -167,7 +167,7 @@ class UsersTest(FunctionalTest):
 
         # John can't remember his password and notices a forgot password link
         # He clicks the link
-        self.browser.find_elements(By.LINK_TEXT, 'Forgot Password? Click here!').click()
+        self.browser.find_elements(By.LINK_TEXT, 'Forgot Password? Click here!')[0].click()
 
         # he is taken to the password reset form page
         assert reverse('users:password_reset_form') in self.browser.current_url
