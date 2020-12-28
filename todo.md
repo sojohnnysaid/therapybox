@@ -1,2 +1,2 @@
 ✅ TODO LIST 
-[] create login user story
+[] create password reset user story
