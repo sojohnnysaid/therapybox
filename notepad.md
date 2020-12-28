@@ -6,26 +6,26 @@ users perspective:
 framework perspective:
     url: 
         create patterns:
-            users/account-activation/
-            users/login/
+            ✅ users/account-activation/
+            ✅ users/login/
     view:
         create views:
-            UsersAccountActivationView
+            ✅ UsersAccountActivationView
                 responsibilities:
-                    - calling activate_user service
-                    - passing success message
-                    - redirecting to login page
-            UsersLoginView
+                    ✅ calling activate_user service with correct arguments
+                    ✅ passing success message
+                    ✅ redirecting to login page
+            ✅ UsersLoginView
                 responsibilities:
-                    - renders login page template
+                    ✅ renders login page template
     service:
         create function:
             activate_user(request)
                 responsibilities:
-                    - get relevant user from db using url query params
-                    - test if token is valid using user and url query params
+                    ✅ get relevant user from db using url query params
+                    ✅ test if token is valid using user and url query params
                         Token is valid:
-                            - update user and save
-                            - return True
+                            ✅ update user and save
+                            ✅ return appropriate message
                         Token is invalid:
-                            - return False
+                            ✅ return appropriate message

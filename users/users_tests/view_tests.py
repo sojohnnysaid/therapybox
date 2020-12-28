@@ -20,6 +20,8 @@ from django.contrib.auth import get_user_model
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils import timezone
+from django.core import mail
+from django.test import Client
 
 from unittest.case import skip
 from unittest.mock import patch
@@ -63,6 +65,15 @@ class UsersRegisterViewTest(TestCase):
 
 
 
+class UsersRegisterFormSubmittedViewTest(TestCase):
+    
+    def test_returns_expected_html(self):
+        response = Client().get(reverse('users:register_form_submitted'))
+        self.assertInHTML('Form Submitted', response.rendered_content)
+
+
+
+
 class SendActivationLinkTest(TestCase):
 
     def setUp(self):
@@ -79,13 +90,12 @@ class SendActivationLinkTest(TestCase):
         })
         
     @patch('users.services.send_mail')
-    def test_calls_send_mail(self, mock_send_mail):
-        view_instance = views.UsersRegisterView.as_view()
-        view_instance(self.request)
+    def test_calls_send_mail_service(self, mock_send_mail):
+        views.UsersRegisterView.as_view()(self.request)
         mock_send_mail.assert_called_once()
 
     @patch('users.services.send_mail')
-    def test_correct_arguments_passed_to_send_mail(self, mock_send_mail):
+    def test_correct_arguments_passed_to_send_mail_service(self, mock_send_mail):
         views.UsersRegisterView.as_view()(self.request)
         link = mock_send_mail.call_args[0][1]
         url = re.search(r'http://.+/users/account-activation/\?uid=.+&token=.+$', link)
@@ -99,11 +109,47 @@ class SendActivationLinkTest(TestCase):
 
 
 
-
-#TODO
 class UsersAccountActivationViewTest(TestCase):
-    pass
 
-#TODO
+    # use Client instead of RequestFactory in tests because messages will not work otherwise
+
+    def setUp(self):
+        super().setUp()
+        self.email = 'johnsmith@gmail.com'
+        self.first_name = 'John'
+        self.password = 'p@assW0rd'
+
+        self.register_request = RequestFactory().post(reverse('users:register_form'), {
+            'email': self.email,
+            'first_name': self.first_name,
+            'password1': self.password,
+            'password2': self.password
+        })
+
+        views.UsersRegisterView.as_view()(self.register_request)
+        email = mail.outbox[0]
+        url_search = re.search(r'http://.+/users/account-activation/\?uid=.+&token=.+$', email.body)
+        self.account_activation_link = url_search.group(0)
+
+    @patch('users.views.activate_user')
+    def test_calls_activate_user_service(self, mock_activate_user):
+        Client().get(self.account_activation_link)
+        mock_activate_user.assert_called_once()
+
+    @patch('users.views.activate_user')
+    def test_correct_arguments_passed_to_activate_user_service(self, mock_activate_user):
+        response = Client().get(self.account_activation_link)
+        initial_request = response.wsgi_request
+        mock_activate_user.assert_called_once_with(initial_request)
+
+    def test_redirect(self):
+        response = Client().get(self.account_activation_link)
+        self.assertRedirects(response, reverse('users:login'))
+
+
+
 class UsersLoginViewTest(TestCase):
-    pass
+    
+    def test_returns_expected_html(self):
+        response = Client().get(reverse('users:login'))
+        self.assertInHTML('Login Page', response.rendered_content)

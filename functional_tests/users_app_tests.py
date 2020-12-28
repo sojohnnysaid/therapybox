@@ -123,5 +123,5 @@ class UsersTest(FunctionalTest):
         
         # John is taken to the login page
         assert '/users/login/' in self.browser.current_url
-        navbar = self.browser.find_elements(By.CLASS_NAME, 'message')[0].text
+        navbar = self.browser.find_elements(By.CLASS_NAME, 'alert-success')[0].text
         assert 'Your account has been activated! You can now login' in navbar

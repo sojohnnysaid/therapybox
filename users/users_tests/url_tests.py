@@ -18,7 +18,7 @@ the url pattern and declare the class in views
 
 
 
-class RegisterTest(TestCase):
+class RegisterURLTest(TestCase):
 
     def test_resolves_to_correct_path(self):
         expected_path = 'users/register/'
@@ -37,7 +37,7 @@ class RegisterTest(TestCase):
 
 
 
-class RegisterFormSubmittedTest(TestCase):
+class RegisterFormSubmittedURLTest(TestCase):
 
     def test_resolves_to_correct_path(self):
         expected_path = 'users/register-form-submitted/'
@@ -56,7 +56,7 @@ class RegisterFormSubmittedTest(TestCase):
 
 
 
-class AccountActivationTest(TestCase):
+class AccountActivationURLTest(TestCase):
 
     def test_resolves_to_correct_path(self):
         expected_path = 'users/account-activation/'
@@ -75,3 +75,18 @@ class AccountActivationTest(TestCase):
 
 
 
+class LoginURLTest(TestCase):
+
+    def test_resolves_to_correct_path(self):
+        expected_path = 'users/login/'
+        name = 'users:login'
+        resolver_match = resolve(reverse(name))
+        resolved_path = resolver_match.route
+        self.assertEqual(expected_path, resolved_path)
+
+    def test_calls_correct_view(self):
+        expected_class = views.UsersLoginView
+        name = 'users:login'
+        resolver_match = resolve(reverse(name))
+        resolved_class = resolver_match.func.view_class
+        self.assertEqual(expected_class, resolved_class)
