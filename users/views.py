@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 
 from users import forms, models
 
-from users.services import send_account_activation_link
+from users.services import send_user_activation_link
 
 # Create your views here.
 class UsersRegisterView(CreateView):
@@ -16,7 +16,7 @@ class UsersRegisterView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        send_account_activation_link(self.request, self.object)
+        send_user_activation_link(self.request, self.object)
         return HttpResponseRedirect(self.get_success_url())
 
 class UsersRegisterFormSubmittedView(TemplateView):

@@ -6,7 +6,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from users.tokens import default_account_activation_token_generator as token_generator
 
 
-def send_account_activation_link(request, user):
+def send_user_activation_link(request, user):
     def get_activation_link(request, user):
         token = token_generator.make_token(user)
         uid = urlsafe_base64_encode(force_bytes(user.pk))
