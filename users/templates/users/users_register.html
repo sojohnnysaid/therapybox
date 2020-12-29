@@ -8,10 +8,10 @@
 <body>
     <h1>Register</h1>
     
-    <form action="{% url 'users:register_form' %}" method="POST">
+    <form action="{% url 'users:register' %}" method="post">
         <table>{{form.as_table}}</table>
         {% csrf_token %}
-        <input id='users_register_form_submit_button' type="submit" value="submit">
+        <input id='users_register_form_submit_button' type="submit" value="reset">
     </form>
     
 </body>

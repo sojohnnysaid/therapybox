@@ -10,7 +10,7 @@
 
 ✅ TODO LIST 
 [✅] explain from users perspective
-[] explain from framework perspective
+[✅] explain from framework perspective
 [] write unit tests
 [] pass functional test
 
@@ -29,28 +29,23 @@ users perspective:
 
 
 framework perspective:
-    url: 
-        create patterns:
-            users/password-reset-form/
+    ✅ url: 
+        ✅ create patterns:
+            ✅ users/request-password-reset/
+            users/password-reset/
     form:
         create form:
-            email field
-            use clean_email(self) method
-                check if user exists. If not raise ValidationError('Email address not found in our system!')
+            X email field
+            X use clean_email(self) method
+                X check if user exists. If not raise ValidationError('Email address not found in our system!')
     view:
         create views:
-            UsersPasswordResetView
+            UsersPasswordResetRequestView
                 responsibilities:
-                    handles request in post method
-                        pass request.post to instanciate form object
-                        check if form.is_valid
-                            form not valid:
-                                create message 'Invalid form submission!'
-                                redirect back to password-reset-form
-                            form is valid:
-                                get the user object based on form.cleaned_data['email']
-                                calls send_password_reset_link service with expected arguments
-                                redirects to login page
+                    handles request in form_valid method
+                        get the user object based on form.cleaned_data['email']
+                        calls send_password_reset_link service with expected arguments
+                        redirects to login page
                     
     service:
         create functions:
@@ -106,3 +101,25 @@ default_token_generator.check_token(user, token)
 default_token_generator.check_token(user, token)
 default_token_generator.check_token(user, token)
 default_token_generator.check_token(user, token)
+
+
+
+
+
+
+
+from django.test import RequestFactory
+from django.urls import reverse
+from users import views
+
+request = RequestFactory().get(reverse('users:password_reset_request'))
+response = views.UsersPasswordResetRequestView.as_view()(request)
+response.template_name[0]
+
+
+
+
+
+from django.contrib.auth import get_user_model
+
+user = get_user_model().objects.get(email='nope@aol.com')

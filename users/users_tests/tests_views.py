@@ -38,7 +38,7 @@ class UsersRegisterViewTest(TestCase):
         self.first_name = 'John'
         self.password = 'p@assW0rd'
 
-        self.request = RequestFactory().post(reverse('users:register_form'), {
+        self.request = RequestFactory().post(reverse('users:register'), {
             'email': self.email,
             'first_name': self.first_name,
             'password1': self.password,
@@ -82,7 +82,7 @@ class SendActivationLinkTest(TestCase):
         self.first_name = 'John'
         self.password = 'p@assW0rd'
 
-        self.request = RequestFactory().post(reverse('users:register_form'), {
+        self.request = RequestFactory().post(reverse('users:register'), {
             'email': self.email,
             'first_name': self.first_name,
             'password1': self.password,
@@ -119,7 +119,7 @@ class UsersAccountActivationViewTest(TestCase):
         self.first_name = 'John'
         self.password = 'p@assW0rd'
 
-        self.register_request = RequestFactory().post(reverse('users:register_form'), {
+        self.register_request = RequestFactory().post(reverse('users:register'), {
             'email': self.email,
             'first_name': self.first_name,
             'password1': self.password,
@@ -131,16 +131,16 @@ class UsersAccountActivationViewTest(TestCase):
         url_search = re.search(r'http://.+/users/account-activation/\?uid=.+&token=.+$', email.body)
         self.account_activation_link = url_search.group(0)
 
-    @patch('users.views.activate_user')
-    def test_calls_activate_user_service(self, mock_activate_user):
+    @patch('users.views.services')
+    def test_calls_activate_user_service(self, mock_services):
         Client().get(self.account_activation_link)
-        mock_activate_user.assert_called_once()
+        mock_services.activate_user.assert_called_once()
 
-    @patch('users.views.activate_user')
-    def test_correct_arguments_passed_to_activate_user_service(self, mock_activate_user):
+    @patch('users.views.services')
+    def test_correct_arguments_passed_to_activate_user_service(self, mock_services):
         response = Client().get(self.account_activation_link)
         initial_request = response.wsgi_request
-        mock_activate_user.assert_called_once_with(initial_request)
+        mock_services.activate_user.assert_called_once_with(initial_request)
 
     def test_redirect(self):
         response = Client().get(self.account_activation_link)
@@ -149,7 +149,26 @@ class UsersAccountActivationViewTest(TestCase):
 
 
 class UsersLoginViewTest(TestCase):
+
+    def test_returns_expected_template(self):
+        response = Client().get(reverse('users:login'))
+        self.assertTemplateUsed(response, 'users/users_login.html')
     
     def test_returns_expected_html(self):
         response = Client().get(reverse('users:login'))
         self.assertInHTML('Login Page', response.rendered_content)
+
+
+
+
+class UsersPasswordResetRequestViewTest(TestCase):
+
+    def test_returns_expected_template(self):
+        request = RequestFactory().get(reverse('users:password_reset_request'))
+        response = views.UsersPasswordResetRequestView.as_view()(request)
+        self.assertEqual(response.template_name[0], 'users/users_password_reset_request.html')
+    
+    def test_returns_expected_html(self):
+        request = RequestFactory().get(reverse('users:password_reset_request'))
+        response = views.UsersPasswordResetRequestView.as_view()(request)
+        self.assertIn('Password Reset', response.rendered_content)

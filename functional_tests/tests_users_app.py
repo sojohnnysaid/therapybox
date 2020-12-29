@@ -5,6 +5,9 @@ from selenium.webdriver.common.keys import Keys
 from django.core import mail
 from django.urls import reverse
 import re
+import time
+from django.test import Client
+
 
 
 class UsersTest(FunctionalTest):
@@ -17,7 +20,7 @@ class UsersTest(FunctionalTest):
         #################################
 
         # John goes to the registration page
-        self.browser.get(self.live_server_url + reverse('users:register_form'))
+        self.browser.get(self.live_server_url + reverse('users:register'))
 
         # he is greeted by the registration header
         assert 'Register' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
@@ -74,7 +77,7 @@ class UsersTest(FunctionalTest):
         #################################
 
         # Jane goes to the registration page
-        self.browser.get(self.live_server_url + reverse('users:register_form'))
+        self.browser.get(self.live_server_url + reverse('users:register'))
 
         # she is greeted by the registration header
         assert 'Register' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
@@ -170,7 +173,7 @@ class UsersTest(FunctionalTest):
         self.browser.find_elements(By.LINK_TEXT, 'Forgot Password? Click here!')[0].click()
 
         # he is taken to the password reset form page
-        assert reverse('users:password_reset_form') in self.browser.current_url
+        assert reverse('users:password_reset_request') in self.browser.current_url
 
         # he is greeted by the password reset header
         assert 'Password Reset' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
@@ -189,11 +192,11 @@ class UsersTest(FunctionalTest):
         assert reverse('users:login') in self.browser.current_url
 
         # the page tells him an email has been sent with a confirmation link
-        form_submitted_message = self.browser.find_elements(By.ID, 'message')[0].text
+        form_submitted_message = self.browser.find_elements(By.CLASS_NAME, 'message')[0].text
         assert 'Form submitted. Check your email to reset your password' in form_submitted_message
 
         # John goes to his email...
-        email = mail.outbox[0]
+        email = mail.outbox[1]
         assert 'Here is your password reset link' in email.subject
         
         url_search = re.search(r'http://.+/users/password-reset/\?uid=.+&token=.+$', email.body)

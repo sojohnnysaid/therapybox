@@ -25,18 +25,29 @@ from users import forms, models
 
 class UsersRegisterFormTest(TestCase):
 
-    def test_UsersRegisterForm_uses_CustomUser_model(self):
+    def test_uses_CustomUser_model(self):
         form = forms.UsersRegisterForm
         self.assertEqual(form._meta.model, models.CustomUser)
 
-    def test_UsersRegisterForm_renders_correct_fields(self):
+    def test_renders_correct_fields(self):
         form = forms.UsersRegisterForm
         field_names = list(form.base_fields.keys())
         self.assertEqual(['email', 'first_name', 'password1', 'password2'], field_names)
 
-    def test_UsersRegisterForm_fields_use_placeholder_attributes(self):
-        response = self.client.get(reverse('users:register_form'))
+    def test_fields_use_placeholder_attributes(self):
+        response = self.client.get(reverse('users:register'))
         self.assertIn('placeholder="first name"', response.rendered_content)
         self.assertIn('placeholder="email"', response.rendered_content)
         
     
+
+class UsersPasswordResetFormTest(TestCase):
+
+    def test_renders_correct_fields(self):
+        form = forms.UsersPasswordResetForm
+        field_names = list(form.base_fields.keys())
+        self.assertEqual(['email'], field_names)
+
+    def test_fields_use_placeholder_attributes(self):
+        response = self.client.get(reverse('users:password_reset_request'))
+        self.assertIn('placeholder="email"', response.rendered_content)

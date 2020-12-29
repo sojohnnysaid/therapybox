@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from django.core import mail
 from django.urls import reverse
 import re
+import time
 
 
 class FunctionalTest(LiveServerTestCase):
@@ -14,7 +15,7 @@ class FunctionalTest(LiveServerTestCase):
         options = Options()
         options.headless = True
         self.browser = webdriver.Firefox(options=options)
-        self.browser.implicitly_wait(10)
+        self.browser.implicitly_wait(15)
 
     def tearDown(self):
         self.browser.quit()
@@ -22,7 +23,7 @@ class FunctionalTest(LiveServerTestCase):
     
     def submit_register_user_form(self, name):
         
-        self.browser.get(self.live_server_url + '/users/register/')
+        self.browser.get(self.live_server_url + reverse('users:register'))
         
         # enters email
         input = self.browser.find_elements(By.ID, 'id_email')[0]
@@ -46,7 +47,7 @@ class FunctionalTest(LiveServerTestCase):
 
     def user_registers_and_activates_account(self, name):
 
-        self.browser.get(self.live_server_url + '/users/register/')
+        self.browser.get(self.live_server_url + reverse('users:register'))
         
         # enters email
         input = self.browser.find_elements(By.ID, 'id_email')[0]

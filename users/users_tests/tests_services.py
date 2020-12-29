@@ -10,7 +10,7 @@ class GetActivationLinkTest(TestCase):
 
     def test_get_activation_link_returns_expected_url(self):
         email = 'johnsmith@gmail.com'
-        response = Client().post(reverse('users:register_form'), {
+        response = Client().post(reverse('users:register'), {
             'email': email,
             'first_name': 'John',
             'password1': 'p@assW0rd',
@@ -28,7 +28,7 @@ class SendUserActivationTest(TestCase):
 
     @patch('users.services.get_activation_link')
     def test_get_activation_link_called(self, mock_get_activation_link):
-        Client().post(reverse('users:register_form'), {
+        Client().post(reverse('users:register'), {
             'email': 'johnsmith@gmail.com',
             'first_name': 'John',
             'password1': 'p@assW0rd',
@@ -39,7 +39,7 @@ class SendUserActivationTest(TestCase):
     @patch('users.services.send_mail')
     def test_calls_send_mail(self, mock_send_mail):
         email = 'johnsmith@gmail.com'
-        response = Client().post(reverse('users:register_form'), {
+        response = Client().post(reverse('users:register'), {
             'email': email,
             'first_name': 'John',
             'password1': 'p@assW0rd',
@@ -59,7 +59,7 @@ class ActivateUserTest(TestCase):
     @patch('users.services.messages')
     def test_calls_success_message(self, mock_messages):
         email = 'johnsmith@gmail.com'
-        response = Client().post(reverse('users:register_form'), {
+        response = Client().post(reverse('users:register'), {
             'email': email,
             'first_name': 'John',
             'password1': 'p@assW0rd',
@@ -74,7 +74,7 @@ class ActivateUserTest(TestCase):
     @patch('users.services.messages')
     def test_calls_error_message(self, mock_messages):
         email = 'johnsmith@gmail.com'
-        response = Client().post(reverse('users:register_form'), {
+        response = Client().post(reverse('users:register'), {
             'email': email,
             'first_name': 'John',
             'password1': 'p@assW0rd',
