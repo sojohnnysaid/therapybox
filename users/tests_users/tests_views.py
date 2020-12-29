@@ -165,21 +165,21 @@ class UsersLoginViewTest(TestCase):
 class UsersPasswordResetRequestViewTest(base.UsersBaseTestCase):
 
     def test_get_request_returns_expected_html(self):
-        response = Client().get(reverse('users:password_reset_request'))
+        response = Client().get(reverse('users:forgot_password_reset_request'))
         self.assertTemplateUsed(response, 'users/users_password_reset_request.html')
 
     def test_uses_expected_form_class(self):
-        response = Client().get(reverse('users:password_reset_request'))
+        response = Client().get(reverse('users:forgot_password_reset_request'))
         self.assertIsInstance(response.context_data['form'], forms.UsersPasswordResetRequestForm)
 
     @patch('users.views.services')
     def test_calls_send_password_reset_link_service_with_expected_arguments(self, mocked_services):
         user = self.create_test_user('John')
-        response = Client().post(reverse('users:password_reset_request'), {'email': 'John@gmail.com'})
+        response = Client().post(reverse('users:forgot_password_reset_request'), {'email': 'John@gmail.com'})
         request = response.wsgi_request
         mocked_services.send_password_reset_link.assert_called_once_with(request, user)
 
     def test_redirects_on_post_success(self):
         user = self.create_test_user('John')
-        response = Client().post(reverse('users:password_reset_request'), {'email': 'John@gmail.com'})
+        response = Client().post(reverse('users:forgot_password_reset_request'), {'email': 'John@gmail.com'})
         self.assertRedirects(response, reverse('users:login'))

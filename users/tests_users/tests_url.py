@@ -97,15 +97,15 @@ class LoginURLTest(TestCase):
 class PasswordResetRequestURLTest(TestCase):
     
     def test_resolves_to_correct_path(self):
-        expected_path = 'users/password-reset-request/'
-        name = 'users:password_reset_request'
+        expected_path = 'users/forgot-password-reset-request/'
+        name = 'users:forgot_password_reset_request'
         resolver_match = resolve(reverse(name))
         resolved_path = resolver_match.route
         self.assertEqual(expected_path, resolved_path)
         
     def test_resolves_to_correct_view(self):
         expected_class = views.UsersPasswordResetRequestView
-        name = 'users:password_reset_request'
+        name = 'users:forgot_password_reset_request'
         resolver_match = resolve(reverse(name))
         resolved_class = resolver_match.func.view_class
         self.assertEqual(expected_class, resolved_class)

@@ -13,5 +13,5 @@ urlpatterns = [
     path('register-form-submitted/', UsersRegisterFormSubmittedView.as_view(), name='register_form_submitted'),
     path('account-activation/', UsersAccountActivationView.as_view(), name='account_activation'),
     path('login/', UsersLoginView.as_view(), name='login'),
-    path('password-reset-request/', UsersPasswordResetRequestView.as_view(), name='password_reset_request'),
+    path('forgot-password-reset-request/', UsersPasswordResetRequestView.as_view(), name='forgot_password_reset_request'),
 ]

@@ -14,6 +14,7 @@ E       IndexError: list index out of range
 
 
     quick unit test notes:
+        password reset form?
         url path?
         view?
         service?

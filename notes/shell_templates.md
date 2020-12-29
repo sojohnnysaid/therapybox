@@ -23,7 +23,7 @@ password = 'pPa@ssw0rd'
 user = get_user_model().objects.create_user(email=email, password=password)
 
 c = Client()
-name = 'users:password_reset_request'
+name = 'users:forgot_password_reset_request'
 response = c.get(reverse(name))
 
 
@@ -45,7 +45,7 @@ password = 'pPa@ssw0rd'
 user = get_user_model().objects.create_user(email=email, password=password)
 
 c = Client()
-name = 'users:password_reset_request'
+name = 'users:forgot_password_reset_request'
 data = {'email': 'wrong@gmail.com'}
 response = c.post(reverse(name), data)
 
@@ -81,7 +81,7 @@ from django.test import RequestFactory
 from django.urls import reverse
 from users import views
 
-request = RequestFactory().get(reverse('users:password_reset_request'))
+request = RequestFactory().get(reverse('users:forgot_password_reset_request'))
 response = views.UsersPasswordResetRequestView.as_view()(request)
 response.template_name[0]
 

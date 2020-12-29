@@ -29,9 +29,19 @@ users perspective:
 framework perspective:
     
      form:
-         
-     url name(): 
+        create form:
+            UsersPasswordResetForm
+                fields:
+                    new_password1
+                    new_password2
+                responsibilities:
+                    verifies password fields match
+                    verifies password is valid
+                    updates user's password in database
+                    returns user object
+     url name(forgot_password_reset_form): 
          create patterns:
+
              
      view:
          create views:
