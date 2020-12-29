@@ -186,7 +186,7 @@ class UsersTest(base.FunctionalTest):
         input.send_keys('john@gmail.com')
 
         # submits the form
-        self.browser.find_elements(By.ID, 'users_password_reset_form_submit_button')[0].click()
+        self.browser.find_elements(By.ID, 'users_password_reset_request_form_submit_button')[0].click()
 
         # he is taken back to the login page
         assert reverse('users:login') in self.browser.current_url
@@ -198,8 +198,10 @@ class UsersTest(base.FunctionalTest):
 
 
 
-    @skip
+    
     def test_user_can_reset_password_using_emailed_link_once(self):
+        
+        self.user_submits_reset_password_form('John') # mail.outbox[0] will hold account activation email
 
         # John goes to his email...
         email = mail.outbox[1]
@@ -211,5 +213,30 @@ class UsersTest(base.FunctionalTest):
             self.fail(f'Could not find url in email body:\n{email.body}')
 
         # the activation link is in the email body
-        activate_account_url = url_search.group(0)
-        assert self.live_server_url in activate_account_url
+        password_reset_url = url_search.group(0)
+        assert self.live_server_url in password_reset_url
+
+        # He clicks the link
+        self.browser.get(password_reset_url)
+        
+        # John is taken to a password reset form page
+        assert reverse('users:password-reset-form') in self.browser.current_url
+
+        # He enters his password in the first password field
+        new_password = 'mynewPp@assW0rd'
+        input = self.browser.find_elements(By.NAME, 'password1')[0]
+        input.send_keys(new_password)
+    
+        # He re-enters his password in the confirm password field
+        input = self.browser.find_elements(By.NAME, 'password2')[0]
+        input.send_keys(new_password)
+
+        # finally he submits the form
+        self.browser.find_elements(By.ID, 'users_password_reset_form_submit_button')[0].click()
+
+        # the page reloads and John notices he is now on the login page
+        assert reverse('users:login') in self.browser.current_url
+
+        # there is a message on the page letting him now his password was reset successfully
+        form_submitted_message = self.browser.find_elements(By.CLASS_NAME, 'message')[0].text
+        assert 'Success! Your password has been reset.' in form_submitted_message

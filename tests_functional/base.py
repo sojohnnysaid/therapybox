@@ -80,3 +80,24 @@ class FunctionalTest(LiveServerTestCase):
 
         # clicks the link
         self.browser.get(activate_account_url)
+
+    
+    def user_submits_reset_password_form(self, name):
+
+        self.user_registers_and_activates_account(name)
+
+        #goes to the login page
+        self.browser.get(self.live_server_url + reverse('users:login'))
+
+        # can't remember password and notices a forgot password link
+        # He clicks the link
+        self.browser.find_elements(By.LINK_TEXT, 'Forgot Password? Click here!')[0].click()
+
+        # he sees a form with a field to enter his email
+        input = self.browser.find_elements(By.ID, 'id_email')[0]
+
+        # he enters his email
+        input.send_keys('john@gmail.com')
+
+        # submits the form
+        self.browser.find_elements(By.ID, 'users_password_reset_request_form_submit_button')[0].click()
