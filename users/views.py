@@ -34,7 +34,7 @@ class UsersLoginView(TemplateView):
 
 class UsersPasswordResetRequestView(FormView):
     template_name = 'users/users_password_reset_request.html'
-    form_class = forms.UsersPasswordResetForm
+    form_class = forms.UsersPasswordResetRequestForm
     success_url = reverse_lazy('users:login')
 
     def form_valid(self, form):

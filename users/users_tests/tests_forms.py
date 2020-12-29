@@ -41,10 +41,10 @@ class UsersRegisterFormTest(TestCase):
         
     
 
-class UsersPasswordResetFormTest(TestCase):
+class UsersPasswordResetRequestFormTest(TestCase):
 
     def test_renders_correct_fields(self):
-        form = forms.UsersPasswordResetForm
+        form = forms.UsersPasswordResetRequestForm
         field_names = list(form.base_fields.keys())
         self.assertEqual(['email'], field_names)
 

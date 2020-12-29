@@ -11,10 +11,6 @@ class UsersRegisterForm(UserCreationForm):
         model = models.CustomUser
         fields = ['email', 'first_name', 'password1', 'password2']  
 
-    def clean_email(self):
-        email = self.cleaned_data['email']
-        return email.lower()
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['email'].widget.attrs['placeholder'] = 'email'
@@ -25,15 +21,15 @@ class UsersRegisterForm(UserCreationForm):
 
 
 
-class UsersPasswordResetForm(forms.Form):
+class UsersPasswordResetRequestForm(forms.Form):
     email = forms.EmailField()
 
     def clean_email(self):
-        email = self.cleaned_data['email']
+        email = self.cleaned_data['email'].lower()
         user = get_user_model().objects.filter(email=email)
         if not user.exists():
             raise ValidationError('No account associated with the email you submitted!')
-        return email.lower()
+        return email
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
