@@ -15,6 +15,11 @@ class CustomUserManagerTest(TestCase):
         user_instance = User.objects.create_user(email='test@gmail.com', password='pP@assw0rd')
         self.assertIsInstance(user_instance, CustomUser)
 
+    def test_create_user_saves_email_in_all_lowercase(self):
+        User = get_user_model()
+        user_instance = User.objects.create_user(email='TEST@GMAIL.com', password='pP@assw0rd')
+        self.assertEqual('test@gmail.com', user_instance.email)
+
     def test_create_user_saves_user_to_db(self):
         User = get_user_model()
         User.objects.create_user(email='test@gmail.com', password='pP@assw0rd')

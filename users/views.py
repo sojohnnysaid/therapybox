@@ -8,6 +8,7 @@ from django.contrib.auth import get_user_model
 
 from users import forms, models, services
 
+
 # Create your views here.
 class UsersRegisterView(CreateView):
     model = models.CustomUser
@@ -20,8 +21,14 @@ class UsersRegisterView(CreateView):
         services.send_user_activation_link(self.request, self.object)
         return HttpResponseRedirect(self.get_success_url())
 
+
+
+
 class UsersRegisterFormSubmittedView(TemplateView):
     template_name = 'users/users_register_form_submitted.html'
+
+
+
 
 class UsersAccountActivationView(RedirectView):
     url = reverse_lazy('users:login')
@@ -29,8 +36,14 @@ class UsersAccountActivationView(RedirectView):
         services.activate_user(request)
         return super().get(request, *args, **kwargs)
 
+
+
+
 class UsersLoginView(TemplateView):
     template_name = 'users/users_login.html'
+
+
+
 
 class UsersPasswordResetRequestView(FormView):
     template_name = 'users/users_password_reset_request.html'

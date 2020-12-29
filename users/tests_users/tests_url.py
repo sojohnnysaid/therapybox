@@ -94,7 +94,7 @@ class LoginURLTest(TestCase):
 
 
 
-class PasswordResetForm(TestCase):
+class PasswordResetRequestURLTest(TestCase):
     
     def test_resolves_to_correct_path(self):
         expected_path = 'users/password-reset-request/'

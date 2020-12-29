@@ -5,11 +5,15 @@ from django.core.exceptions import ValidationError
 
 from users import models
 
+
 class UsersRegisterForm(UserCreationForm):
 
     class Meta:
         model = models.CustomUser
-        fields = ['email', 'first_name', 'password1', 'password2']  
+        fields = ['email', 'first_name', 'password1', 'password2']
+
+    def clean_email(self):
+        return self.cleaned_data['email'].lower()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -22,7 +26,7 @@ class UsersRegisterForm(UserCreationForm):
 
 
 class UsersPasswordResetRequestForm(forms.Form):
-    email = forms.EmailField()
+    email = forms.EmailField(required=True)
 
     def clean_email(self):
         email = self.cleaned_data['email'].lower()

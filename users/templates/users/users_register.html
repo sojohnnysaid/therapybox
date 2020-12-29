@@ -11,7 +11,7 @@
     <form action="{% url 'users:register' %}" method="post">
         <table>{{form.as_table}}</table>
         {% csrf_token %}
-        <input id='users_register_form_submit_button' type="submit" value="reset">
+        <input id='users_register_form_submit_button' type="submit" value="register">
     </form>
     
 </body>

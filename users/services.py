@@ -46,12 +46,4 @@ def activate_user(request):
 
 
 def send_password_reset_link(request, user):
-    absolute_uri = request.build_absolute_uri(reverse_lazy('users:password_reset_request'))
-    send_mail(
-        'Here is your password reset link',
-        f'{absolute_uri}?uid=blah&token=blah',
-        'noreply@gmail.com',
-        ['john@gmail.com'],
-        fail_silently=False,
-    )
-    return messages.success(request, 'Form submitted. Check your email to reset your password')
+    return messages.success(request, 'Success! A password reset link was sent to your email.')

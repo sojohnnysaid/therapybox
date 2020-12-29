@@ -1,5 +1,5 @@
 from unittest.case import skip
-from .base import FunctionalTest
+from tests_functional import base
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from django.core import mail
@@ -10,7 +10,7 @@ from django.test import Client
 
 
 
-class UsersTest(FunctionalTest):
+class UsersTest(base.FunctionalTest):
 
     
     def test_user_can_register(self):
@@ -158,7 +158,7 @@ class UsersTest(FunctionalTest):
 
 
     # TODO
-    def test_user_can_reset_forgotten_password_using_email(self):
+    def test_user_can_request_password_reset_using_email(self):
 
         self.user_registers_and_activates_account('John')
 
@@ -193,7 +193,13 @@ class UsersTest(FunctionalTest):
 
         # the page tells him an email has been sent with a confirmation link
         form_submitted_message = self.browser.find_elements(By.CLASS_NAME, 'message')[0].text
-        assert 'Form submitted. Check your email to reset your password' in form_submitted_message
+        assert 'Success! A password reset link was sent to your email.' in form_submitted_message
+
+
+
+
+    @skip
+    def test_user_can_reset_password_using_emailed_link_once(self):
 
         # John goes to his email...
         email = mail.outbox[1]
