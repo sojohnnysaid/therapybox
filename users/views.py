@@ -46,7 +46,7 @@ class UsersLoginView(TemplateView):
 
 
 
-class UsersPasswordResetRequestView(FormView):
+class UsersForgotPasswordResetRequestView(FormView):
     template_name = 'users/users_password_reset_request.html'
     form_class = forms.UsersPasswordResetRequestForm
     success_url = reverse_lazy('users:login')
@@ -59,5 +59,12 @@ class UsersPasswordResetRequestView(FormView):
 
 
 
-class UsersPasswordResetView(PasswordResetConfirmView):
-    pass
+INTERNAL_RESET_SESSION_TOKEN = '_password_reset_token'
+class UsersForgotPasswordResetView(PasswordResetConfirmView):
+    success_url = reverse_lazy('users:login')
+    template_name = 'users/users_password_reset_form.html'
+
+    def form_valid(self, form):
+        del self.request.session[INTERNAL_RESET_SESSION_TOKEN]
+        messages.success(self.request, 'Success! Your password has been reset.')
+        return HttpResponseRedirect(self.success_url)

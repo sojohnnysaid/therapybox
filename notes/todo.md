@@ -1,7 +1,5 @@
 ✅ TODO (someday) 
 
-
-
 functional test:
     current expected failure:
         self.user_submits_reset_password_form('John') # mail.outbox[0] will hold account activation email
@@ -15,3 +13,5 @@ E       IndexError: list index out of range
         url path?
         view?
         service?
+
+    

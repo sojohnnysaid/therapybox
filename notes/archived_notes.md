@@ -179,7 +179,7 @@ framework perspective:
 
     ✅ view:
         ✅ create views:
-            ✅ UsersPasswordResetRequestView
+            ✅ UsersForgotPasswordResetRequestView
                 ✅ responsibilities:
                     ✅uses expected form class
                     ✅get method:

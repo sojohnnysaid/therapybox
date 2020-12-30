@@ -56,12 +56,12 @@ class UsersPasswordResetRequestFormTest(base.UsersBaseTestCase):
     def test_form_converts_email_to_lowercase(self):
         self.create_test_user('John')
         form = forms.UsersPasswordResetRequestForm({'email': 'JOHN@GMAIL.com'})
+        form.cleaned_data = {'email':'JOHN@GMAIL.com'}
         self.assertTrue(form.is_valid())
+        self.assertEqual(form.cleaned_data['email'], 'john@gmail.com')
 
     def test_form_email_field_raises_validation_error_when_user_not_found(self):
         self.create_test_user('John')
         self.assertFalse(get_user_model().objects.filter(email='wrong@gmail.com').exists())
         form = forms.UsersPasswordResetRequestForm({'email': 'wrong@gmail.com'})
         self.assertEqual(form.errors['email'], ['No account associated with the email you submitted!'])
-
-        

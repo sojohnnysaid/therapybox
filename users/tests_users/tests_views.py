@@ -13,6 +13,7 @@ We test:
 '''
 
 import re
+from urllib.parse import urlparse
 from django.test.testcases import TestCase
 from django.urls import reverse, reverse_lazy
 from django.test import TestCase, RequestFactory
@@ -162,7 +163,7 @@ class UsersLoginViewTest(TestCase):
 
 
 
-class UsersPasswordResetRequestViewTest(base.UsersBaseTestCase):
+class UsersForgotPasswordResetRequestViewTest(base.UsersBaseTestCase):
 
     def test_get_request_returns_expected_html(self):
         response = Client().get(reverse('users:forgot_password_reset_request'))
@@ -183,3 +184,27 @@ class UsersPasswordResetRequestViewTest(base.UsersBaseTestCase):
         user = self.create_test_user('John')
         response = Client().post(reverse('users:forgot_password_reset_request'), {'email': 'John@gmail.com'})
         self.assertRedirects(response, reverse('users:login'))
+
+
+
+
+class UsersForgotPasswordResetViewTest(base.UsersBaseTestCase):
+
+    def test_success_url_goes_to_expected_path(self):
+        user = self.create_test_user('John')
+        request = RequestFactory().get('') # request path not important in this case
+
+        url = services.get_password_reset_link(request, user)
+        uidb64 = url.split('/')[5]
+        token = url.split('/')[6]
+
+        new_password = 'AuniqueNewPW2rrrd$'
+        c = Client()
+        response = c.get(
+            reverse('users:forgot_password_reset', kwargs={'uidb64': uidb64, 'token': token}), follow=True)
+        
+        response = c.post(
+            reverse('users:forgot_password_reset', kwargs={'uidb64': uidb64, 'token': 'set-password'}),
+            {'new_password1': new_password, 'new_password2': new_password}, follow=True)
+
+        print(response.content)

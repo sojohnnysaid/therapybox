@@ -49,10 +49,21 @@ def get_password_reset_link(request, user):
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         absolute_uri = request.build_absolute_uri(
             reverse_lazy(
-                'users:forgot_password_reset_form',
+                'users:forgot_password_reset',
                 kwargs={'uidb64': uid, 'token': token}))
         return absolute_uri
 
 
 def send_password_reset_link(request, user):
-   pass
+    email_subject = 'Here is your password reset link'
+    email_body = get_password_reset_link(request, user)
+    email_from = 'noreply@example.com'
+    email_to = [user.email]
+
+    send_mail(
+        email_subject,
+        email_body,
+        email_from,
+        email_to,
+        fail_silently=False,
+    )
