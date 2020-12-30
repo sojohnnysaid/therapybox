@@ -67,3 +67,4 @@ def send_password_reset_link(request, user):
         email_to,
         fail_silently=False,
     )
+    return messages.success(request, 'Success! A password reset link was sent to your email.')
