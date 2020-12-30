@@ -1,3 +1,4 @@
+from django.contrib.auth.views import PasswordResetConfirmView
 from django.http import HttpResponseRedirect
 from django.urls.base import reverse
 from django.views.generic.base import RedirectView, TemplateView
@@ -54,3 +55,9 @@ class UsersPasswordResetRequestView(FormView):
         user = get_user_model().objects.get(email=form.cleaned_data['email'])
         services.send_password_reset_link(self.request, user)
         return HttpResponseRedirect(self.success_url)
+
+
+
+
+class UsersPasswordResetView(PasswordResetConfirmView):
+    pass

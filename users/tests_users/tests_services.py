@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from unittest.mock import patch
 
 from users import services
+from users.tests_users import base
 
 class GetActivationLinkTest(TestCase):
 
@@ -87,3 +88,15 @@ class ActivateUserTest(TestCase):
         # request page again to invalidate token
         Client().get(activation_link)
         mock_messages.error.assert_called_once()
+
+
+
+
+class SendPasswordResetLinkTest(base.UsersBaseTestCase):
+
+    def test_get_password_reset_link_returns_url(self):
+        user = self.create_test_user('John')
+        response = Client().post(reverse('users:forgot_password_reset_request'))
+        expected_url = r'http://.+/users/forgot-password-reset-form/.+/.+$'
+        generated_url = services.get_password_reset_link(response.wsgi_request, user)
+        self.assertRegex(generated_url, expected_url)

@@ -27,6 +27,16 @@ users perspective:
 
 
 framework perspective:
+
+    service
+        create methods:
+            get_password_reset_link(request, user)
+                returns reset link including keywork arguments
+            send_password_reset_link(request, user):
+                responsibilities:
+                    build send_email arguments
+                    call send_email with correct arguments
+                    return a success message
     ✅ form (uses form class in PasswordResetConfirmView):
     url name(forgot_password_reset_form): 
         create patterns:
@@ -44,7 +54,6 @@ framework perspective:
             methods:
                 form_valid:
                     pass success message
-    ✅ service (no services in this feature)
     html templates
         create template:
             users_password_reset_form.html
