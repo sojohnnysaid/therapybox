@@ -207,7 +207,7 @@ class UsersTest(base.FunctionalTest):
         email = mail.outbox[1]
         assert 'Here is your password reset link' in email.subject
         
-        url_search = re.search(r'http://.+/users/forgot-password-reset/\?uid=.+&token=.+$', email.body)
+        url_search = re.search(r'http://.+/users/forgot-password-reset-form/.+/.+$', email.body)
         
         if not url_search:
             self.fail(f'Could not find url in email body:\n{email.body}')
@@ -220,7 +220,7 @@ class UsersTest(base.FunctionalTest):
         self.browser.get(password_reset_url)
         
         # John is taken to a password reset form page
-        assert reverse('users:forgot-password-reset-form') in self.browser.current_url
+        assert '/users/forgot-password-reset-form/' in self.browser.current_url
 
         # He enters his password in the first password field
         new_password = 'mynewPp@assW0rd'
