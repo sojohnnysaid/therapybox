@@ -27,27 +27,35 @@ users perspective:
 
 
 framework perspective:
-    
-     form:
-        create form:
-            UsersPasswordResetForm
-                fields:
-                    new_password1
-                    new_password2
-                responsibilities:
-                    verifies password fields match
-                    verifies password is valid
-                    updates user's password in database
-                    returns user object
-     url name(forgot_password_reset_form): 
-         create patterns:
+    ✅ form (uses form class in PasswordResetConfirmView):
+    url name(forgot_password_reset_form): 
+        create patterns:
+            forgot-password-reset-form/<uidb64>/<token>/
+        calls:
+            UsersPasswordResetView.as_view()
+    view UsersPasswordResetView( inherits from PasswordResetConfirmView):
+        important:
+            declare INTERNAL_RESET_SESSION_TOKEN = '_password_reset_token'
+            outside of class (see forgot_password_token_spike/views.py)
+        overrides
+            attributes:
+                success_url = reverse_lazy('users:login')
+                template_name = 'users/users_password_reset_form.html'
+            methods:
+                form_valid:
+                    pass success message
+    ✅ service (no services in this feature)
+    html templates
+        create template:
+            users_password_reset_form.html
+                should include if else branches
+                    form exists:
+                        display the password reset form
+                    form does not exist:
+                        Display message token invalid
+                        include link back to login page
 
-             
-     view:
-         create views:
-            
-     service:
-         function:
+    
             
  
                     
