@@ -33,9 +33,19 @@ class Command(BaseCommand):
             templates = os.listdir(file_template_directory)
 
             for template in templates:
-                with open(f"core/management/commands/file_templates/unit/{template}", 'r') as file:
+                with open(f"{file_template_directory}/{template}", 'r') as file:
                     template_text = file.read()
                 with open(f"{appname}/tests/{feature}/unit_tests/{template.replace('template_', '')}", 'w') as f:
+                    f.write(template_text)
+
+            # create functional test files from templates
+            file_template_directory = 'core/management/commands/file_templates/functional'
+            templates = os.listdir(file_template_directory)
+
+            for template in templates:
+                with open(f"{file_template_directory}/{template}", 'r') as file:
+                    template_text = file.read()
+                with open(f"{appname}/tests/{feature}/functional_tests/{template.replace('template_', '')}", 'w') as f:
                     f.write(template_text)
 
             
@@ -44,7 +54,7 @@ class Command(BaseCommand):
             templates = os.listdir(file_template_directory)
 
             for template in templates:
-                with open(f"core/management/commands/file_templates/notes/{template}", 'r') as file:
+                with open(f"{file_template_directory}/{template}", 'r') as file:
                     template_text = file.read()
                 with open(f"{appname}/tests/{feature}/notes/{template.replace('template_', '')}", 'w') as f:
                     f.write(template_text)
