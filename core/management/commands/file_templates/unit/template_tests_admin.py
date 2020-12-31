@@ -11,7 +11,7 @@ class BaseTestCase(TestCase):
 
 
 
-class AdminTests(TestCase):
+class AdminTests(BaseTestCase):
 
     def test_admin_does_what_is_expected(self):
         pass

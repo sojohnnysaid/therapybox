@@ -15,7 +15,7 @@ class BaseTestCase(TestCase):
 
 
 
-class MyManagerTest(TestCase):
+class MyManagerTest(BaseTestCase):
 
     def test_manager_does_what_is_expected(self):
         pass

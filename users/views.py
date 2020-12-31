@@ -1,5 +1,6 @@
 from django.contrib.auth.views import PasswordResetConfirmView
 from django.http import HttpResponseRedirect
+from django.http.response import HttpResponse
 from django.urls.base import reverse
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.edit import CreateView, FormView
@@ -27,17 +28,14 @@ class UsersRegisterView(CreateView):
 
 
 
-class UsersRegisterFormSubmittedView(TemplateView):
-    template_name = 'users/register_form_submitted.html'
-
-
-
-
 class UsersAccountActivationView(RedirectView):
     url = reverse_lazy('users:login')
     def get(self, request, *args, **kwargs):
-        services.activate_user(request)
-        return super().get(request, *args, **kwargs)
+        try:
+            services.activate_user(request)
+            return super().get(request, *args, **kwargs)
+        except:
+            return HttpResponse('<h1>Invalid Request! <a href="/">back to homepage</a></h1>')
 
 
 
