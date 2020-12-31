@@ -25,7 +25,6 @@ class Command(BaseCommand):
             # make folders if they don't exist yet (first feature)
             os.makedirs(f"{appname}/tests/{feature}", exist_ok=False)
             os.makedirs(f"{appname}/tests/{feature}/unit_tests", exist_ok=False)
-            os.makedirs(f"{appname}/tests/{feature}/functional_tests", exist_ok=False)
             os.makedirs(f"{appname}/tests/{feature}/notes", exist_ok=False)
 
             # create unit test files from templates
@@ -45,7 +44,7 @@ class Command(BaseCommand):
             for template in templates:
                 with open(f"{file_template_directory}/{template}", 'r') as file:
                     template_text = file.read()
-                with open(f"{appname}/tests/{feature}/functional_tests/{template.replace('template_', '')}", 'w') as f:
+                with open(f"{appname}/tests/{feature}/{template.replace('template_', '')}", 'w') as f:
                     f.write(template_text)
 
             
