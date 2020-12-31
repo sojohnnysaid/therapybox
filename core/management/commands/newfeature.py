@@ -16,7 +16,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         try:
             appname = options['appname']
-            feature = options['featurename']
+            feature = 'test_' + options['featurename']
             
             project_apps = [app.verbose_name.lower() for app in apps.get_app_configs()]
             if options['appname'] not in project_apps:
@@ -24,7 +24,7 @@ class Command(BaseCommand):
 
             # make folders if they don't exist yet (first feature)
             os.makedirs(f"{appname}/tests/{feature}", exist_ok=False)
-            os.makedirs(f"{appname}/tests/{feature}/unit_tests", exist_ok=False)
+            os.makedirs(f"{appname}/tests/{feature}/tests_unit", exist_ok=False)
             os.makedirs(f"{appname}/tests/{feature}/notes", exist_ok=False)
 
             # create unit test files from templates
@@ -34,7 +34,7 @@ class Command(BaseCommand):
             for template in templates:
                 with open(f"{file_template_directory}/{template}", 'r') as file:
                     template_text = file.read()
-                with open(f"{appname}/tests/{feature}/unit_tests/{template.replace('template_', '')}", 'w') as f:
+                with open(f"{appname}/tests/{feature}/tests_unit/{template.replace('template_', '')}", 'w') as f:
                     f.write(template_text)
 
             # create functional test files from templates

@@ -13,7 +13,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         try:
-            functional_test_name = options['functional_test_name']
+            functional_test_name = 'test_' + options['functional_test_name']
             
             file_exists = os.path.exists(f"core/tests_functional/{functional_test_name}.py")
             if file_exists:
