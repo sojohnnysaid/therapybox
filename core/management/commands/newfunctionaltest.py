@@ -1,5 +1,4 @@
 import os
-import errno
 
 from django.core.management.base import BaseCommand, CommandError
 from django.apps import apps
@@ -14,23 +13,26 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         try:
-            project_apps = [app.verbose_name.lower() for app in apps.get_app_configs()]
             functional_test_name = options['functional_test_name']
             
+            file_exists = os.path.exists(f"core/tests_functional/{functional_test_name}.py")
+            if file_exists:
+                raise ValidationError('Test already exists!')
+
+            project_apps = [app.verbose_name.lower() for app in apps.get_app_configs()]
             if 'core' not in project_apps:
                 raise ValidationError('App not found. This command creates the test file into the app called "core." Did you create an app with that name yet?')
 
             # make folder if it doesn't exist yet (first functional test)
-            os.makedirs(f"core/tests_functional", exist_ok=False)
+            os.makedirs(f"core/tests_functional", exist_ok=True)
 
-            with open(f"core/management/commands/file_templates/template_tests_functional.py", 'r') as file:
+            with open(f"core/management/commands/file_templates/functional/template_tests_functional.py", 'r') as file:
                 template_text = file.read()
                 
             with open(f"core/tests_functional/{functional_test_name}.py", 'w') as f:
                 f.write(template_text)
             
-            self.stdout.write(self.style.SUCCESS(f"📜 {options['function_test_name']} has been created. 🎉 Happy testing! "))
+            self.stdout.write(self.style.SUCCESS(f"📜 {options['functional_test_name']} has been created. 🎉 Happy testing! "))
 
-        except (CommandError, OSError) as e:
-            if e.errno == errno.EEXIST:
-                self.stdout.write(f"Can not create the test file you've specified! {e.strerror}")
+        except (CommandError, OSError, ValidationError) as e:
+            self.stdout.write(f"Can not create the test file you've specified! {e.message}")

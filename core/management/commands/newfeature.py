@@ -1,4 +1,5 @@
 import os
+import errno
 
 from django.core.management.base import BaseCommand, CommandError
 from django.apps import apps
@@ -14,10 +15,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         try:
-            project_apps = [app.verbose_name.lower() for app in apps.get_app_configs()]
             appname = options['appname']
             feature = options['featurename']
             
+            project_apps = [app.verbose_name.lower() for app in apps.get_app_configs()]
             if options['appname'] not in project_apps:
                 raise ValidationError('the app you specified does not exist')
 
@@ -25,21 +26,34 @@ class Command(BaseCommand):
             os.makedirs(f"{appname}/tests/{feature}", exist_ok=False)
             os.makedirs(f"{appname}/tests/{feature}/unit_tests", exist_ok=False)
             os.makedirs(f"{appname}/tests/{feature}/functional_tests", exist_ok=False)
+            os.makedirs(f"{appname}/tests/{feature}/notes", exist_ok=False)
 
-            # read templates and save to variables to use later
-
-            file_template_directory = 'core/management/commands/file_templates/'
+            # create unit test files from templates
+            file_template_directory = 'core/management/commands/file_templates/unit'
             templates = os.listdir(file_template_directory)
 
             for template in templates:
-                with open(f"core/management/commands/file_templates/{template}", 'r') as file:
+                with open(f"core/management/commands/file_templates/unit/{template}", 'r') as file:
                     template_text = file.read()
                 with open(f"{appname}/tests/{feature}/unit_tests/{template.replace('template_', '')}", 'w') as f:
                     f.write(template_text)
+
             
-             self.stdout.write(self.style.SUCCESS(f"📜 New suite of tests for {feature} has been created in {appname} app! 🎉 Happy testing!"))
+            # create notes from templates
+            file_template_directory = 'core/management/commands/file_templates/notes'
+            templates = os.listdir(file_template_directory)
 
-        except CommandError as e:
-            self.stdout.write(e)
+            for template in templates:
+                with open(f"core/management/commands/file_templates/notes/{template}", 'r') as file:
+                    template_text = file.read()
+                with open(f"{appname}/tests/{feature}/notes/{template.replace('template_', '')}", 'w') as f:
+                    f.write(template_text)
 
-        
+            
+            self.stdout.write(self.style.SUCCESS(f"📜 New suite of tests for {feature} has been created in {appname} app! 🎉 Happy testing!"))
+
+        except OSError as e:
+            if e.strerror:
+                self.stdout.write(f"Oops! This test suite has already been created! Error message: {e.strerror}")
+            else:
+                self.stdout.write(e)
