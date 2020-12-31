@@ -69,6 +69,7 @@ class UsersForgotPasswordResetView(PasswordResetConfirmView):
     def form_valid(self, form):
         del self.request.session[INTERNAL_RESET_SESSION_TOKEN]
         messages.success(self.request, 'Success! Your password has been reset.')
+        # log user in and out to invalidate token after password reset form submitted
         login(self.request, form.user)
         logout(self.request)
         return HttpResponseRedirect(self.success_url)
