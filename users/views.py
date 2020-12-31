@@ -5,7 +5,7 @@ from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.edit import CreateView, FormView
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, login, logout
 
 from users import forms, models, services
 
@@ -69,4 +69,6 @@ class UsersForgotPasswordResetView(PasswordResetConfirmView):
     def form_valid(self, form):
         del self.request.session[INTERNAL_RESET_SESSION_TOKEN]
         messages.success(self.request, 'Success! Your password has been reset.')
+        login(self.request, form.user)
+        logout(self.request)
         return HttpResponseRedirect(self.success_url)
