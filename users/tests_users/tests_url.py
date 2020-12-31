@@ -102,15 +102,15 @@ class LoginURLTest(TestCase):
 class ForgotPasswordResetRequestURLTest(TestCase):
     
     def test_resolves_to_correct_path(self):
-        expected_path = 'users/forgot-password-reset-request/'
-        name = 'users:forgot_password_reset_request'
+        expected_path = 'users/password-request-reset-link/'
+        name = 'users:password_request_reset_link'
         resolver_match = resolve(reverse(name))
         resolved_path = resolver_match.route
         self.assertEqual(expected_path, resolved_path)
         
     def test_resolves_to_correct_view(self):
         expected_class = views.UsersForgotPasswordResetRequestView
-        name = 'users:forgot_password_reset_request'
+        name = 'users:password_request_reset_link'
         resolver_match = resolve(reverse(name))
         resolved_class = resolver_match.func.view_class
         self.assertEqual(expected_class, resolved_class)
@@ -125,7 +125,7 @@ class ForgotPasswordResetURLTest(base.UsersBaseTestCase):
         request = RequestFactory().get('') # request path not important in this case
         url = services.get_password_reset_link(request, user)
         response = Client().get(url)
-        expected_path = 'users/forgot-password-reset/'
+        expected_path = 'users/password-reset/'
         self.assertTrue(expected_path in response.url)
 
     def test_resolves_to_correct_view(self):

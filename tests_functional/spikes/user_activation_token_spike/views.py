@@ -17,7 +17,7 @@ from . import forms, models
 class UsersRegisterView(CreateView):
     model = models.CustomUser
     form_class = forms.UsersRegisterForm
-    template_name = 'users/users_register.html'
+    template_name = 'users/register.html'
     success_url = reverse_lazy('users:users_register_form_submitted')
 
     def form_valid(self, form):
@@ -40,7 +40,7 @@ class UsersRegisterView(CreateView):
 
 
 class UsersRegisterFormSubmittedView(TemplateView):
-    template_name = 'users/users_register_form_submitted.html'
+    template_name = 'users/register_form_submitted.html'
 
 
 class UsersAccountActivationView(TemplateView):
@@ -62,4 +62,4 @@ class UsersAccountActivationView(TemplateView):
 
 
 class UsersLoginView(TemplateView):
-    template_name = 'users/users_login.html'
+    template_name = 'users/login.html'

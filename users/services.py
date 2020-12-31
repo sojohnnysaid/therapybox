@@ -22,13 +22,14 @@ def send_user_activation_link(request, user):
     email_from = 'noreply@example.com'
     email_to = [user.email]
 
-    return send_mail(
+    send_mail(
         email_subject,
         email_body,
         email_from,
         email_to,
         fail_silently=False,
     )
+    return messages.success(request, 'Form submitted. Check your email to activate your new account')
 
 
 def activate_user(request):
@@ -49,7 +50,7 @@ def get_password_reset_link(request, user):
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         absolute_uri = request.build_absolute_uri(
             reverse_lazy(
-                'users:forgot_password_reset',
+                'users:password-reset',
                 kwargs={'uidb64': uid, 'token': token}))
         return absolute_uri
 

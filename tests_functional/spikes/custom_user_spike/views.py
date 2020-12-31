@@ -9,9 +9,9 @@ from . import forms, models
 class UsersRegisterView(CreateView):
     model = models.CustomUser
     form_class = forms.UsersRegisterForm
-    template_name = 'users/users_register.html'
+    template_name = 'users/register.html'
     success_url = reverse_lazy('users:users_register_form_submitted')
 
 
 class UsersRegisterFormSubmittedView(TemplateView):    
-    template_name = 'users/users_register_form_submitted.html'
+    template_name = 'users/register_form_submitted.html'

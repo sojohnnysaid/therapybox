@@ -51,10 +51,10 @@ class UsersTest(base.FunctionalTest):
         self.browser.find_elements(By.ID, 'users_register_form_submit_button')[0].click()
 
         # he is taken to a new page
-        assert reverse('users:register_form_submitted') in self.browser.current_url
+        assert reverse('therapybox:homepage') in self.browser.current_url
 
         # the page tells him an email has been sent with a confirmation link
-        form_submitted_message = self.browser.find_elements(By.ID, 'users-register-form-submitted-message')[0].text
+        form_submitted_message = self.browser.find_elements(By.CLASS_NAME, 'message')[0].text
         assert 'Form submitted. Check your email to activate your new account' in form_submitted_message
 
         # John goes to his email...
@@ -108,10 +108,10 @@ class UsersTest(base.FunctionalTest):
         self.browser.find_elements(By.ID, 'users_register_form_submit_button')[0].click()
 
         # she is taken to a new page
-        assert reverse('users:register_form_submitted') in self.browser.current_url
+        assert reverse('therapybox:homepage') in self.browser.current_url
 
         # the page tells her an email has been sent with a confirmation link
-        form_submitted_message = self.browser.find_elements(By.ID, 'users-register-form-submitted-message')[0].text
+        form_submitted_message = self.browser.find_elements(By.CLASS_NAME, 'message')[0].text
         assert 'Form submitted. Check your email to activate your new account' in form_submitted_message
 
         # Jane goes to her email...
@@ -173,7 +173,7 @@ class UsersTest(base.FunctionalTest):
         self.browser.find_elements(By.LINK_TEXT, 'Forgot Password? Click here!')[0].click()
 
         # he is taken to the password reset form page
-        assert reverse('users:forgot_password_reset_request') in self.browser.current_url
+        assert reverse('users:password_request_reset_link') in self.browser.current_url
 
         # he is greeted by the password reset header
         assert 'Password Reset' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
@@ -207,7 +207,7 @@ class UsersTest(base.FunctionalTest):
         email = mail.outbox[1]
         assert 'Here is your password reset link' in email.subject
         
-        url_search = re.search(r'http://.+/users/forgot-password-reset/.+/.+$', email.body)
+        url_search = re.search(r'http://.+/users/password-reset/.+/.+$', email.body)
         
         if not url_search:
             self.fail(f'Could not find url in email body:\n{email.body}')
@@ -220,7 +220,7 @@ class UsersTest(base.FunctionalTest):
         self.browser.get(password_reset_url)
         
         # John is taken to a password reset form page
-        assert '/users/forgot-password-reset/' in self.browser.current_url
+        assert '/users/password-reset/' in self.browser.current_url
 
         # He enters his password in the first password field
         new_password = 'mynewPp@assW0rd'

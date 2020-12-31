@@ -23,6 +23,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils import timezone
 from django.core import mail
 from django.test import Client
+from django.conf import settings as conf_settings
 
 from unittest.case import skip
 from unittest.mock import patch
@@ -57,22 +58,17 @@ class UsersRegisterViewTest(TestCase):
         assert views.UsersRegisterView.form_class == forms.UsersRegisterForm
 
     def test_uses_expected_template(self):
-        assert views.UsersRegisterView.template_name == 'users/users_register.html'
+        assert views.UsersRegisterView.template_name == 'users/register.html'
 
     def test_redirects_on_post_request(self):
-        view_instance = views.UsersRegisterView.as_view()
-        response = view_instance(self.request)
-        assert response.url == reverse('users:register_form_submitted')
+        response = Client().post(reverse('users:register'), {
+            'email': self.email,
+            'first_name': self.first_name,
+            'password1': self.password,
+            'password2': self.password
+        }, follow=True)
 
-
-
-
-class UsersRegisterFormSubmittedViewTest(TestCase):
-    
-    def test_get_request_returns_expected_html(self):
-        response = Client().get(reverse('users:register_form_submitted'))
-        self.assertInHTML('Form Submitted', response.rendered_content)
-
+        self.assertRedirects(response, reverse('therapybox:homepage'))
 
 
 
@@ -90,15 +86,27 @@ class SendActivationLinkTest(TestCase):
             'password1': self.password,
             'password2': self.password
         })
-        
+    
+    
     @patch('users.services.send_mail')
     def test_calls_send_mail_service(self, mock_send_mail):
-        views.UsersRegisterView.as_view()(self.request)
+        Client().post(reverse('users:register'), {
+            'email': self.email,
+            'first_name': self.first_name,
+            'password1': self.password,
+            'password2': self.password
+        })
         mock_send_mail.assert_called_once()
+
 
     @patch('users.services.send_mail')
     def test_correct_arguments_passed_to_send_mail_service(self, mock_send_mail):
-        views.UsersRegisterView.as_view()(self.request)
+        Client().post(reverse('users:register'), {
+            'email': self.email,
+            'first_name': self.first_name,
+            'password1': self.password,
+            'password2': self.password
+        })
         link = mock_send_mail.call_args[0][1]
         url = re.search(r'http://.+/users/account-activation/\?uid=.+&token=.+$', link)
         mock_send_mail.assert_called_once_with(
@@ -110,25 +118,24 @@ class SendActivationLinkTest(TestCase):
         )
 
 
-
 class UsersAccountActivationViewTest(TestCase):
 
     # use Client instead of RequestFactory in tests because messages will not work otherwise
 
+    
     def setUp(self):
         super().setUp()
         self.email = 'johnsmith@gmail.com'
         self.first_name = 'John'
         self.password = 'p@assW0rd'
 
-        self.register_request = RequestFactory().post(reverse('users:register'), {
+        Client().post(reverse('users:register'), {
             'email': self.email,
             'first_name': self.first_name,
             'password1': self.password,
             'password2': self.password
         })
-
-        views.UsersRegisterView.as_view()(self.register_request)
+        
         email = mail.outbox[0]
         url_search = re.search(r'http://.+/users/account-activation/\?uid=.+&token=.+$', email.body)
         self.account_activation_link = url_search.group(0)
@@ -154,7 +161,7 @@ class UsersLoginViewTest(TestCase):
 
     def test_returns_expected_template(self):
         response = Client().get(reverse('users:login'))
-        self.assertTemplateUsed(response, 'users/users_login.html')
+        self.assertTemplateUsed(response, 'users/login.html')
     
     def test_get_request_returns_expected_html(self):
         response = Client().get(reverse('users:login'))
@@ -166,23 +173,23 @@ class UsersLoginViewTest(TestCase):
 class UsersForgotPasswordResetRequestViewTest(base.UsersBaseTestCase):
 
     def test_get_request_returns_expected_html(self):
-        response = Client().get(reverse('users:forgot_password_reset_request'))
-        self.assertTemplateUsed(response, 'users/users_password_reset_request.html')
+        response = Client().get(reverse('users:password_request_reset_link'))
+        self.assertTemplateUsed(response, 'users/password_reset_request.html')
 
     def test_uses_expected_form_class(self):
-        response = Client().get(reverse('users:forgot_password_reset_request'))
+        response = Client().get(reverse('users:password_request_reset_link'))
         self.assertIsInstance(response.context_data['form'], forms.UsersPasswordResetRequestForm)
 
     @patch('users.views.services')
     def test_calls_send_password_reset_link_service_with_expected_arguments(self, mocked_services):
         user = self.create_test_user('John')
-        response = Client().post(reverse('users:forgot_password_reset_request'), {'email': 'John@gmail.com'})
+        response = Client().post(reverse('users:password_request_reset_link'), {'email': 'John@gmail.com'})
         request = response.wsgi_request
         mocked_services.send_password_reset_link.assert_called_once_with(request, user)
 
     def test_redirects_on_post_success(self):
         user = self.create_test_user('John')
-        response = Client().post(reverse('users:forgot_password_reset_request'), {'email': 'John@gmail.com'})
+        response = Client().post(reverse('users:password_request_reset_link'), {'email': 'John@gmail.com'})
         self.assertRedirects(response, reverse('users:login'))
 
 
@@ -190,7 +197,7 @@ class UsersForgotPasswordResetRequestViewTest(base.UsersBaseTestCase):
 
 class UsersForgotPasswordResetViewTest(base.UsersBaseTestCase):
 
-    def test_success_url_goes_to_expected_path(self):
+    def test_success_url_goes_to_expected_path_on_successful_password_reset(self):
         user = self.create_test_user('John')
         request = RequestFactory().get('') # request path not important in this case
 
@@ -201,10 +208,13 @@ class UsersForgotPasswordResetViewTest(base.UsersBaseTestCase):
         new_password = 'AuniqueNewPW2rrrd$'
         c = Client()
         response = c.get(
-            reverse('users:forgot_password_reset', kwargs={'uidb64': uidb64, 'token': token}), follow=True)
+            reverse('users:password-reset', kwargs={'uidb64': uidb64, 'token': token}), follow=True)
+        
+        self.assertTemplateUsed(response, 'users/password_reset_form.html')
         
         response = c.post(
-            reverse('users:forgot_password_reset', kwargs={'uidb64': uidb64, 'token': 'set-password'}),
+            reverse('users:password-reset', kwargs={'uidb64': uidb64, 'token': 'set-password'}),
             {'new_password1': new_password, 'new_password2': new_password}, follow=True)
 
-        print(response.content)
+        self.assertTemplateUsed(response, 'users/login.html')
+        self.assertContains(response, 'Success! Your password has been reset.')

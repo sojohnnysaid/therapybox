@@ -9,10 +9,10 @@
 
 
 ✅ TODO LIST 
-[] explain from users perspective
-[] explain from framework perspective
-[] write unit tests
-[] pass functional test
+[✅] explain from users perspective
+[✅] explain from framework perspective
+[✅] write unit tests
+[✅] pass functional test
 
 
 users perspective:
@@ -28,8 +28,8 @@ users perspective:
 
 framework perspective:
 
-    service
-        create methods:
+    ✅ service
+        ✅ create methods:
             ✅ get_password_reset_link(request, user)
                 ✅ returns reset link including keywork arguments
             ✅ send_password_reset_link(request, user):
@@ -38,20 +38,20 @@ framework perspective:
                     ✅ call send_email with correct arguments
                     ✅ return a success message
     ✅ form (uses form class in PasswordResetConfirmView):
-    ✅ url name(forgot_password_reset): 
+    ✅ url name(password-reset): 
         ✅ create patterns:
-            ✅ forgot-password-reset/<uidb64>/<token>/
+            ✅ password-reset/<uidb64>/<token>/
         ✅ view class:
             ✅ UsersForgotPasswordResetView
-    view UsersForgotPasswordResetView( inherits from PasswordResetConfirmView):
+    ✅ view UsersForgotPasswordResetView( inherits from PasswordResetConfirmView):
         ✅ important:
             ✅ declare INTERNAL_RESET_SESSION_TOKEN = '_password_reset_token'
             ✅ outside of class (see forgot_password_token_spike/views.py)
         ✅ overrides
             ✅ attributes:
                 ✅ success_url = reverse_lazy('users:login')
-                ✅ template_name = 'users/users_password_reset_form.html'
-            methods:
+                ✅ template_name = 'users/password_reset_form.html'
+            ✅ methods:
                 ✅ form_valid:
                     ✅ pass success message
     ✅ html templates

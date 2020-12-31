@@ -9,13 +9,15 @@ from django.contrib.auth import get_user_model
 
 from users import forms, models, services
 
+from django.conf import settings as conf_settings
+
 
 # Create your views here.
 class UsersRegisterView(CreateView):
     model = models.CustomUser
     form_class = forms.UsersRegisterForm
-    template_name = 'users/users_register.html'
-    success_url = reverse_lazy('users:register_form_submitted')
+    template_name = 'users/register.html'
+    success_url = conf_settings.USERS_REGISTER_SUCCESS_URL
 
     def form_valid(self, form):
         self.object = form.save()
@@ -26,7 +28,7 @@ class UsersRegisterView(CreateView):
 
 
 class UsersRegisterFormSubmittedView(TemplateView):
-    template_name = 'users/users_register_form_submitted.html'
+    template_name = 'users/register_form_submitted.html'
 
 
 
@@ -41,13 +43,13 @@ class UsersAccountActivationView(RedirectView):
 
 
 class UsersLoginView(TemplateView):
-    template_name = 'users/users_login.html'
+    template_name = 'users/login.html'
 
 
 
 
 class UsersForgotPasswordResetRequestView(FormView):
-    template_name = 'users/users_password_reset_request.html'
+    template_name = 'users/password_reset_request.html'
     form_class = forms.UsersPasswordResetRequestForm
     success_url = reverse_lazy('users:login')
 
@@ -62,7 +64,7 @@ class UsersForgotPasswordResetRequestView(FormView):
 INTERNAL_RESET_SESSION_TOKEN = '_password_reset_token'
 class UsersForgotPasswordResetView(PasswordResetConfirmView):
     success_url = reverse_lazy('users:login')
-    template_name = 'users/users_password_reset_form.html'
+    template_name = 'users/password_reset_form.html'
 
     def form_valid(self, form):
         del self.request.session[INTERNAL_RESET_SESSION_TOKEN]
