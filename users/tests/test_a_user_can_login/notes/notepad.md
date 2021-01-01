@@ -28,27 +28,27 @@ users perspective:
 framework perspective:
 
     [✅] url name(name_of_url): 
-        [] create patterns:
-            [] login/
-        [] view class:
-            [] UsersLoginView
+        [✅] create patterns:
+            [✅] login/
+        [✅] view class:
+            [✅] UsersLoginView
 
-    [] view UsersLoginView(inherts mostly from LoginView):
-        [] responsibilities:
-            [] declare template_name = 'users/login.html'
-            [] success_url = '/'
-            [] display the template to the user
+    [✅] view UsersLoginView(inherts mostly from LoginView):
+        [✅] responsibilities:
+            [✅] declare template_name = 'users/login.html'
+            [✅] success_url = '/'
+            [✅] display the template to the user
 
-    [] form we are using the framework implementation:
-        [] responsibilities:
-            [] We only need to include {form} in the template
+    [✅] form we are using the framework implementation:
+        [✅] responsibilities:
+            [✅] We only need to include {form} in the template
 
-    [] html templates
-        [] create template:
-            [] login.html
-                [] responsibilities:
-                    [] display form
-                    [] display messages
+    [✅] html templates
+        [✅] create template:
+            [✅] login.html
+                [✅] responsibilities:
+                    [✅] display form
+                    [✅] display messages
 
 
 *******************************

@@ -43,6 +43,10 @@ class UsersAccountActivationView(RedirectView):
 class UsersLoginView(LoginView):
     template_name = 'users/login.html'
 
+    def form_valid(self, form):
+        messages.success(self.request, f'Welcome back {form.user_cache.email}! You are logged in!')
+        return super().form_valid(form)
+
 
 
 
