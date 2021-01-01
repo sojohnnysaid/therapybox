@@ -22,9 +22,9 @@ class BaseFunctionalTest(LiveServerTestCase):
         self.browser = webdriver.Firefox(options=options)
         self.browser.implicitly_wait(15)
 
-        email = 'john@gmail.com'
-        password = 'pP@assW0rd'
-        self.user = get_user_model().objects.create_user(email=email, password=password)
+        self.email = 'john@gmail.com'
+        self.password = 'pP@assW0rd'
+        self.user = get_user_model().objects.create_user(email=self.email, password=self.password)
         self.user.is_active = True
         self.user.save()
 
@@ -43,7 +43,7 @@ class BaseFunctionalTest(LiveServerTestCase):
         input = self.browser.find_elements(By.ID, 'id_email')[0]
 
         # he enters his email
-        input.send_keys('john@gmail.com')
+        input.send_keys(self.email)
 
         # submits the form
         self.browser.find_elements(By.ID, 'users_password_reset_request_form_submit_button')[0].click()

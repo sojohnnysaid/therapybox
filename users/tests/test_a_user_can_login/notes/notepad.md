@@ -27,11 +27,7 @@ users perspective:
 
 framework perspective:
 
-    [] form we are using the framework implementation:
-        [] responsibilities:
-            [] We only need to include {form} in the template
-
-    [] url name(name_of_url): 
+    [✅] url name(name_of_url): 
         [] create patterns:
             [] login/
         [] view class:
@@ -41,6 +37,11 @@ framework perspective:
         [] responsibilities:
             [] declare template_name = 'users/login.html'
             [] success_url = '/'
+            [] display the template to the user
+
+    [] form we are using the framework implementation:
+        [] responsibilities:
+            [] We only need to include {form} in the template
 
     [] html templates
         [] create template:
