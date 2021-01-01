@@ -138,3 +138,4 @@ user.is_active = True
 user.save()
 data = {'email': email, 'password': password}
 response = Client().post(reverse('users:login'), data)
+

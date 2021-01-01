@@ -42,7 +42,6 @@ class UsersAccountActivationView(RedirectView):
 
 class UsersLoginView(LoginView):
     template_name = 'users/login.html'
-    success_url = '/'
 
 
 
