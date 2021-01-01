@@ -45,14 +45,12 @@ class UserCanLogin(BaseFunctionalTest):
 
         # John starts filling out the Login form...
 
-        # enters his email
-        input = self.browser.find_elements(By.ID, 'id_email')[0]
-        assert input.get_attribute('placeholder') == 'email'
+        # enters his email in the username field
+        input = self.browser.find_elements(By.ID, 'id_username')[0]
         input.send_keys(self.email)
 
         # enters his password
-        input = self.browser.find_elements(By.ID, 'id_password1')[0]
-        assert input.get_attribute('placeholder') == 'password'
+        input = self.browser.find_elements(By.ID, 'id_password')[0]
         input.send_keys(self.password)
 
         # submits the form
@@ -63,4 +61,4 @@ class UserCanLogin(BaseFunctionalTest):
 
         # the page tells him he is now logged in
         form_submitted_message = self.browser.find_elements(By.CLASS_NAME, 'message')[0].text
-        assert f'Welcome back {self.email}! You are now logged in!' in form_submitted_message
+        assert f'Welcome back {self.email}! You are logged in!' in form_submitted_message

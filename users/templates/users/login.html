@@ -19,7 +19,7 @@
             {{form.as_table}}
             {% csrf_token %}
         </table>
-        <input type="submit" value="Login">
+        <input type="submit" value="Login" id="users_login_form_submit_button">
     </form>
     <a href={% url 'users:password_request_reset_link' %}>Forgot Password? Click here!</a>
 </body>

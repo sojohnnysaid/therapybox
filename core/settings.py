@@ -136,6 +136,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 AUTH_USER_MODEL = 'users.CustomUser'
 USERS_REGISTER_SUCCESS_URL = reverse_lazy('therapybox:homepage')
+LOGIN_REDIRECT_URL = reverse_lazy('therapybox:homepage')
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())

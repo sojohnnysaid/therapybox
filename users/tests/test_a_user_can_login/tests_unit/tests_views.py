@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
+from django.conf import settings as conf_settings
 
 
 
@@ -28,7 +29,12 @@ class LoginViewTest(BaseTestCase):
         response = Client().get(reverse('users:login'))
         self.assertTemplateUsed(response, 'users/login.html')
 
+    def test_settings_LOGIN_REDIRECT_URL_is_login_success_page(self):
+        data = {'username': self.email, 'password': self.password}
+        response = Client().post(reverse('users:login'), data, follow=True)
+        self.assertEqual(response.request['PATH_INFO'], conf_settings.LOGIN_REDIRECT_URL)
+
     def test_success_page_displays_expected_message(self):
-        data = {'email': self.email, 'password': self.password}
-        response = Client().post(reverse('users:login'), data)
-        self.assertContains(response, f'Welcome back {self.email}! You are now logged in!')
+        data = {'username': self.email, 'password': self.password}
+        response = Client().post(reverse('users:login'), data, follow=True)
+        self.assertContains(response, f'Welcome back {self.email}! You are logged in!')

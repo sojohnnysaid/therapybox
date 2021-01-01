@@ -137,5 +137,12 @@ user = get_user_model().objects.create_user(email=email, password=password)
 user.is_active = True
 user.save()
 data = {'email': email, 'password': password}
-response = Client().post(reverse('users:login'), data)
+response = Client().post(reverse('users:login'), data, follow=True)
 
+
+# check variables in settings
+from django.conf import settings as conf_settings
+from django.urls import reverse_lazy
+
+settings_login_redirect_url = conf_settings.LOGIN_REDIRECT_URL
+expected_url = reverse_lazy('therapybox:homepage')
