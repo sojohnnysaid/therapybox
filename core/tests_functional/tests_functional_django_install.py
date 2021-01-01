@@ -2,12 +2,13 @@ from platform import python_version
 
 import django
 from django.urls import reverse
-from django.test import LiveServerTestCase
+from django.test import LiveServerTestCase, SimpleTestCase
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.options import Options
+
 
 class BaseFunctionalTest(LiveServerTestCase):
 
@@ -19,6 +20,18 @@ class BaseFunctionalTest(LiveServerTestCase):
 
     def tearDown(self):
         self.browser.quit()
+
+
+
+
+class DjangoInstallationTest(SimpleTestCase):
+
+    def test_python_is_correct_version_number(self):
+        assert '3.8' in python_version()
+
+    def test_django_is_correct_version_number(self):
+        assert django.get_version() == '3.1.4'
+
 
 
 
