@@ -18,9 +18,6 @@ from users import views, models, forms, services
 from users.tokens import default_account_activation_token_generator as token_generator
 
 
-
-
-
 class BaseTestCase(TestCase):
 
     def setUp(self):
