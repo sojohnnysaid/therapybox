@@ -14,5 +14,13 @@
         {% endfor %}
     </ul>
     {% endif %}
+    {% if user.is_authenticated %}
+        Welcome back {{user.email}}! You are logged in!
+        <a href="/users/logout/">Logout</a>
+    {% else %}
+        You are not logged in!
+        <a href="/users/login/">Login</a><span> | </span>
+        <a href="/users/register/">Register</a>
+    {% endif %}
 </body>
 </html>

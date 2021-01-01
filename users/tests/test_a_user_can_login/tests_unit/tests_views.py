@@ -28,7 +28,7 @@ class LoginViewTest(BaseTestCase):
         response = Client().get(reverse('users:login'))
         self.assertTemplateUsed(response, 'users/login.html')
 
-    def test_user_can_login_successfully(self):
+    def test_success_page_displays_expected_message(self):
         data = {'email': self.email, 'password': self.password}
         response = Client().post(reverse('users:login'), data)
-        self.assertInHTML(f'Welcome back {self.email}! You are now logged in!')
+        self.assertContains(response, f'Welcome back {self.email}! You are now logged in!')

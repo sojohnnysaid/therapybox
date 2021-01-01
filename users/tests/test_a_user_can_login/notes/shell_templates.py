@@ -120,3 +120,21 @@ default_token_generator.check_token(user, token)
 default_token_generator.check_token(user, token)
 default_token_generator.check_token(user, token)
 default_token_generator.check_token(user, token)
+
+
+
+
+# log user in
+from django.contrib.auth import get_user_model
+from django.test import TestCase, Client
+from django.urls import reverse
+from random import randrange
+
+random_number = randrange(100000000)
+email = f'{random_number}john@gmail.com'
+password = 'pP@assW0rd'
+user = get_user_model().objects.create_user(email=email, password=password)
+user.is_active = True
+user.save()
+data = {'email': email, 'password': password}
+response = Client().post(reverse('users:login'), data)

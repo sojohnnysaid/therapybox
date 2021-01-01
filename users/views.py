@@ -1,4 +1,4 @@
-from django.contrib.auth.views import PasswordResetConfirmView
+from django.contrib.auth.views import PasswordResetConfirmView, LoginView
 from django.http import HttpResponseRedirect
 from django.http.response import HttpResponse
 from django.urls.base import reverse
@@ -40,8 +40,9 @@ class UsersAccountActivationView(RedirectView):
 
 
 
-class UsersLoginView(TemplateView):
+class UsersLoginView(LoginView):
     template_name = 'users/login.html'
+    success_url = '/'
 
 
 
