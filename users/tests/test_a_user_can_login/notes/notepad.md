@@ -5,7 +5,7 @@
 *******************************
 
 📜 Feature:
-    ✅  A user can ...
+    ✅  A user can login
 
 
 ✅ TODO LIST 
@@ -16,37 +16,38 @@
 
 
 users perspective:
-    user does this...
-    user does that...
+    user goes to the login page
+    user enters username
+    user enters password
+    user clicks submit
+    user is taken to homepage
+    there is a message on the homepage letting them know they are successfully logged in
 
 
 
 framework perspective:
 
-    [] service
-        [] create methods:
-            [] some_method(arg1)           
-                [] responsibilities:
-                    [] method is responsible for...
-
-    [] form:
+    [] form we are using the framework implementation:
         [] responsibilities:
-            [] form is responsible for...
+            [] We only need to include {form} in the template
 
     [] url name(name_of_url): 
         [] create patterns:
-            [] my/url/pattern
+            [] login/
         [] view class:
-            [] ClassUrlCalls
+            [] UsersLoginView
 
-    [] view MyViewName:
+    [] view UsersLoginView(inherts mostly from LoginView):
         [] responsibilities:
-            [] form is responsible for...
+            [] declare template_name = 'users/login.html'
+            [] success_url = '/'
 
     [] html templates
         [] create template:
-            [] my_template_name.html
+            [] login.html
                 [] responsibilities:
+                    [] display form
+                    [] display messages
 
 
 *******************************
