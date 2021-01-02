@@ -145,6 +145,7 @@ USERS_REGISTER_SUCCESS_URL = reverse_lazy('therapybox:homepage')
 USERS_PASSWORD_RESET_REQUEST_SUCCESS_URL = reverse_lazy('therapybox:homepage')
 USERS_PASSWORD_RESET_FORM_SUCCESS_URL = reverse_lazy('therapybox:homepage')
 LOGIN_REDIRECT_URL = reverse_lazy('therapybox:homepage')
+LOGOUT_URL = reverse_lazy('therapybox:homepage')
 USERS_ACTIVATE_USER_ACCOUNT_SUCCESS_URL = reverse_lazy('therapybox:homepage')
 
 # Activate Django-Heroku.
