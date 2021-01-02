@@ -45,3 +45,25 @@ class UsersPasswordResetViewTest(BaseTestCase):
 
         self.assertContains(response, 'Success! Your password has been reset.')
         self.assertEqual(response.url, conf_settings.USERS_PASSWORD_RESET_FORM_SUCCESS_URL)
+        
+
+    def test_new_password_is_valid(self):
+        request = RequestFactory().get('') # request path not important in this case
+
+        url = services.get_password_reset_link(request, self.user)
+        uidb64 = url.split('/')[5]
+        token = url.split('/')[6]
+
+        UserModel = get_user_model()
+        new_password = UserModel.objects.make_random_password()
+
+        c = Client()
+        c.get(
+            reverse('users:password-reset', kwargs={'uidb64': uidb64, 'token': token}), follow=True)
+        c.post(
+            reverse('users:password-reset', kwargs={'uidb64': uidb64, 'token': 'set-password'}),
+            {'new_password1': new_password, 'new_password2': new_password}, follow=True)
+
+        
+        fresh_user = UserModel.objects.get(email=self.user.email)
+        self.assertTrue(fresh_user.check_password(new_password))
