@@ -82,7 +82,7 @@ from django.urls import reverse
 from users import views
 
 request = RequestFactory().get(reverse('users:password_request_reset_link'))
-response = views.UsersForgotPasswordResetRequestView.as_view()(request)
+response = views.UsersPasswordResetRequestView.as_view()(request)
 response.template_name[0]
 
 

@@ -37,15 +37,13 @@ class UsersPasswordResetViewTest(BaseTestCase):
         response = c.get(
             reverse('users:password-reset', kwargs={'uidb64': uidb64, 'token': token}), follow=True)
         
-        self.assertTemplateUsed(response, 'users/password_reset_form.html')
+        self.assertTemplateUsed(response, conf_settings.USERS_PASSWORD_RESET_FORM_TEMPLATE)
         
         response = c.post(
             reverse('users:password-reset', kwargs={'uidb64': uidb64, 'token': 'set-password'}),
             {'new_password1': new_password, 'new_password2': new_password}, follow=True)
 
         self.assertContains(response, 'Success! Your password has been reset.')
-        self.assertEqual(response.url, conf_settings.USERS_PASSWORD_RESET_FORM_SUCCESS_URL)
-        
 
     def test_new_password_is_valid(self):
         request = RequestFactory().get('') # request path not important in this case

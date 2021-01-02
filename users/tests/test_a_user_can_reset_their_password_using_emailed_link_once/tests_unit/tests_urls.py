@@ -23,7 +23,7 @@ class BaseTestCase(TestCase):
 
 
 
-class ForgotPasswordResetURLTest(BaseTestCase):
+class PasswordResetURLTest(BaseTestCase):
     
 
     def test_resolves_to_correct_view(self):
@@ -31,7 +31,7 @@ class ForgotPasswordResetURLTest(BaseTestCase):
         url = services.get_password_reset_link(request, self.user)
         path = urlparse(url).path
         
-        expected_class = views.UsersForgotPasswordResetView
+        expected_class = views.UsersPasswordResetView
         resolver_match = resolve(path)
         resolved_class = resolver_match.func.view_class
         self.assertEqual(expected_class, resolved_class)

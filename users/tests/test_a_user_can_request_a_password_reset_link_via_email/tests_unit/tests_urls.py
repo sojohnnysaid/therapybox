@@ -18,10 +18,10 @@ class BaseTestCase(TestCase):
 
 
 
-class ForgotPasswordResetRequestURLTest(BaseTestCase):        
+class PasswordResetRequestURLTest(BaseTestCase):        
 
     def test_resolves_to_correct_view(self):
-        expected_class = views.UsersForgotPasswordResetRequestView
+        expected_class = views.UsersPasswordResetRequestView
         name = 'users:password_request_reset_link'
         resolver_match = resolve(reverse(name))
         resolved_class = resolver_match.func.view_class
