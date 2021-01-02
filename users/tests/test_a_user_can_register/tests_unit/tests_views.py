@@ -1,21 +1,13 @@
 import re
-from urllib.parse import urlparse
 from django.test.testcases import TestCase
 from django.urls import reverse, reverse_lazy
-from django.test import TestCase, RequestFactory
-from django.contrib.auth import get_user_model
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils import timezone
-from django.core import mail
+from django.test import TestCase
 from django.test import Client
 from django.conf import settings as conf_settings
 
-from unittest.case import skip
 from unittest.mock import patch
 
-from users import views, models, forms, services
-from users.tokens import default_account_activation_token_generator as token_generator
+from users import views, models, forms
 
 
 
@@ -50,7 +42,7 @@ class UserRegisterViewTest(BaseTestCase):
         assert views.UsersRegisterView.form_class == forms.UsersRegisterForm
 
     def test_uses_expected_template(self):
-        assert views.UsersRegisterView.template_name == 'users/register.html'
+        assert views.UsersRegisterView.template_name == conf_settings.USERS_REGISTER_TEMPLATE
 
     def test_redirects_on_successful_post_request(self):
         expected_url = conf_settings.USERS_REGISTER_SUCCESS_URL

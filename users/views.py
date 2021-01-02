@@ -1,8 +1,7 @@
 from django.contrib.auth.views import PasswordResetConfirmView, LoginView
 from django.http import HttpResponseRedirect
 from django.http.response import HttpResponse
-from django.urls.base import reverse
-from django.views.generic.base import RedirectView, TemplateView
+from django.views.generic.base import RedirectView
 from django.views.generic.edit import CreateView, FormView
 from django.urls import reverse_lazy
 from django.contrib import messages
@@ -17,7 +16,7 @@ from django.conf import settings as conf_settings
 class UsersRegisterView(CreateView):
     model = models.CustomUser
     form_class = forms.UsersRegisterForm
-    template_name = 'users/register.html'
+    template_name = conf_settings.USERS_REGISTER_TEMPLATE
     success_url = conf_settings.USERS_REGISTER_SUCCESS_URL
 
     def form_valid(self, form):
@@ -29,19 +28,16 @@ class UsersRegisterView(CreateView):
 
 
 class UsersAccountActivationView(RedirectView):
-    url = reverse_lazy('users:login')
+    url = conf_settings.USERS_ACTIVATE_USER_ACCOUNT_SUCCESS_URL
     def get(self, request, *args, **kwargs):
-        try:
-            services.activate_user(request)
-            return super().get(request, *args, **kwargs)
-        except:
-            return HttpResponse('<h1>Invalid Request! <a href="/">back to homepage</a></h1>')
+        services.activate_user(request)
+        return super().get(request, *args, **kwargs)
 
 
 
 
 class UsersLoginView(LoginView):
-    template_name = 'users/login.html'
+    template_name = conf_settings.USERS_LOGIN_TEMPLATE
 
     def form_valid(self, form):
         messages.success(self.request, f'Welcome back {form.user_cache.email}! You are logged in!')
@@ -50,10 +46,10 @@ class UsersLoginView(LoginView):
 
 
 
-class UsersForgotPasswordResetRequestView(FormView):
-    template_name = 'users/password_reset_request.html'
+class UsersPasswordResetRequestView(FormView):
+    template_name = conf_settings.USERS_PASSWORD_RESET_REQUEST_TEMPLATE
     form_class = forms.UsersPasswordResetRequestForm
-    success_url = reverse_lazy('users:login')
+    success_url = conf_settings.USERS_PASSWORD_RESET_REQUEST_SUCCESS_URL
 
     def form_valid(self, form):
         user = get_user_model().objects.get(email=form.cleaned_data['email'])
@@ -64,11 +60,13 @@ class UsersForgotPasswordResetRequestView(FormView):
 
 
 INTERNAL_RESET_SESSION_TOKEN = '_password_reset_token'
-class UsersForgotPasswordResetView(PasswordResetConfirmView):
-    success_url = reverse_lazy('users:login')
-    template_name = 'users/password_reset_form.html'
+class UsersPasswordResetView(PasswordResetConfirmView):
+    template_name = conf_settings.USERS_PASSWORD_RESET_FORM_TEMPLATE
+    success_url = conf_settings.USERS_PASSWORD_RESET_FORM_SUCCESS_URL
 
     def form_valid(self, form):
+        form.full_clean()
+        form.save()
         del self.request.session[INTERNAL_RESET_SESSION_TOKEN]
         messages.success(self.request, 'Success! Your password has been reset.')
         # log user in and out to invalidate token after password reset form submitted

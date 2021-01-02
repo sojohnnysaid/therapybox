@@ -135,8 +135,17 @@ STATIC_URL = '/static/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 AUTH_USER_MODEL = 'users.CustomUser'
+USERS_REGISTER_TEMPLATE = 'therapybox/register.html'
+USERS_LOGIN_TEMPLATE =  'therapybox/login.html'
+USERS_PASSWORD_RESET_REQUEST_TEMPLATE = 'therapybox/password_reset_request.html'
+USERS_PASSWORD_RESET_FORM_TEMPLATE = 'therapybox/password_reset_form.html'
+
+
 USERS_REGISTER_SUCCESS_URL = reverse_lazy('therapybox:homepage')
+USERS_PASSWORD_RESET_REQUEST_SUCCESS_URL = reverse_lazy('therapybox:homepage')
+USERS_PASSWORD_RESET_FORM_SUCCESS_URL = reverse_lazy('therapybox:homepage')
 LOGIN_REDIRECT_URL = reverse_lazy('therapybox:homepage')
+USERS_ACTIVATE_USER_ACCOUNT_SUCCESS_URL = reverse_lazy('therapybox:homepage')
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())

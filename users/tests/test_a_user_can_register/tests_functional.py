@@ -11,7 +11,7 @@ from selenium.webdriver.firefox.options import Options
 from django.test import LiveServerTestCase
 from django.urls import reverse
 from django.core import mail
-
+from django.conf import settings as conf_settings
 
 class BaseFunctionalTest(LiveServerTestCase):
 
@@ -63,7 +63,7 @@ class UserCanRegisterTest(BaseFunctionalTest):
         self.browser.find_elements(By.ID, 'users_register_form_submit_button')[0].click()
 
         # he is taken to a new page
-        assert reverse('therapybox:homepage') in self.browser.current_url
+        assert str(conf_settings.USERS_REGISTER_SUCCESS_URL) in self.browser.current_url
 
         # the page tells him an email has been sent with a confirmation link
         form_submitted_message = self.browser.find_elements(By.CLASS_NAME, 'message')[0].text

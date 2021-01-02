@@ -11,6 +11,7 @@ from selenium.webdriver.firefox.options import Options
 from django.test import LiveServerTestCase
 from django.urls import reverse
 from django.core import mail
+from django.conf import settings as conf_settings
 
 
 class BaseFunctionalTest(LiveServerTestCase):
@@ -73,7 +74,7 @@ class UserCanActivateAccountUsingLinkOnceTest(BaseFunctionalTest):
         # and clicks the link
         self.browser.get(activate_account_url)
         
-        # John is taken to the login page
-        assert reverse('users:login') in self.browser.current_url
-        navbar = self.browser.find_elements(By.CLASS_NAME, 'alert-success')[0].text
+        # John is taken to the home page
+        assert str(conf_settings.USERS_ACTIVATE_USER_ACCOUNT_SUCCESS_URL) in self.browser.current_url
+        navbar = self.browser.find_elements(By.CLASS_NAME, 'message')[0].text
         assert 'Your account has been activated! You can now login' in navbar

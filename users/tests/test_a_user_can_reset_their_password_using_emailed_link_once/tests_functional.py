@@ -5,13 +5,13 @@ from unittest.case import skip
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.options import Options
 
 from django.test import LiveServerTestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.core import mail
+from django.conf import settings as conf_settings
 
 
 class BaseFunctionalTest(LiveServerTestCase):
@@ -90,9 +90,9 @@ class UserCanResetTheirPasswordUsingEmailedLinkOnce(BaseFunctionalTest):
         # finally he submits the form
         self.browser.find_elements(By.ID, 'users_password_reset_form_submit_button')[0].click()
 
-        # the page reloads and John notices he is now on the login page
-        assert reverse('users:login') in self.browser.current_url
+        # the page reloads and John notices he is now on another page
+        assert str(conf_settings.USERS_PASSWORD_RESET_FORM_SUCCESS_URL) in self.browser.current_url
 
-        # there is a message on the page letting him now his password was reset successfully
+        # there is a message on the page letting him know his password was reset successfully
         form_submitted_message = self.browser.find_elements(By.CLASS_NAME, 'message')[0].text
         assert 'Success! Your password has been reset.' in form_submitted_message

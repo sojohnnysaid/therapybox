@@ -18,15 +18,7 @@ class BaseTestCase(TestCase):
 
 
 
-class ForgotPasswordResetRequestURLTest(BaseTestCase):
-    
-    def test_resolves_to_correct_path(self):
-        expected_path = 'users/password-request-reset-link/'
-        name = 'users:password_request_reset_link'
-        resolver_match = resolve(reverse(name))
-        resolved_path = resolver_match.route
-        self.assertEqual(expected_path, resolved_path)
-        
+class ForgotPasswordResetRequestURLTest(BaseTestCase):        
 
     def test_resolves_to_correct_view(self):
         expected_class = views.UsersForgotPasswordResetRequestView

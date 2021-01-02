@@ -25,12 +25,6 @@ class BaseTestCase(TestCase):
 
 class ForgotPasswordResetURLTest(BaseTestCase):
     
-    def test_resolves_to_correct_path(self):
-        request = RequestFactory().get('') # request path not important in this case
-        url = services.get_password_reset_link(request, self.user)
-        response = Client().get(url)
-        expected_path = 'users/password-reset/'
-        self.assertTrue(expected_path in response.url)
 
     def test_resolves_to_correct_view(self):
         request = RequestFactory().get('') # request path not important in this case

@@ -23,13 +23,6 @@ class BaseTestCase(TestCase):
 
 class RegisterURLTest(BaseTestCase):
 
-    def test_resolves_to_correct_path(self):
-        expected_path = 'users/register/'
-        name = 'users:register'
-        resolver_match = resolve(reverse(name))
-        resolved_path = resolver_match.route
-        self.assertEqual(expected_path, resolved_path)
-
     def test_calls_correct_view(self):
         expected_class = views.UsersRegisterView
         name = 'users:register'

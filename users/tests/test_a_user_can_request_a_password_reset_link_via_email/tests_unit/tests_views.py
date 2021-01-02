@@ -14,8 +14,8 @@ from django.conf import settings as conf_settings
 from unittest.case import skip
 from unittest.mock import patch
 
-from users import views, models, forms, services
-from users.tokens import default_account_activation_token_generator as token_generator
+from users import forms
+
 
 
 class BaseTestCase(TestCase):
@@ -28,11 +28,11 @@ class BaseTestCase(TestCase):
 
 
 
-class UsersForgotPasswordResetRequestViewTest(BaseTestCase):
+class UsersPasswordResetRequestViewTest(BaseTestCase):
 
-    def test_get_request_returns_expected_html(self):
+    def test_get_request_uses_expected_template(self):
         response = Client().get(reverse('users:password_request_reset_link'))
-        self.assertTemplateUsed(response, 'users/password_reset_request.html')
+        self.assertTemplateUsed(response, conf_settings.USERS_PASSWORD_RESET_REQUEST_TEMPLATE)
 
     def test_uses_expected_form_class(self):
         response = Client().get(reverse('users:password_request_reset_link'))
@@ -47,4 +47,4 @@ class UsersForgotPasswordResetRequestViewTest(BaseTestCase):
 
     def test_redirects_on_post_success(self):
         response = Client().post(reverse('users:password_request_reset_link'), {'email': 'John@gmail.com'})
-        self.assertRedirects(response, reverse('users:login'))
+        self.assertRedirects(response, str(conf_settings.USERS_PASSWORD_RESET_REQUEST_SUCCESS_URL))

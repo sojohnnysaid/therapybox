@@ -1,20 +1,10 @@
 import re
-from urllib.parse import urlparse
 from django.urls import reverse, reverse_lazy
-from django.test import TestCase, RequestFactory
-from django.contrib.auth import get_user_model
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils import timezone
 from django.core import mail
 from django.test import TestCase, Client
 from django.conf import settings as conf_settings
-
-from unittest.case import skip
 from unittest.mock import patch
 
-from users import views, models, forms, services
-from users.tokens import default_account_activation_token_generator as token_generator
 
 
 
@@ -54,4 +44,4 @@ class UsersAccountActivationViewTest(BaseTestCase):
 
     def test_redirect(self):
         response = Client().get(self.link)
-        self.assertRedirects(response, reverse('users:login'))
+        self.assertRedirects(response, conf_settings.USERS_ACTIVATE_USER_ACCOUNT_SUCCESS_URL)
