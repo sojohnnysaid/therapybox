@@ -35,17 +35,17 @@ class BaseTestCase(TestCase):
 
 class UserRegisterViewTest(BaseTestCase):
 
-    def test_uses_CustomUser(self):
-        assert views.UsersRegisterView.model == models.CustomUser
+    def test_uses_MyAbstractUser(self):
+        assert views.UsersRegisterView.model == models.MyAbstractUser
         
     def test_uses_UsersRegisterForm(self):
         assert views.UsersRegisterView.form_class == forms.UsersRegisterForm
 
     def test_uses_expected_template(self):
-        assert views.UsersRegisterView.template_name == conf_settings.USERS_REGISTER_TEMPLATE
+        assert views.UsersRegisterView.template_name == conf_settings.MY_ABSTRACT_USER_SETTINGS['templates']['register']
 
     def test_redirects_on_successful_post_request(self):
-        expected_url = conf_settings.USERS_REGISTER_SUCCESS_URL
+        expected_url = conf_settings.MY_ABSTRACT_USER_SETTINGS['users_messages_page']
         response = self.register_user('John')
         self.assertRedirects(response, expected_url)
 

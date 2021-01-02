@@ -1,12 +1,12 @@
 '''
-- CustomUserManager instance belongs to the object attribute of the custom user class
+- MyAbstractUserManager instance belongs to the object attribute of the custom user class
 - technically these are custom user model tests but we are specifically testing the manager methods
 '''
 
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
-from users.models import CustomUser
+from users.models import MyAbstractUser
 
 
 
@@ -18,12 +18,12 @@ class BaseTestCase(TestCase):
 
 
 
-class CustomUserManagerTest(BaseTestCase):
+class MyAbstractUserManagerTest(BaseTestCase):
 
     def test_create_user_creates_custom_user(self):
         User = get_user_model()
         user_instance = User.objects.create_user(email='test@gmail.com', password='pP@assw0rd')
-        self.assertIsInstance(user_instance, CustomUser)
+        self.assertIsInstance(user_instance, MyAbstractUser)
 
     def test_create_user_saves_email_in_all_lowercase(self):
         User = get_user_model()
@@ -58,7 +58,7 @@ class CustomUserManagerTest(BaseTestCase):
     def test_create_superuser_creates_custom_user(self):
         User = get_user_model()
         user_instance = User.objects.create_superuser(email='testsuper@gmail.com', password='pP@assw0rd')
-        self.assertIsInstance(user_instance, CustomUser)
+        self.assertIsInstance(user_instance, MyAbstractUser)
 
     def test_create_superuser_saves_user_to_db(self):
         User = get_user_model()

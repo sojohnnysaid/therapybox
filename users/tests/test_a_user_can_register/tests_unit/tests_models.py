@@ -12,11 +12,11 @@ class BaseTestCase(TestCase):
 
 
 
-class CustomUserTest(BaseTestCase):
+class MyAbstractUserTest(BaseTestCase):
 
     def test_str_of_user_object_is_email(self):
-        custom_user_instance = get_user_model().objects.create_user(email='test@gmail.com', password='pP@assw0rd')
-        self.assertEqual(str(custom_user_instance), custom_user_instance.email)
+        my_abstract_user_instance = get_user_model().objects.create_user(email='test@gmail.com', password='pP@assw0rd')
+        self.assertEqual(str(my_abstract_user_instance), my_abstract_user_instance.email)
 
     def test_created_user_has_no_permissions(self):
         user_instance = get_user_model().objects.create_user(email='test@gmail.com', password='pP@assw0rd')
