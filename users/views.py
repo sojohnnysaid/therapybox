@@ -1,4 +1,4 @@
-from django.contrib.auth.views import PasswordResetConfirmView, LoginView
+from django.contrib.auth.views import PasswordResetConfirmView, LoginView, LogoutView
 from django.http import HttpResponseRedirect
 from django.http.response import HttpResponse
 from django.views.generic.base import RedirectView
@@ -6,6 +6,9 @@ from django.views.generic.edit import CreateView, FormView
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth import get_user_model, login, logout
+from django.contrib.auth import logout as auth_logout
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 
 from users import forms, models, services
 
@@ -43,6 +46,19 @@ class UsersLoginView(LoginView):
         messages.success(self.request, f'Welcome back {form.user_cache.email}! You are logged in!')
         return super().form_valid(form)
 
+
+class UsersLogoutView(LogoutView):
+    next_page = conf_settings.LOGOUT_URL
+
+    @method_decorator(never_cache)
+    def dispatch(self, request, *args, **kwargs):
+        auth_logout(request)
+        next_page = self.get_next_page()
+        if next_page:
+            # Redirect to this page until the session has been cleared.
+            messages.success(self.request, 'You are logged out!')
+            return HttpResponseRedirect(next_page)
+        return super().dispatch(request, *args, **kwargs)
 
 
 

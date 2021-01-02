@@ -69,4 +69,4 @@ class UserCanLogout(BaseFunctionalTest):
 
         # the page reloads and there is a message that says he has logged out
         logged_out_message = self.browser.find_elements(By.CLASS_NAME, 'message')[0].text
-        assert f'You are logged out!' in form_submitted_message
+        assert f'You are logged out!' in logged_out_message
