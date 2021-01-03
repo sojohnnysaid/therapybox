@@ -10,8 +10,9 @@ from selenium.webdriver.firefox.options import Options
 
 from django.test import LiveServerTestCase
 from django.urls import reverse
-from django.core import mail
 from django.conf import settings as conf_settings
+from django.core import mail
+
 
 class BaseFunctionalTest(LiveServerTestCase):
 
@@ -27,10 +28,9 @@ class BaseFunctionalTest(LiveServerTestCase):
 
 
 
-class UserCanRegisterTest(BaseFunctionalTest):
+class UserRegistration(BaseFunctionalTest):
     
-    def test_John_can_register(self):
-
+    def test_a_facility_can_register(self):
         # John goes to the registration page
         self.browser.get(self.live_server_url + reverse('users:register'))
 
@@ -39,26 +39,68 @@ class UserCanRegisterTest(BaseFunctionalTest):
 
         # John starts filling out the registration form...
 
-        # enters his email
-        input = self.browser.find_elements(By.ID, 'id_email')[0]
-        assert input.get_attribute('placeholder') == 'email'
+        # email
+        input = self.browser.find_elements(By.NAME, 'email')[0]
         input.send_keys('john@gmail.com')
 
-        # enters his password
-        input = self.browser.find_elements(By.ID, 'id_password1')[0]
-        assert input.get_attribute('placeholder') == 'password'
+        # password
+        input = self.browser.find_elements(By.NAME, 'password1')[0]
         input.send_keys('p@assW00rd')
 
-        # enters his password to confirm
-        input = self.browser.find_elements(By.ID, 'id_password2')[0]
-        assert input.get_attribute('placeholder') == 'confirm password'
+        # password to confirm
+        input = self.browser.find_elements(By.NAME, 'password2')[0]
         input.send_keys('p@assW00rd')
+
+        # facility_name
+        input = self.browser.find_elements(By.NAME, 'facility_name')[0]
+        input.send_keys('facility_name')
+
+        # company_name
+        input = self.browser.find_elements(By.NAME, 'company_name')[0]
+        input.send_keys('company_name')
+
+        # phone_number
+        input = self.browser.find_elements(By.NAME, 'phone_number')[0]
+        input.send_keys('phone_number')
+
+        # point_of_contact
+        input = self.browser.find_elements(By.NAME, 'point_of_contact')[0]
+        input.send_keys('point_of_contact')
+
+        # address_line_1
+        input = self.browser.find_elements(By.NAME, 'address_line_1')[0]
+        input.send_keys('address_line_1')
+
+        # address_line_2
+        input = self.browser.find_elements(By.NAME, 'address_line_2')[0]
+        input.send_keys('address_line_2')
+
+        # suburb
+        input = self.browser.find_elements(By.NAME, 'suburb')[0]
+        input.send_keys('suburb')
+
+        # city
+        input = self.browser.find_elements(By.NAME, 'city')[0]
+        input.send_keys('city')
+
+        # postcode
+        input = self.browser.find_elements(By.NAME, 'postcode')[0]
+        input.send_keys('postcode')
+
+        # shipping_region
+        input = self.browser.find_element_by_xpath("//select[@name='shipping_region']/option[text()='Region 1']")
+        input.click()
+
+        # agreed_to_terms_and_conditions
+        input = self.browser.find_elements_by_xpath(".//*[contains(text(), 'Agreed to terms and conditions')]")[0]
+        input.click()
 
         # submits the form
         self.browser.find_elements(By.ID, 'users_register_form_submit_button')[0].click()
 
         # he is taken to a new page
         assert str(conf_settings.MY_ABSTRACT_USER_SETTINGS['users_messages_page']) in self.browser.current_url
+        time.sleep(5)
 
         # the page tells him an email has been sent with a confirmation link
         form_submitted_message = self.browser.find_elements(By.CLASS_NAME, 'message')[0].text

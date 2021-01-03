@@ -16,8 +16,13 @@
 
 
 users perspective:
-    user does this...
-    user does that...
+    ✅ user goes to the homepage
+    ✅ if user not logged in they will see a register link
+    ✅ user will click the link
+    ✅ user will be brought to the register page
+    user will fill out the form
+    on success user will be redirected to homepage
+    user will see a success message
 
 
 
