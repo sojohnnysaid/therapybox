@@ -68,3 +68,6 @@ framework perspective:
 ******* END xx/xx/xx
 *******
 *******************************
+
+He is on a new page account_activation_request
+client get is 200 status ok

@@ -37,7 +37,7 @@ class BaseFunctionalTest(LiveServerTestCase):
 
 class UserCanRequestAccountActivationLinkViaEmail(BaseFunctionalTest):
     
-    @skip
+    
     def test_a_user_can_request_an_activation_link_when_login_error_is_account_not_activated(self):
         
         # John registers a new account
@@ -60,8 +60,8 @@ class UserCanRequestAccountActivationLinkViaEmail(BaseFunctionalTest):
         self.browser.find_elements(By.ID, 'users_login_form_submit_button')[0].click()
 
         # a message appears telling him his account is not activated
-        error_message = self.browser.find_elements(By.CLASS_NAME, 'alert-danger')[0].text
-        assert 'This account has not been activated!'
+        error_message = self.browser.find_elements(By.CLASS_NAME, 'message')[0].text
+        assert 'Account has not been activated!' in error_message
 
         # there is a link that says re-send activation link
         # he clicks the link
@@ -83,7 +83,7 @@ class UserCanRequestAccountActivationLinkViaEmail(BaseFunctionalTest):
 
         # There is a message that says user activation link has been re-sent! Check your email
         form_submitted_message = self.browser.find_elements(By.CLASS_NAME, 'message')[0].text
-        assert 'Account activation link has been re-sent to your registered email' in form_submitted_message
+        assert 'Form submitted. Check your email to activate your new account' in form_submitted_message
 
         # John has now had 3 cups of coffee and violently goes to his email
         # He sees the activation link in the email body
@@ -91,7 +91,7 @@ class UserCanRequestAccountActivationLinkViaEmail(BaseFunctionalTest):
         assert 'Here is your activation link' in email.subject
 
         # He goes to the link
-        url_search = re.search(r'http://.+/users/account-activation/\?uid=.+&token=.+$', email.body)
+        url_search = re.search(r'http://.+/account-activation/\?uid=.+&token=.+$', email.body)
         if not url_search:
             self.fail(f'Could not find url in email body:\n{email.body}')
 

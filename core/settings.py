@@ -143,7 +143,9 @@ MY_ABSTRACT_USER_SETTINGS = {
     'admin_messages_page':reverse_lazy('therapybox:homepage'),
     'templates': {
         'register': 'therapybox/register.html',
+        'account_activation_request': 'therapybox/account_activation_request.html',
         'login': 'therapybox/login.html',
+        'admin_login': 'therapybox/admin_login.html',
         'password_reset_request': 'therapybox/password_reset_request.html',
         'password_reset_form': 'therapybox/password_reset_form.html',
     } 

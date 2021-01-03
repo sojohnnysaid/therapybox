@@ -6,7 +6,7 @@
     <title>Login</title>
 </head>
 <body>
-    <h1>Login Page</h1>
+    <h1>Admin Login Page</h1>
 
     {% if messages %}
     <ul class="messages">
@@ -44,7 +44,7 @@
             {% endfor %}
         </table>
 
-        <button id="users_login_form_submit_button" type="submit">Login</button>
+        <button id="users_admin_login_form_submit_button" type="submit">Login</button>
     </form>
 
     <a href={% url 'users:password_request_reset_link' %}>Forgot Password? Click here!</a>
