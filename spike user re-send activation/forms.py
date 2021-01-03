@@ -53,7 +53,7 @@ class UsersLoginForm(AuthenticationForm):
                 return self.get_invalid_login_error()
 
             if not user.is_active:
-                self.confirm_login_allowed(user)
+                return self.confirm_login_allowed(user)
             
         return username
 
