@@ -19,7 +19,7 @@ class BaseFunctionalTest(LiveServerTestCase):
     def setUp(self):
         options = Options()
         options.headless = True
-        self.browser = webdriver.Firefox()#options=options
+        self.browser = webdriver.Firefox(options=options)
         self.browser.implicitly_wait(15)
 
     def tearDown(self):
@@ -100,7 +100,6 @@ class UserRegistration(BaseFunctionalTest):
 
         # he is taken to a new page
         assert str(conf_settings.MY_ABSTRACT_USER_SETTINGS['users_messages_page']) in self.browser.current_url
-        time.sleep(5)
 
         # the page tells him an email has been sent with a confirmation link
         form_submitted_message = self.browser.find_elements(By.CLASS_NAME, 'message')[0].text
