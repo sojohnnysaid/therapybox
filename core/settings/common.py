@@ -15,7 +15,7 @@ from django.urls.base import reverse_lazy
 from dotenv import load_dotenv
 load_dotenv()
 
-import django_heroku
+
 from pathlib import Path
 from django.contrib.messages import constants as messages
 
@@ -29,8 +29,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('django_framework_secret_key')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -83,16 +81,6 @@ MESSAGE_TAGS = {
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 
 # Password validation
@@ -151,5 +139,3 @@ MY_ABSTRACT_USER_SETTINGS = {
     } 
 }
 
-# Activate Django-Heroku.
-django_heroku.settings(locals())
