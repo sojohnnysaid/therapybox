@@ -67,10 +67,12 @@ class UsersLoginView(LoginView):
 class UsersAdminLoginView(LoginView):
     template_name = conf_settings.MY_ABSTRACT_USER_SETTINGS['templates']['admin_login']
     form_class = forms.UsersAdminLoginForm
+    success_url = reverse_lazy('administration:dashboard')
 
     def form_valid(self, form):
+        login(self.request, form.get_user())
         messages.success(self.request, f'Welcome back {form.user_cache.email}! You are logged in! You are an admin!')
-        return HttpResponseRedirect(self.get_success_url())
+        return HttpResponseRedirect(self.success_url)
 
 
 

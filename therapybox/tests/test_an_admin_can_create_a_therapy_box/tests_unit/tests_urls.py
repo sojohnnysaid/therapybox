@@ -12,10 +12,10 @@ class BaseTestCase(TestCase):
 
 
 
-
+@skip
 class YourUrlTest(BaseTestCase):
 
-    @skip
+    
     def test_calls_correct_view(self):
         expected_class = views.YourView
         name = ''
