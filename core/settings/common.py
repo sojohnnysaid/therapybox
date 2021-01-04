@@ -10,10 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-import os
-from django.urls.base import reverse_lazy
 from dotenv import load_dotenv
 load_dotenv()
+
+from django.urls.base import reverse_lazy
+import os
 
 
 from pathlib import Path
