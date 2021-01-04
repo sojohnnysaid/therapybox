@@ -1,1 +1,1 @@
-web: gunicorn therapybox.wsgi
+web: gunicorn core.wsgi
