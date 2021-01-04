@@ -11,7 +11,7 @@ class MyAbstractUserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password=None):
-        user = self.create_user(email, password=password)
+        user = self.create_user(email=email, password=password)
         user.is_active = True
         user.is_staff = True
         user.is_admin = True

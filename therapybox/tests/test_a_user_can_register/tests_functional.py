@@ -19,7 +19,7 @@ class BaseFunctionalTest(LiveServerTestCase):
     def setUp(self):
         options = Options()
         options.headless = True
-        self.browser = webdriver.Firefox(options=options)
+        self.browser = webdriver.Firefox()#options=options
         self.browser.implicitly_wait(15)
 
     def tearDown(self):
