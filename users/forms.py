@@ -52,6 +52,8 @@ class UsersRegisterForm(ErrorListMixin, UserCreationForm):
         self.fields['email'].widget.attrs['placeholder'] = 'email'
         self.fields['password1'].widget.attrs['placeholder'] = 'password'
         self.fields['password2'].widget.attrs['placeholder'] = 'confirm password'
+        for field in self.fields:
+            self.fields[field].required = True
 
 
 class UsersPasswordResetRequestForm(ErrorListMixin, forms.Form):

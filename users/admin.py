@@ -11,6 +11,7 @@ class UserCreationForm(forms.ModelForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
     is_active = forms.BooleanField(initial=True)
+    
 
     class Meta:
         model = get_user_model()
