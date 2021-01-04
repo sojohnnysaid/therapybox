@@ -5,6 +5,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.core.exceptions import ValidationError
 from django.forms import widgets
+from users.models import MyAbstractUser
 
 class UserCreationForm(forms.ModelForm):
     # A form for creating new users. Includes all the required fields, plus a repeated password
@@ -14,7 +15,7 @@ class UserCreationForm(forms.ModelForm):
     
 
     class Meta:
-        model = get_user_model()
+        model = MyAbstractUser()
         fields = ('is_active',)
 
     def clean_password2(self):
