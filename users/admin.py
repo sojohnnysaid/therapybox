@@ -15,7 +15,7 @@ class UserCreationForm(forms.ModelForm):
     
 
     class Meta:
-        model = MyAbstractUser()
+        model = MyAbstractUser
         fields = ('is_active',)
 
     def clean_password2(self):

@@ -24,3 +24,15 @@ class TherapyBoxUser(MyAbstractUser):
     shipping_region = models.CharField(max_length=40, choices=ShippingRegions.choices, blank=True)
     agreed_to_terms_and_conditions = models.BooleanField(default=False, blank=True)
     is_approved = models.BooleanField(default=False, blank=True)
+
+
+
+class TherapyBoxTemplate(models.Model):
+    name = models.CharField(max_length=128)
+    description = models.CharField(max_length=128)
+    images = models.CharField(max_length=128)
+    tags = models.CharField(max_length=128)
+    location = models.CharField(max_length=128)
+    status = models.CharField(max_length=128)
+    condition = models.CharField(max_length=128)
+    notes = models.CharField(max_length=128)
