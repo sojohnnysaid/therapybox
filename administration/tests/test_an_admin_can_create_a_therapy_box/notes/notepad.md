@@ -22,7 +22,10 @@ users perspective:
     sees inventory page
     clicks + Add new item
     sees item creation page
-    fills out item creation form
+
+    fills out item creation form...
+    adds 3 photos
+    photos are urls to cloudinary api
     
 
 

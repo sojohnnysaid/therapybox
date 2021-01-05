@@ -10,15 +10,27 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+<<<<<<< HEAD
+=======
+import os
+from pathlib import Path
+
+>>>>>>> spike-an-admin-can-add-photos-to-a-therapy-box-using-cloudinary-api
 from dotenv import load_dotenv
 load_dotenv()
 
 from django.urls.base import reverse_lazy
+<<<<<<< HEAD
 import os
 
 
 from pathlib import Path
+=======
+>>>>>>> spike-an-admin-can-add-photos-to-a-therapy-box-using-cloudinary-api
 from django.contrib.messages import constants as messages
+
+import cloudinary
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -44,13 +56,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
+    'cloudinary',
+    'core',
     'therapybox.apps.TherapyboxConfig',
     'administration.apps.AdministrationConfig',
-    'core',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -141,3 +155,11 @@ MY_ABSTRACT_USER_SETTINGS = {
     } 
 }
 
+
+cloudinary.config( 
+  cloud_name = os.getenv('CLOUDINARY_NAME'), 
+  api_key = os.getenv('CLOUDINARY_KEY'), 
+  api_secret = os.getenv('CLOUDINARY_SECRET')
+)
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
