@@ -35,7 +35,9 @@ class TherapyBoxUser(MyAbstractUser):
 class TherapyBoxTemplate(models.Model):
     name = models.CharField(max_length=128)
     description = models.CharField(max_length=128, blank=True)
-    image_1 = CloudinaryField('image', blank=True)
+    image_1 = CloudinaryField('Image 1', blank=True)
+    image_2 = CloudinaryField('Image 2', blank=True)
+    image_3 = CloudinaryField('Image 3', blank=True)
     tags = models.CharField(max_length=128, blank=True)
     length = models.CharField(max_length=128, help_text='Approx mm', blank=True)
     height = models.CharField(max_length=128, help_text='Approx mm', blank=True)

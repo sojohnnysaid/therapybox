@@ -99,11 +99,20 @@ class AdminLogsInAndCreatesTherapyBoxInstance(BaseFunctionalTest):
         input.send_keys('test_description')
 
         time.sleep(1)
-        # image
+        # image_1
         input = self.browser.find_elements(By.NAME, 'image_1')[0]
         input.send_keys('/Users/home/Desktop/therapybox/staticfiles/test_image_1.png')
         time.sleep(2)
 
+        # image_2
+        input = self.browser.find_elements(By.NAME, 'image_2')[0]
+        input.send_keys('/Users/home/Desktop/therapybox/staticfiles/test_image_1.png')
+        time.sleep(2)
+
+        # image_3
+        input = self.browser.find_elements(By.NAME, 'image_3')[0]
+        input.send_keys('/Users/home/Desktop/therapybox/staticfiles/test_image_1.png')
+        time.sleep(2)
 
         # tags
         input = self.browser.find_elements(By.NAME, 'tags')[0]
