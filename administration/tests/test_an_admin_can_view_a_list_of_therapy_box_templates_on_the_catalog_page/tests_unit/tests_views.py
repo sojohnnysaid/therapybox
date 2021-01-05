@@ -21,7 +21,6 @@ class BaseTestCase(TestCase):
             {'username': self.email, 'password': self.password}, follw=True)
 
 
-@skip
 class ViewTest(BaseTestCase):
 
     def test_homepage_returns_page_status_ok(self):
