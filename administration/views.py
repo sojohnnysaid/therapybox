@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.urls.base import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
+from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from django import forms
@@ -30,9 +31,9 @@ class AdminDashboard(LoginAdminRequiredMixin, TemplateView):
 
 
 
-class Catalog(LoginAdminRequiredMixin, TemplateView):
+class Catalog(LoginAdminRequiredMixin, ListView):
     template_name = 'administration/catalog.html'
-
+    model = TherapyBoxTemplate
 
 
 

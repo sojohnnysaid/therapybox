@@ -5,7 +5,7 @@
 *******************************
 
 📜 Feature:
-    ✅  A user can ...
+    ✅  An admin can see a list of therapy box templates on the catalog page
 
 
 ✅ TODO LIST 
