@@ -18,7 +18,7 @@ class BaseFunctionalTest(LiveServerTestCase):
     def setUp(self):
         options = Options()
         options.headless = True
-        self.browser = webdriver.Firefox()#options=options
+        self.browser = webdriver.Firefox(options=options)
         self.browser.implicitly_wait(15)
         
         self.email = 'test@gmail.com'
@@ -78,8 +78,8 @@ class AdminLogsInAndCreatesTherapyBoxInstance(BaseFunctionalTest):
         # John logs in and is redirected to the dashboard page
         self.login()
 
-        # he clicks on the inventory menu item
-        self.browser.find_element_by_link_text('Inventory').click()
+        # he clicks on the Catalog menu item
+        self.browser.find_element_by_link_text('Catalog').click()
 
         # he sees the add new item button and clicks on it
         self.browser.find_element_by_link_text('+ Add new item').click()
@@ -88,7 +88,6 @@ class AdminLogsInAndCreatesTherapyBoxInstance(BaseFunctionalTest):
         assert '+ new item' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
 
         # he fills out the form
-        time.sleep(1)
 
         # name
         input = self.browser.find_elements(By.NAME, 'name')[0]
@@ -98,21 +97,17 @@ class AdminLogsInAndCreatesTherapyBoxInstance(BaseFunctionalTest):
         input = self.browser.find_elements(By.NAME, 'description')[0]
         input.send_keys('test_description')
 
-        time.sleep(1)
         # image_1
         input = self.browser.find_elements(By.NAME, 'image_1')[0]
         input.send_keys('/Users/home/Desktop/therapybox/staticfiles/test_image_1.png')
-        time.sleep(2)
 
         # image_2
         input = self.browser.find_elements(By.NAME, 'image_2')[0]
         input.send_keys('/Users/home/Desktop/therapybox/staticfiles/test_image_1.png')
-        time.sleep(2)
 
         # image_3
         input = self.browser.find_elements(By.NAME, 'image_3')[0]
         input.send_keys('/Users/home/Desktop/therapybox/staticfiles/test_image_1.png')
-        time.sleep(2)
 
         # tags
         input = self.browser.find_elements(By.NAME, 'tags')[0]
@@ -134,14 +129,9 @@ class AdminLogsInAndCreatesTherapyBoxInstance(BaseFunctionalTest):
         input = self.browser.find_elements(By.NAME, 'weight')[0]
         input.send_keys('test_weight')
 
-        time.sleep(3)
-
         # he submits the form
         self.browser.find_elements(By.ID, 'admin_create_therapy_box_template_submit')[0].click()
 
-        time.sleep(2)
 
-        # John is back on the inventory page
-        assert 'Inventory' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
-
-        # he sees his new item in the inventory list
+        # John is back on the catalog page
+        assert 'Catalog' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text

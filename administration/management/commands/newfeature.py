@@ -27,8 +27,10 @@ class Command(BaseCommand):
             os.makedirs(f"{appname}/tests/{feature}/tests_unit", exist_ok=False)
             os.makedirs(f"{appname}/tests/{feature}/notes", exist_ok=False)
 
+            app_directory = 'administration'
+
             # create unit test files from templates
-            file_template_directory = 'core/management/commands/file_templates/unit'
+            file_template_directory = f'{app_directory}/management/commands/file_templates/unit'
             templates = os.listdir(file_template_directory)
 
             for template in templates:
@@ -38,7 +40,7 @@ class Command(BaseCommand):
                     f.write(template_text)
 
             # create functional test files from templates
-            file_template_directory = 'core/management/commands/file_templates/functional'
+            file_template_directory = f'{app_directory}/management/commands/file_templates/functional'
             templates = os.listdir(file_template_directory)
 
             for template in templates:
@@ -49,7 +51,7 @@ class Command(BaseCommand):
 
             
             # create notes from templates
-            file_template_directory = 'core/management/commands/file_templates/notes'
+            file_template_directory = f'{app_directory}/management/commands/file_templates/notes'
             templates = os.listdir(file_template_directory)
 
             for template in templates:

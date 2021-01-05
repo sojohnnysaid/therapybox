@@ -3,14 +3,14 @@ from django.urls import path, reverse_lazy
 from django.views.generic.base import RedirectView
 from administration.views import (
     AdminDashboard,
-    Inventory,
+    Catalog,
     Create,
 )
 
 app_name = 'administration'
 urlpatterns = [
-    path('', RedirectView.as_view(url=reverse_lazy('users:admin_login'))),
+    path('', RedirectView.as_view(url=reverse_lazy('users:admin_login')), name='admin_base'),
     path('dashboard/', AdminDashboard.as_view(), name='dashboard'),
-    path('inventory', Inventory.as_view(), name='inventory'),
+    path('catalog/', Catalog.as_view(), name='catalog'),
     path('create/', Create.as_view(), name='create_therapy_box_template')
 ]

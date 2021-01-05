@@ -51,7 +51,7 @@ class TherapyBoxTemplate(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('administration:inventory')
+        return reverse('administration:catalog')
 
 
 class TherapyBox(models.Model):

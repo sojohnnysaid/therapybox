@@ -10,8 +10,7 @@ class BaseTestCase(TestCase):
 
 
 
+class MyModelTest(BaseTestCase):
 
-class AdminTests(BaseTestCase):
-
-    def test_admin_does_what_is_expected(self):
+    def test_model_does_what_is_expected(self):
         pass

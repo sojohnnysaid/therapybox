@@ -30,20 +30,13 @@ class AdminDashboard(LoginAdminRequiredMixin, TemplateView):
 
 
 
-class Inventory(LoginAdminRequiredMixin, TemplateView):
-    template_name = 'administration/inventory.html'
+class Catalog(LoginAdminRequiredMixin, TemplateView):
+    template_name = 'administration/catalog.html'
 
 
 
 
-class Create(CreateView):
+class Create(LoginAdminRequiredMixin, CreateView):
     template_name = 'administration/create.html'
     model = TherapyBoxTemplate
     fields = '__all__'
-
-    def get_form(self, form_class=None):
-        """Return an instance of the form to be used in this view."""
-        if form_class is None:
-            form_class = self.get_form_class()
-            form_class.base_fields['image_1'].required = False
-        return form_class(**self.get_form_kwargs())
