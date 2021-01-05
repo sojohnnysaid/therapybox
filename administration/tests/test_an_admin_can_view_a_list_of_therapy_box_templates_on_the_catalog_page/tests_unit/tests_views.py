@@ -3,6 +3,8 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 
+from factories.factories import TherapyBoxTemplateFactory
+
 
 
 
@@ -13,17 +15,27 @@ class BaseTestCase(TestCase):
         self.User = get_user_model()
         self.email = 'test@gmail.com'
         self.password = 'password'
-        self.User.objects.create_superuser(self.email, self.password)
+        self.client = Client()
 
-    def login(self, name):
-       return Client().post(
-            reverse(name), 
-            {'username': self.email, 'password': self.password}, follw=True)
+    def login_user(self):
+        user = self.User.objects.create(email=self.email, password=self.password)
+        self.client.force_login(user)
+    
+    def login_admin(self):
+        user = self.User.objects.create(email=self.email, password=self.password)
+        user.is_admin = True
+        user.is_active = True
+        user.save()
+        self.client.force_login(user)
 
-@skip
+
 class ViewTest(BaseTestCase):
 
-    def test_homepage_returns_page_status_ok(self):
-        url_name = 'app:url_name'
-        response = Client().get(reverse(url_name))
-        self.assertEqual(response.status_code, 200)
+
+    def test_catalog_page_shows_list_of_therapy_box_templates(self):
+        TherapyBoxTemplateFactory(name='a new therapy box template')
+        TherapyBoxTemplateFactory(name='another therapy box template')
+        self.login_admin()
+        response = self.client.get(reverse('administration:catalog'), follow=True)
+        assert 'a new therapy box template' in response.rendered_content
+        assert 'another therapy box template' in response.rendered_content

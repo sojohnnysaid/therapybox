@@ -13,12 +13,20 @@ class BaseTestCase(TestCase):
         self.User = get_user_model()
         self.email = 'test@gmail.com'
         self.password = 'password'
-        self.User.objects.create_superuser(self.email, self.password)
+        self.client = Client()
+    
+    def get_user(self):
+        return self.User.objects.create_superuser(self.email, self.password)
 
-    def login(self, name):
-       return Client().post(
-            reverse(name), 
-            {'username': self.email, 'password': self.password}, follw=True)
+    def login_user(self):
+        user = self.User.objects.create(email=self.email, password=self.password)
+        self.client.force_login(user)
+    
+    def login_admin(self):
+        user = self.User.objects.create(email=self.email, password=self.password)
+        user.is_admin = True
+        user.save()
+        self.client.force_login(user)
 
 
 @skip
