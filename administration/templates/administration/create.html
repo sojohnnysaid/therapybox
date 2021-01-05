@@ -7,10 +7,7 @@
 </head>
 <body>
     <h1>+ new item</h1>
-    <form action="" method='post' enctype="multipart/form-data">
-        {% csrf_token %}
-        <table>{{form.as_table}}</table>
-        <input type="submit" value="create" id="admin_create_therapy_box_template_submit">
-    </form>
+    {% include "form.html" with method='post' enctype='text/plain' value='create' button_id='admin_create_therapy_box_template_submit' %}
+</form>
 </body>
 </html>

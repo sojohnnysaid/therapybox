@@ -1,0 +1,10 @@
+<ul>
+    <li><a href="{% url 'therapybox:homepage' %}">Home</a></li>
+    {% if user.is_authenticated %}
+        <li><a href="{% url 'users:logout' %}">Logout</a></li>
+    {% else %}
+        <li><a href="{% url 'users:login' %}">Login</a></li>
+        <li><a href="{% url 'users:admin_login' %}">Admin</a></li>
+        <li><a href="{% url 'users:register' %}">Register</a></li>
+    {% endif %}
+</ul>

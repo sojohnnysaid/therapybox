@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Default Title{% endblock %}</title>
+</head>
+<body>
+    {% include "public/menu.html" %}
+    {% include "includes/messages.html" %}
+    {% include "includes/form_errors.html" %}
+    {% block content %}{% endblock content %}
+</body>
+</html>
