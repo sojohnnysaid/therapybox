@@ -7,6 +7,13 @@
 </head>
 <body>
     <h1>Admin Dashboard</h1>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="message alert alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <a href="{% url 'administration:catalog' %}">Catalog</a>
 </body>
 </html>

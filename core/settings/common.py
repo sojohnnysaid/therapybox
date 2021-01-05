@@ -67,7 +67,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [(os.path.join(BASE_DIR, 'templates')),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -135,12 +135,12 @@ MY_ABSTRACT_USER_SETTINGS = {
     'users_messages_page': reverse_lazy('therapybox:homepage'),
     'admin_messages_page':reverse_lazy('therapybox:homepage'),
     'templates': {
-        'register': 'therapybox/register.html',
-        'account_activation_request': 'therapybox/account_activation_request.html',
-        'login': 'therapybox/login.html',
-        'admin_login': 'therapybox/admin_login.html',
-        'password_reset_request': 'therapybox/password_reset_request.html',
-        'password_reset_form': 'therapybox/password_reset_form.html',
+        'register': 'users/register.html',
+        'account_activation_request': 'users/account_activation_request.html',
+        'login': 'users/login.html',
+        'admin_login': 'users/admin_login.html',
+        'password_reset_request': 'users/password_reset_request.html',
+        'password_reset_form': 'users/password_reset_form.html',
     } 
 }
 
