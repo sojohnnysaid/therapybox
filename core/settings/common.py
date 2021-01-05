@@ -10,23 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-<<<<<<< HEAD
-=======
 import os
 from pathlib import Path
 
->>>>>>> spike-an-admin-can-add-photos-to-a-therapy-box-using-cloudinary-api
 from dotenv import load_dotenv
 load_dotenv()
 
 from django.urls.base import reverse_lazy
-<<<<<<< HEAD
-import os
-
-
-from pathlib import Path
-=======
->>>>>>> spike-an-admin-can-add-photos-to-a-therapy-box-using-cloudinary-api
 from django.contrib.messages import constants as messages
 
 import cloudinary
