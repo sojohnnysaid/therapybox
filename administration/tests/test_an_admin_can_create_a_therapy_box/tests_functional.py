@@ -98,11 +98,11 @@ class AdminLogsInAndCreatesTherapyBoxInstance(BaseFunctionalTest):
         input = self.browser.find_elements(By.NAME, 'description')[0]
         input.send_keys('test_description')
 
-        time.sleep(5)
+        time.sleep(1)
         # image
         input = self.browser.find_elements(By.NAME, 'image_1')[0]
         input.send_keys('/Users/home/Desktop/therapybox/staticfiles/test_image_1.png')
-        time.sleep(5)
+        time.sleep(2)
 
 
         # tags
@@ -125,12 +125,12 @@ class AdminLogsInAndCreatesTherapyBoxInstance(BaseFunctionalTest):
         input = self.browser.find_elements(By.NAME, 'weight')[0]
         input.send_keys('test_weight')
 
-        time.sleep(5)
+        time.sleep(3)
 
         # he submits the form
         self.browser.find_elements(By.ID, 'admin_create_therapy_box_template_submit')[0].click()
 
-        time.sleep(5)
+        time.sleep(2)
 
         # John is back on the inventory page
         assert 'Inventory' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
