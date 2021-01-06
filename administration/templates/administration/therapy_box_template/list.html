@@ -10,7 +10,7 @@
 
     <ul>
         {% for therapybox in object_list %}
-            <li>{{ therapybox.name }}</li>
+            <li><a href="{% url 'administration:detail_therapy_box_template' therapybox.id%}">{{ therapybox.name }}</a></li>
             {% cloudinary therapybox.image_1 format="jpg" width=120 height=80 crop="fill" %}
         {% empty %}
             <li>No Therapy Boxes yet.</li>

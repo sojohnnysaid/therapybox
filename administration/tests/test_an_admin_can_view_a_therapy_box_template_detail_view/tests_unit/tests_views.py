@@ -3,6 +3,8 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 
+from factories.factories import TherapyBoxTemplateFactory
+
 
 
 
@@ -14,9 +16,6 @@ class BaseTestCase(TestCase):
         self.email = 'test@gmail.com'
         self.password = 'password'
         self.client = Client()
-    
-    def get_user(self):
-        return self.User.objects.create_superuser(self.email, self.password)
 
     def login_user(self):
         user = self.User.objects.create(email=self.email, password=self.password)
@@ -25,14 +24,19 @@ class BaseTestCase(TestCase):
     def login_admin(self):
         user = self.User.objects.create(email=self.email, password=self.password)
         user.is_admin = True
+        user.is_active = True
         user.save()
         self.client.force_login(user)
 
 
-@skip
 class ViewTest(BaseTestCase):
 
-    def test_homepage_returns_page_status_ok(self):
-        url_name = 'app:url_name'
-        response = Client().get(reverse(url_name))
-        self.assertEqual(response.status_code, 200)
+
+    def test_detail_page_shows_a_single_therapy_box(self):
+        TherapyBoxTemplateFactory(name='a new therapy box template')
+        self.login_admin()
+        response = self.client.get(reverse('administration:detail_therapy_box_template', kwargs={'pk':1}), follow=True)
+        from rich import inspect
+        inspect(response)
+        assert 'Detail: a new therapy box template' in response.rendered_content
+        assert 'a new therapy box template' in response.rendered_content

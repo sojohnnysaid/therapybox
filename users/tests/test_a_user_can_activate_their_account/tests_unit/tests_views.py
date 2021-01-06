@@ -31,8 +31,6 @@ class BaseTestCase(TestCase):
             }
 
         response = Client().post(reverse_lazy('users:register'), data, follow=True)
-        from rich import inspect
-        inspect(response)
         
         email = mail.outbox[0]
         url_search = re.search(r'http://.+/account-activation/\?uid=.+&token=.+$', email.body)
