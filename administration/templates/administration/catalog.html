@@ -1,14 +1,13 @@
+{% extends "public/base.html" %}
 {% load cloudinary %}   
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catalog</title>
-</head>
-<body>
-    <h1>Catalog</h1>
+
+
+{% block content %}
+
+    <h1>{% block title %}Catalog{% endblock %}</h1>
+    
     <a href="{% url 'administration:create_therapy_box_template' %}">+ Add new item</a>
+
     <ul>
         {% for therapybox in object_list %}
             <li>{{ therapybox.name }}</li>
@@ -17,5 +16,6 @@
             <li>No Therapy Boxes yet.</li>
         {% endfor %}
     </ul>
-</body>
-</html>
+
+
+{% endblock %}

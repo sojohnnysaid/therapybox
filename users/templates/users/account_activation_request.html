@@ -1,28 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-<h1>Re-send Account Activation Link</h1>
-<form action="" method="post">
-  {% csrf_token %}
-  {% comment %} {{ form.non_field_errors }} {% endcomment %}
-  <table>
-    {% for field in form.visible_fields %}
-      <tr>
-        <th>{{ field.label_tag }}</th>
-        <td>
-          {% comment %} {{ field.errors }} {% endcomment %}
-          {{ field }}
-        </td>
-      </tr>
-    {% endfor %}
-  </table>
+{% extends "public/base.html" %}
 
-  <button id="users_account_activation_request_form_submit_button" type="submit">Submit</button>
-</form>
-</body>
-</html>
+
+{% block content %}
+
+    <h1>{% block title %}Re-send Account Activation Link{% endblock %}</h1>
+    
+    {% include "includes/form.html" with method='post' enctype='text/plain' value='submit' button_id='form_submit_button_account_activation_request' %}
+
+{% endblock %}

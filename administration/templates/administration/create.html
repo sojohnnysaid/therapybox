@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create</title>
-</head>
-<body>
-    <h1>+ new item</h1>
-    {% include "form.html" with method='post' enctype='text/plain' value='create' button_id='admin_create_therapy_box_template_submit' %}
-</form>
-</body>
-</html>
+{% extends "admin/base.html" %}
+
+
+{% block content %}
+
+    <h1>{% block title %}Create a new Therapy Box Template{% endblock %}</h1>
+    
+    {% include "includes/form.html" with method='post' enctype='multipart/form-data' value='register' button_id='create_therapy_box_template' %}
+
+{% endblock %}

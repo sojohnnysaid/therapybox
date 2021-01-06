@@ -1,7 +1,14 @@
-<form method="{{method|default:'post'}}" action="">
+<form method="{{method|default:'post'}}" action="{{action|default:""}}">
     {% csrf_token %}
     <table>
-    {{form.as_table}}
+        {% for field in form.visible_fields %}
+        <tr>
+            <th>{{ field.label_tag }}</th>
+            <td>
+            {{ field }}
+            </td>
+        </tr>
+        {% endfor %}
     </table>
-    <input type="submit" value="submit" id="id_form_button">
+    <input type="submit" value="{{button_text|default:'submit'}}" id="form_submit_button_{{button_id|default:'id'}}">
 </form>
