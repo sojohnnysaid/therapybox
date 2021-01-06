@@ -44,7 +44,7 @@ class UserCanLogin(BaseFunctionalTest):
         self.browser.get(self.live_server_url + reverse('users:admin_login'))
 
         # he is greeted by the admin-login header
-        assert 'Admin Login Page' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
+        assert 'Admin Login' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
 
         # John starts filling out the admin-login form...
 
@@ -57,7 +57,7 @@ class UserCanLogin(BaseFunctionalTest):
         input.send_keys(self.password)
 
         # submits the form
-        self.browser.find_elements(By.ID, 'users_admin_login_form_submit_button')[0].click()
+        self.browser.find_elements(By.ID, 'form_submit_button_admin_login')[0].click()
 
         # he is taken to a new page
         assert str(conf_settings.MY_ABSTRACT_USER_SETTINGS['users_messages_page']) in self.browser.current_url

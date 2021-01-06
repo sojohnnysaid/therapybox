@@ -43,7 +43,7 @@ class BaseFunctionalTest(LiveServerTestCase):
         input = self.browser.find_elements(By.NAME, 'password')[0]
         input.send_keys(self.password)
 
-        self.browser.find_element_by_id('users_admin_login_form_submit_button').click()
+        self.browser.find_element_by_id('form_submit_button_admin_login').click()
 
         # John is redirected to the dashboard page
         assert 'Admin Dashboard' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
@@ -67,7 +67,7 @@ class AdminLogsInAndCreatesTherapyBoxInstance(BaseFunctionalTest):
         input = self.browser.find_elements(By.NAME, 'password')[0]
         input.send_keys(self.password)
 
-        self.browser.find_element_by_id('users_admin_login_form_submit_button').click()
+        self.browser.find_element_by_id('form_submit_button_admin_login').click()
 
         # John is redirected to the dashboard page
         assert 'Admin Dashboard' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
@@ -85,7 +85,7 @@ class AdminLogsInAndCreatesTherapyBoxInstance(BaseFunctionalTest):
         self.browser.find_element_by_link_text('+ Add new item').click()
 
         # he is brought to a form
-        assert '+ new item' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
+        assert 'Create a Therapy Box Template' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
 
         # he fills out the form
 
@@ -130,7 +130,7 @@ class AdminLogsInAndCreatesTherapyBoxInstance(BaseFunctionalTest):
         input.send_keys('test_weight')
 
         # he submits the form
-        self.browser.find_elements(By.ID, 'admin_create_therapy_box_template_submit')[0].click()
+        self.browser.find_elements(By.ID, 'form_submit_button_create_therapy_box_template')[0].click()
 
 
         # John is back on the catalog page

@@ -60,7 +60,7 @@ class BaseFunctionalTest(LiveServerTestCase):
         input.click()
         input = self.browser.find_elements_by_xpath(".//*[contains(text(), 'Agreed to terms and conditions')]")[0]
         input.click()
-        self.browser.find_elements(By.ID, 'users_register_form_submit_button')[0].click()
+        self.browser.find_elements(By.ID, 'form_submit_button_register')[0].click()
 
 
 

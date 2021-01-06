@@ -96,7 +96,7 @@ class UserRegistration(BaseFunctionalTest):
         input.click()
 
         # submits the form
-        self.browser.find_elements(By.ID, 'users_register_form_submit_button')[0].click()
+        self.browser.find_elements(By.ID, 'form_submit_button_register')[0].click()
 
         # he is taken to a new page
         assert str(conf_settings.MY_ABSTRACT_USER_SETTINGS['users_messages_page']) in self.browser.current_url

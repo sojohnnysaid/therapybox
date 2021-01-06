@@ -57,7 +57,7 @@ class UserCanRequestAccountActivationLinkViaEmail(BaseFunctionalTest):
         input.send_keys(self.password)
 
         # submits the form
-        self.browser.find_elements(By.ID, 'users_login_form_submit_button')[0].click()
+        self.browser.find_elements(By.ID, 'form_submit_button_login')[0].click()
 
         # a message appears telling him his account is not activated
         error_message = self.browser.find_elements(By.CLASS_NAME, 'message')[0].text
@@ -76,7 +76,7 @@ class UserCanRequestAccountActivationLinkViaEmail(BaseFunctionalTest):
         input.send_keys(self.email)
 
         # he submits the form
-        self.browser.find_elements(By.ID, 'users_account_activation_request_form_submit_button')[0].click()
+        self.browser.find_elements(By.ID, 'form_submit_button_account_activation_request')[0].click()
 
         # John sees the page is now back to the homepage
         assert str(conf_settings.MY_ABSTRACT_USER_SETTINGS['users_messages_page']) in self.browser.current_url
@@ -123,7 +123,7 @@ class UserCanRequestAccountActivationLinkViaEmail(BaseFunctionalTest):
         input.send_keys(self.password)
 
         # submits the form
-        self.browser.find_elements(By.ID, 'users_login_form_submit_button')[0].click()
+        self.browser.find_elements(By.ID, 'form_submit_button_login')[0].click()
 
         # he is taken to a new page
         assert str(conf_settings.MY_ABSTRACT_USER_SETTINGS['users_messages_page']) in self.browser.current_url

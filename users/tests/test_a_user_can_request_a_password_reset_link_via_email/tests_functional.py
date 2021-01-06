@@ -58,7 +58,7 @@ class BaseFunctionalTest(LiveServerTestCase):
         input.click()
         input = self.browser.find_elements_by_xpath(".//*[contains(text(), 'Agreed to terms and conditions')]")[0]
         input.click()
-        self.browser.find_elements(By.ID, 'users_register_form_submit_button')[0].click()
+        self.browser.find_elements(By.ID, 'form_submit_button_register')[0].click()
 
         # this is the test_a_user_can_activate_their_account test_funcional.py code. Do not change it directly
         # just copy the test code from the other file!
@@ -103,7 +103,7 @@ class UserCanRequestPasswordResetLinkViaEmail(BaseFunctionalTest):
         input.send_keys('john@gmail.com')
 
         # submits the form
-        self.browser.find_elements(By.ID, 'users_password_reset_request_form_submit_button')[0].click()
+        self.browser.find_elements(By.ID, 'form_submit_button_password_reset_request')[0].click()
 
         # he is taken back to the homepage
         assert str(conf_settings.MY_ABSTRACT_USER_SETTINGS['users_messages_page']) in self.browser.current_url

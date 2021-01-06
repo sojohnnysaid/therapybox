@@ -46,7 +46,7 @@ class BaseFunctionalTest(LiveServerTestCase):
         input.send_keys(self.email)
 
         # submits the form
-        self.browser.find_elements(By.ID, 'users_password_reset_request_form_submit_button')[0].click()
+        self.browser.find_elements(By.ID, 'form_submit_button_password_reset_request')[0].click()
         
 
 
@@ -88,7 +88,7 @@ class UserCanResetTheirPasswordUsingEmailedLinkOnce(BaseFunctionalTest):
         input.send_keys(new_password)
 
         # finally he submits the form
-        self.browser.find_elements(By.ID, 'users_password_reset_form_submit_button')[0].click()
+        self.browser.find_elements(By.ID, 'form_submit_button_password_reset')[0].click()
 
         # the page reloads and John notices he is now on another page
         assert str(conf_settings.MY_ABSTRACT_USER_SETTINGS['users_messages_page']) in self.browser.current_url

@@ -50,7 +50,7 @@ def get_password_reset_link(request, user):
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         absolute_uri = request.build_absolute_uri(
             reverse_lazy(
-                'users:password-reset',
+                'users:password_reset',
                 kwargs={'uidb64': uid, 'token': token}))
         return absolute_uri
 

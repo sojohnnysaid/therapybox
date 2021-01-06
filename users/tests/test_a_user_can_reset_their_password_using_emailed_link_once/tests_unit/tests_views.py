@@ -36,12 +36,12 @@ class UsersPasswordResetViewTest(BaseTestCase):
         new_password = 'AuniqueNewPW2rrrd$'
         c = Client()
         response = c.get(
-            reverse('users:password-reset', kwargs={'uidb64': uidb64, 'token': token}), follow=True)
+            reverse('users:password_reset', kwargs={'uidb64': uidb64, 'token': token}), follow=True)
         
         self.assertTemplateUsed(response, conf_settings.MY_ABSTRACT_USER_SETTINGS['templates']['password_reset_form'])
         
         response = c.post(
-            reverse('users:password-reset', kwargs={'uidb64': uidb64, 'token': 'set-password'}),
+            reverse('users:password_reset', kwargs={'uidb64': uidb64, 'token': 'set-password'}),
             {'new_password1': new_password, 'new_password2': new_password}, follow=True)
 
         self.assertContains(response, 'Success! Your password has been reset.')
@@ -59,9 +59,9 @@ class UsersPasswordResetViewTest(BaseTestCase):
 
         c = Client()
         c.get(
-            reverse('users:password-reset', kwargs={'uidb64': uidb64, 'token': token}), follow=True)
+            reverse('users:password_reset', kwargs={'uidb64': uidb64, 'token': token}), follow=True)
         c.post(
-            reverse('users:password-reset', kwargs={'uidb64': uidb64, 'token': 'set-password'}),
+            reverse('users:password_reset', kwargs={'uidb64': uidb64, 'token': 'set-password'}),
             {'new_password1': new_password, 'new_password2': new_password}, follow=True)
 
         

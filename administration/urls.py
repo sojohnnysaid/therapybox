@@ -17,5 +17,5 @@ urlpatterns = [
 
 urlpatterns += [
     path('catalog/', Catalog.as_view(), name='catalog'),
-    path('catalog/new', Create.as_view(), name='create_therapy_box_template'),
+    path('catalog/create', Create.as_view(), name='create_therapy_box_template'),
 ]

@@ -5,7 +5,7 @@
 
     <h1>{% block title %}Admin Login{% endblock %}</h1>
     
-    {% include "includes/form.html" with method='post' enctype='text/plain' value='login' button_id='form_submit_button_admin_login' %}
+    {% include "includes/form.html" with method='post' enctype='text/plain' value='login' button_id='admin_login' %}
 
     <a href={% url 'users:password_request_reset_link' %}>Forgot Password? Click here!</a>
 
