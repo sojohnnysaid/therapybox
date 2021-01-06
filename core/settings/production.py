@@ -19,4 +19,4 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 STATIC_URL = 'http://' + AWS_STORAGE_BUCKET_NAME + '.s3.amazonaws.com/'
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+django_heroku.settings(locals(), staticfiles=False)
