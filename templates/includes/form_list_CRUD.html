@@ -1,0 +1,25 @@
+{% load cloudinary %}
+{% if object_list.all %}
+	<form action="">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Photo</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for therapybox in object_list %}
+					<tr style='cursor: pointer; cursor: hand;' onclick="window.location='{% url 'administration:detail_therapy_box_template' therapybox.id%}';">
+						<td>{{ therapybox.name }}</td>
+						<td>{% cloudinary therapybox.image_1 format="jpg" width=120 height=80 crop="fill" %}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</form>
+{% else %}
+
+<p class="text-center">No Therapy Boxes yet.</p>
+
+{% endif %}

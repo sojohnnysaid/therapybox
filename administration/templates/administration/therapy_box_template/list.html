@@ -1,21 +1,16 @@
 {% extends "public/base.html" %}
-{% load cloudinary %}   
+
 
 
 {% block content %}
 
     <h1 class="text-center">{% block title %}Catalog{% endblock %}</h1>
     
-    <a href="{% url 'administration:create_therapy_box_template' %}">+ Add new item</a>
+    <div class="row">
+        <a class="ml-auto" href="{% url 'administration:create_therapy_box_template' %}">+ Add new item</a>
+    </div>
 
-    <ul>
-        {% for therapybox in object_list %}
-            <li><a href="{% url 'administration:detail_therapy_box_template' therapybox.id%}">{{ therapybox.name }}</a></li>
-            {% cloudinary therapybox.image_1 format="jpg" width=120 height=80 crop="fill" %}
-        {% empty %}
-            <li>No Therapy Boxes yet.</li>
-        {% endfor %}
-    </ul>
+    {% include 'includes/form_list_CRUD.html' %}
 
 
 {% endblock %}
