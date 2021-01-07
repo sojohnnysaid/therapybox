@@ -22,7 +22,11 @@ nav {
     margin-bottom: 1em;
 }
 
-nav a{
+.admin-navbar .nav-link{
     color: white !important;
+}
+
+.public-navbar a, .nav-link{
+    color: rgb(43, 43, 43) !important;
 }
 
