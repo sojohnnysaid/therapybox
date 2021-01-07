@@ -1,6 +1,6 @@
 import factory
-from therapybox import models
 from django.contrib.auth.hashers import make_password
+from cloudinary.models import CloudinaryField
 
 class TherapyBoxTemplateFactory(factory.django.DjangoModelFactory):
     class Meta:
@@ -16,3 +16,4 @@ class TherapyBoxUserFactory(factory.django.DjangoModelFactory):
         """Override the default ``_create`` with our custom call."""
         kwargs['password'] = make_password(kwargs['password'])
         return super(TherapyBoxUserFactory, cls)._create(model_class, *args, **kwargs)
+
