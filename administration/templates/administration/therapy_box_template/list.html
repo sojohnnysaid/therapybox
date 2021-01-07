@@ -7,10 +7,9 @@
     <h1 class="text-center">{% block title %}Catalog{% endblock %}</h1>
     
     <div class="row">
-        <a class="ml-auto" href="{% url 'administration:create_therapy_box_template' %}">+ Add new item</a>
+        <a class="mx-auto" href="{% url 'administration:create_therapy_box_template' %}">+ Add new item</a>
     </div>
 
     {% include 'includes/form_list_CRUD.html' %}
-
 
 {% endblock %}
