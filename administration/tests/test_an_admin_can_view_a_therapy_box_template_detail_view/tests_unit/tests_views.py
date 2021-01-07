@@ -36,7 +36,5 @@ class ViewTest(BaseTestCase):
         TherapyBoxTemplateFactory(name='a new therapy box template')
         self.login_admin()
         response = self.client.get(reverse('administration:detail_therapy_box_template', kwargs={'pk':1}), follow=True)
-        from rich import inspect
-        inspect(response)
         assert 'Detail: a new therapy box template' in response.rendered_content
         assert 'a new therapy box template' in response.rendered_content
