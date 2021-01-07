@@ -62,10 +62,10 @@ class Command(BaseCommand):
 
             
             # create __init__.py files - allows us to use the same test file names in different folders
-            file_exists = os.path.exists(f"{appname}/tests/__init__.py")
-            if not file_exists:
-                with open(f"{appname}/tests/__init__.py", 'w') as f:
-                    f.write('')
+            # file_exists = os.path.exists(f"{appname}/tests/__init__.py")
+            # if not file_exists:
+            #     with open(f"{appname}/tests/__init__.py", 'w') as f:
+            #         f.write('')
             
             file_exists = os.path.exists(f"{appname}/tests/{feature}/__init__.py")
             if not file_exists:
