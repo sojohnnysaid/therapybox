@@ -3,8 +3,8 @@
 
 {% block content %}
 
-    <h1>{% block title %}Register{% endblock %}</h1>
+    <h1 class="text-center">{% block title %}Register{% endblock %}</h1>
     
-    {% include "includes/form.html" with method='post' enctype='text/plain' value='register' button_id='register' %}
+    {% include "includes/form.html" with method='post' button_text='Register' button_id='register'%}
 
 {% endblock %}

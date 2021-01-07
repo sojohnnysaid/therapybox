@@ -1,12 +1,14 @@
-{% extends "public/base.html" %}
+{% extends "admin/base.html" %}
 
 
 {% block content %}
 
-    <h1>{% block title %}Admin Login{% endblock %}</h1>
+    <h1 class="text-center">{% block title %}Admin Login{% endblock %}</h1>
     
-    {% include "includes/form.html" with method='post' enctype='text/plain' value='login' button_id='admin_login' %}
+    {% include "includes/form.html" with method='post' button_text='Login' button_id='login'%}
 
-    <a href={% url 'users:password_request_reset_link' %}>Forgot Password? Click here!</a>
+    <div class="text-center mt-3">
+        <a href={% url 'users:password_request_reset_link' %}>Forgot Password? Click here!</a>
+    </div>
 
 {% endblock %}

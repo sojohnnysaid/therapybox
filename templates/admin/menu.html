@@ -1,5 +1,18 @@
-<ul>
-    <li><a href="{% url 'administration:dashboard' %}">Dashboard</a></li>
-    <li><a href="{% url 'administration:catalog' %}">Catalog</a></li>
-    <li><a href="{% url 'users:logout' %}">Logout</a></li>
-</ul>
+<nav class="navbar navbar-expand-sm navbar-light bg-dark">
+  <button class="navbar-toggler mr-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand ml-auto" href="{% url 'therapybox:homepage' %}">The Therapy Box</a>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+        {% if user.is_authenticated %}
+          <li class="nav-item"><a href="{% url 'therapybox:homepage' %}" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="{% url 'administration:dashboard' %}" class="nav-link">Dashboard</a></li>
+          <li class="nav-item"><a href="{% url 'administration:catalog' %}" class="nav-link">Catalog</a></li>
+          <li class="nav-item"><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
+        {% else %}
+            <li class="nav-item"><a href="{% url 'therapybox:homepage' %}" class="nav-link">Home</a></li>
+        {% endif %}
+    </ul>
+  </div>
+</nav>
