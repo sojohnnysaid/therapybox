@@ -8,27 +8,13 @@
     
     <a href="{% url 'administration:create_therapy_box_template' %}">+ Add new item</a>
 
-    {% comment %} <ul>
+    <ul>
         {% for therapybox in object_list %}
             <li><a href="{% url 'administration:detail_therapy_box_template' therapybox.id%}">{{ therapybox.name }}</a></li>
             {% cloudinary therapybox.image_1 format="jpg" width=120 height=80 crop="fill" %}
         {% empty %}
             <li>No Therapy Boxes yet.</li>
         {% endfor %}
-    </ul> {% endcomment %}
-
-
-
-    <form action="">
-        <input type="checkbox" name="{{object_list.first.id}}" id="">
-    
-    </form>
-
-    <ul>
-        <li>
-            <a href="{% url 'administration:detail_therapy_box_template' object_list.first.id%}">{{ object_list.first.name }}</a>
-            <p>{% cloudinary object_list.first.image_1 format="jpg" width=120 height=80 crop="fill" %}</p>
-        </li>
     </ul>
 
 
