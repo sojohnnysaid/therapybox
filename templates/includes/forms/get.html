@@ -1,0 +1,16 @@
+<form method="get"  action="">
+    {% csrf_token %}
+    <table>
+        {% for field in form.visible_fields %}
+        <tr>
+            <th>{{ field.label_tag }}</th>
+            <td>
+            {{ field }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="text-center mt-3">
+        <input type="submit" value="{{button_text|default:'submit'}}" id="form_submit_button_{{button_id|default:'id'}}" class="btn btn-primary">
+    </div>
+</form>

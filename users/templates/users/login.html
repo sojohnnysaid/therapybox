@@ -5,7 +5,7 @@
 
     <h1 class="text-center">{% block title %}Login{% endblock %}</h1>
     
-    {% include "includes/form.html" with button_text='Login' button_id='login'%}
+    {% include "includes/forms/post.html" with button_text='Login' button_id='login'%}
 
     <div class="text-center mt-3">
         <a href={% url 'users:password_request_reset_link' %}>Forgot Password? Click here!</a>

@@ -13,7 +13,6 @@
             <li class="nav-item"><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
         {% else %}
             <li class="nav-item"><a href="{% url 'users:login' %}" class="nav-link">Login</a></li>
-            <li class="nav-item"><a href="{% url 'users:admin_login' %}" class="nav-link">Admin</a></li>
             <li class="nav-item"><a href="{% url 'users:register' %}" class="nav-link">Register</a></li>
         {% endif %}
     </ul>

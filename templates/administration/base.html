@@ -3,7 +3,7 @@
 <body>
 
     {% include "administration/menu.html" %}
-    <div class="container">
+    <main role="main" class="container">
         <div class="text-center mt-4 mb-4">
             {% include "includes/messages.html" %}
         </div>
@@ -11,7 +11,7 @@
             {% include "includes/form_errors.html" %}
         </div>
         {% block content %}{% endblock content %}
-    </div>
+    </main>
     {% include "includes/footer.html" %}
 
 </body>
