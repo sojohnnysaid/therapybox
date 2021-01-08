@@ -109,5 +109,5 @@ class TherapyBoxTemplateDeleteMultiple(View):
         key_list = [item[0] for item in GET.items()]
         query_set = models.TherapyBoxTemplate.objects.filter(pk__in=key_list)
         query_set.delete()
-        messages.success(self.request, 'Selected items deleted')
+        messages.success(self.request, f'Selected items deleted')
         return HttpResponseRedirect(self.success_url)
