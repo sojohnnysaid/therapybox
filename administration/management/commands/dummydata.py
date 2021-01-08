@@ -1,5 +1,6 @@
 import os
 import errno
+from halo import Halo
 
 from django.core.management.base import BaseCommand
 from django.apps import apps
@@ -11,6 +12,9 @@ class Command(BaseCommand):
     help = 'creates dummy data'
 
     def handle(self, *args, **options):
-        TherapyBoxTemplateFactory.create_batch(10)
-        TherapyBoxUserFactory.create_batch(10)
-        print('Dummy data added!')
+        spinner = Halo(text='Loading', spinner='dots')
+        spinner.start()
+        TherapyBoxTemplateFactory.create_batch(15)
+        TherapyBoxUserFactory.create_batch(15)
+        spinner.stop()
+        print('🔥 Dummy data added!')
