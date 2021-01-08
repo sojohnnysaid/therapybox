@@ -23,7 +23,7 @@
 			<div class="col-12 text-center">
 					{% for page_num in page_obj.paginator.page_range %}
 						{% if page_num == current_page %}
-							<a class="font-weight-bold" href="{% url 'administration:catalog' %}?page={{page_num}}">{{page_num}}</a>
+							<a style="text-decoration: underline;" href="{% url 'administration:catalog' %}?page={{page_num}}">{{page_num}}</a>
 						{% else %}
 							<a href="{% url 'administration:catalog' %}?page={{page_num}}">{{page_num}}</a>
 						{% endif %}
