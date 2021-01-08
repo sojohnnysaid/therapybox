@@ -1,22 +1,34 @@
 {% load cloudinary %}
 {% if object_list.all %}
-	<form action="">
+	<form action="{% url 'administration:delete_multiple_therapy_box_template'%}" method="get">
+		{% csrf_token %}
 		<table class="table table-bordered">
 			<thead>
 				<tr>
 					<th><input type="checkbox" name="all" id="select_all" onclick="checkAll()"></th>
 					<th>Name</th>
 					<th>Photo</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody id="catalog-list">
 				{% for therapybox in object_list %}
 					<tr>
-						<td><input type="checkbox" name="therapy_box_template_{{therapybox.id}}" value="{{therapybox.id}}"></td>
+						<td><input type="checkbox" name="{{therapybox.id}}" value="{{therapybox.id}}"></td>
 						<td><a href="{% url 'administration:detail_therapy_box_template' therapybox.id%}">{{ therapybox.name }}</a></td>
 						<td>{% cloudinary therapybox.image_1 format="jpg" width=120 height=80 crop="fill" %}</td>
+						<td style="min-width:105px">
+							<a href="{% url 'administration:delete_therapy_box_template' therapybox.id %}">Delete</a>
+							<a href="{% url 'administration:edit_therapy_box_template' therapybox.id %}">Edit</a>
+						</td>
 					</tr>
 				{% endfor %}
+				<tr>
+					<td><input type="submit" value="delete"></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
 			</tbody>
 		</table>
 	</form>
