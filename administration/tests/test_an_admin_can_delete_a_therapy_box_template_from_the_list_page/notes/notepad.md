@@ -16,8 +16,8 @@
 
 
 users perspective:
-    user does this...
-    user does that...
+    user is a logged in admin
+    user goes to catalog page
 
 
 

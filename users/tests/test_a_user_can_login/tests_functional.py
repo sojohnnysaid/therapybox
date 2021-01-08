@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.firefox.options import Options
+from selenium.webdriver import ChromeOptions as Options
 
 from django.test import LiveServerTestCase
 from django.urls import reverse
@@ -19,7 +19,7 @@ class BaseFunctionalTest(LiveServerTestCase):
     def setUp(self):
         options = Options()
         options.headless = True
-        self.browser = webdriver.Firefox(options=options)
+        self.browser = webdriver.Chrome(options=options)
         self.browser.implicitly_wait(15)
 
         self.email = 'john@gmail.com'
@@ -29,6 +29,7 @@ class BaseFunctionalTest(LiveServerTestCase):
         self.user.save()
 
     def tearDown(self):
+        
         self.browser.quit()
 
 
