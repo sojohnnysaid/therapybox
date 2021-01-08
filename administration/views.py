@@ -38,7 +38,10 @@ class TherapyBoxTemplateCatalog(LoginAdminRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_page'] = int(self.request.GET.get('page')) or None
+        try:
+            context['current_page'] = int(self.request.GET.get('page'))
+        except:
+            pass
         return context
 
 
