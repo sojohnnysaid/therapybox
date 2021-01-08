@@ -19,6 +19,7 @@
 						<td>{% cloudinary therapybox.image_1 format="jpg" width=120 height=80 crop="fill" %}</td>
 						<td style="min-width:105px">
 							<a href="{% url 'administration:delete_therapy_box_template' therapybox.id %}">Delete</a>
+							<span> | </span>
 							<a href="{% url 'administration:edit_therapy_box_template' therapybox.id %}">Edit</a>
 						</td>
 					</tr>
