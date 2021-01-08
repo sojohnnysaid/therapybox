@@ -4,9 +4,11 @@ import time
 from unittest.case import skip
 
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver import ChromeOptions as Options
+
 
 from django.test import LiveServerTestCase
 from django.urls import reverse
@@ -132,8 +134,9 @@ class AdminLogsInAndCreatesTherapyBoxInstance(BaseFunctionalTest):
         input.send_keys('test_weight')
 
         # he submits the form
+        self.browser.execute_script("scrollBy(0,-500);")
+        time.sleep(5)
         self.browser.find_elements(By.ID, 'form_submit_button_create_therapy_box_template')[0].click()
-
 
         # John is back on the catalog page
         assert 'Catalog' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
