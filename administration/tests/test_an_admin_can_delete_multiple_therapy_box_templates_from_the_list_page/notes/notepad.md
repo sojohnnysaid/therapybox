@@ -5,7 +5,7 @@
 *******************************
 
 📜 Feature:
-    ✅  A user can ...
+    ✅  A user can delete a therapy box template
 
 
 ✅ TODO LIST 
@@ -16,8 +16,11 @@
 
 
 users perspective:
-    user does this...
-    user does that...
+    logged in admin goes to catalog page
+    clicks delete icon on item row
+    delete confirmation page appears to confirm
+    user confirms
+    redirects back to catalog page
 
 
 

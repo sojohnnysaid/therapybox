@@ -18,6 +18,7 @@ urlpatterns = [
 
 urlpatterns += [
     path('catalog/', TherapyBoxTemplateCatalog.as_view(), name='catalog'),
+    path('catalog/<int:pk>', TherapyBoxTemplateDetail.as_view(), name='detail_therapy_box_template'),
     path('catalog/create', TherapyBoxTemplateCreate.as_view(), name='create_therapy_box_template'),
-    path('catalog/detail/<int:pk>', TherapyBoxTemplateDetail.as_view(), name='detail_therapy_box_template'),
+    path('catalog/delete/<int:pk>', TherapyBoxTemplateCreate.as_view(),name='delete_therapy_box_template'),
 ]

@@ -1,8 +1,8 @@
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls.base import reverse_lazy
+from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
@@ -12,7 +12,9 @@ from therapybox.models import TherapyBoxTemplate
 
 # Create your views here.
 
-
+######################
+# CustomMixins #
+######################
 class LoginAdminRequiredMixin(LoginRequiredMixin):
     login_url = reverse_lazy('users:admin_login')
 
@@ -25,17 +27,7 @@ class LoginAdminRequiredMixin(LoginRequiredMixin):
         return super().dispatch(request, *args, **kwargs)
 
 
-class AdminDashboard(LoginAdminRequiredMixin, TemplateView):
-    template_name = 'administration/dashboard.html'
-
-
-
-
-class TherapyBoxTemplateCatalog(LoginAdminRequiredMixin, ListView):
-    template_name = 'administration/therapy_box_template/list.html'
-    model = TherapyBoxTemplate
-    paginate_by = 5
-
+class PaginationMixin:
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         try:
@@ -45,6 +37,13 @@ class TherapyBoxTemplateCatalog(LoginAdminRequiredMixin, ListView):
         return context
 
 
+class AdminDashboard(LoginAdminRequiredMixin, TemplateView):
+    template_name = 'administration/dashboard.html'
+
+
+######################
+# TherapyBoxTemplate #
+######################
 
 class TherapyBoxTemplateCreate(LoginAdminRequiredMixin, CreateView):
     template_name = 'administration/therapy_box_template/create.html'
@@ -52,8 +51,20 @@ class TherapyBoxTemplateCreate(LoginAdminRequiredMixin, CreateView):
     fields = '__all__'
 
 
+class TherapyBoxTemplateCatalog(LoginAdminRequiredMixin, PaginationMixin, ListView):
+    template_name = 'administration/therapy_box_template/list.html'
+    model = TherapyBoxTemplate
+    paginate_by = 5
+
+
 class TherapyBoxTemplateDetail(LoginAdminRequiredMixin, DetailView):
     template_name = 'administration/therapy_box_template/detail.html'
     model = TherapyBoxTemplate
     fields = '__all__'
     context_object_name = 'therapybox'
+
+
+class TherapyBoxTemplateDelete(DeleteView):
+    model = TherapyBoxTemplate
+    template_name = 'administration/therapy_box_template/delete.html'
+    success_url = reverse_lazy('administration:catalog')

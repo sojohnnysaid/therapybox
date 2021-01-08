@@ -4,13 +4,15 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr>
+					<th><input type="checkbox" name="all" id="select_all" onclick="checkAll()"></th>
 					<th>Name</th>
 					<th>Photo</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody id="catalog-list">
 				{% for therapybox in object_list %}
-					<tr style='cursor: pointer; cursor: hand;' onclick="window.location='{% url 'administration:detail_therapy_box_template' therapybox.id%}';">
+					<tr>
+						<td><input type="checkbox" name="therapy_box_template_{{therapybox.id}}" value="{{therapybox.id}}"></td>
 						<td><a href="{% url 'administration:detail_therapy_box_template' therapybox.id%}">{{ therapybox.name }}</a></td>
 						<td>{% cloudinary therapybox.image_1 format="jpg" width=120 height=80 crop="fill" %}</td>
 					</tr>
@@ -18,29 +20,7 @@
 			</tbody>
 		</table>
 	</form>
-	{% if is_paginated %}
-		<div class="row">
-			<div class="col-12 text-center">
-					{% for page_num in page_obj.paginator.page_range %}
-						{% if page_num == current_page %}
-							<a style="text-decoration: underline;" href="{% url 'administration:catalog' %}?page={{page_num}}">{{page_num}}</a>
-						{% else %}
-							<a href="{% url 'administration:catalog' %}?page={{page_num}}">{{page_num}}</a>
-						{% endif %}
-					{% endfor %}
-			</div>
-			<div class="col-12 text-center">
-			{% if page_obj.has_previous %}
-				<a href="?page=1">&laquo; first | </a>
-				<a href="?page={{ page_obj.previous_page_number }}">previous | </a>
-			{% endif %}
-			{% if page_obj.has_next %}
-				<a href="?page={{ page_obj.next_page_number }}">next</a>
-				<a href="?page={{ page_obj.paginator.num_pages }}"> | last &raquo;</a>
-			{% endif %}
-			</div>
-		</div>
-    {% endif %}
+	{% include 'includes/pagination.html' %}
 {% else %}
 <p class="text-center">No Therapy Boxes yet.</p>
 {% endif %}
