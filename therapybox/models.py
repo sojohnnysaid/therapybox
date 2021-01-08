@@ -33,6 +33,9 @@ class TherapyBoxUser(MyAbstractUser):
 
 
 class TherapyBoxTemplate(models.Model):
+    class Meta:
+        ordering = ['-id']
+
     name = models.CharField(max_length=128)
     description = models.CharField(max_length=128, blank=True)
     image_1 = CloudinaryField('Image 1', blank=True)

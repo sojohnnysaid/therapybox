@@ -34,6 +34,12 @@ class AdminDashboard(LoginAdminRequiredMixin, TemplateView):
 class TherapyBoxTemplateCatalog(LoginAdminRequiredMixin, ListView):
     template_name = 'administration/therapy_box_template/list.html'
     model = TherapyBoxTemplate
+    paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_page'] = int(self.request.GET.get('page')) or None
+        return context
 
 
 

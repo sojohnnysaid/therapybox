@@ -11,5 +11,8 @@ class Command(BaseCommand):
     help = 'creates a super user admin@gmail.com with the password "password"'
 
     def handle(self, *args, **options):
-        get_user_model().objects.create_superuser(email='admin@gmail.com', password='password')
-        print('Super user created!')
+        if get_user_model().objects.filter(email='admin@gmail.com').exists():
+            print('Super user already created!')
+        else:
+            get_user_model().objects.create_superuser(email='admin@gmail.com', password='password')
+            print('Super user created!')
