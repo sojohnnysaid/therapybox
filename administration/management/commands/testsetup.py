@@ -10,6 +10,7 @@ class Command(BaseCommand):
     commands = [
         'python manage.py migrate',
         'python manage.py addsuperuser',
+        'python manage.py dummydata',
     ]
  
     def handle(self, *args, **options):
