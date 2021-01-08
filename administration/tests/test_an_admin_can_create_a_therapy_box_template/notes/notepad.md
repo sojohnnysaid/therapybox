@@ -1,11 +1,11 @@
 *******************************
 *******
-******* START xx/xx/xx
+******* START 1/3/20
 *******
 *******************************
 
 📜 Feature:
-    ✅  A user can ...
+    ✅  An admin can create a therapy box
 
 
 ✅ TODO LIST 
@@ -16,8 +16,19 @@
 
 
 users perspective:
-    user does this...
-    user does that...
+    admin logs in
+    redirected to dashboard main page
+    clicks on inventory menu item
+    sees inventory page
+    clicks + Add new item
+    sees item creation page
+
+    fills out item creation form...
+    adds 3 photos
+    photos are urls to cloudinary api
+    
+
+
 
 
 
