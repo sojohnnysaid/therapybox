@@ -1,0 +1,10 @@
+{% extends "administration/base.html" %}
+
+
+{% block content %}
+
+    <h1 class="text-center">{% block title %}Create a Therapy Box Template{% endblock %}</h1>
+    
+    {% include "includes/forms/post_multipart.html" with button_text='edit' button_id='edit_therapy_box_template' %}
+
+{% endblock %}

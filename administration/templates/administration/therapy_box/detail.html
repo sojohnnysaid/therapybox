@@ -1,0 +1,13 @@
+{% extends "administration/base.html" %}
+
+
+{% block content %}
+
+    <h1 class="text-center">{% block title %}Detail: {{therapybox.template.name}}{% endblock %}</h1>
+
+    <ul>
+        <li>{{ therapybox.template.name }}</li>
+    </ul>
+
+
+{% endblock %}

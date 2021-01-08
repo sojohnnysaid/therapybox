@@ -7,7 +7,7 @@
     <form method="post">{% csrf_token %} 
         <ul>
             {% for object in object_list %}
-                <li>{{object.name}}</li>
+                <li>{{object.template.name}}</li>
             {% endfor %}
         </ul>
         <hr>

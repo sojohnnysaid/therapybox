@@ -11,6 +11,7 @@ class Command(BaseCommand):
         'python manage.py migrate',
         'python manage.py addsuperuser',
         'python manage.py dummydata',
+        'python manage.py runserver'
     ]
  
     def handle(self, *args, **options):

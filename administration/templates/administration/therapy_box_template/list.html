@@ -1,4 +1,5 @@
 {% extends "administration/base.html" %}
+{% load cloudinary %}
 
 
 
@@ -10,6 +11,47 @@
         <a class="mx-auto" href="{% url 'administration:create_therapy_box_template' %}">+ Add new item</a>
     </div>
 
-    {% include 'includes/forms/post_table.html' %}
+    
+    {% if object_list.all %}
+        <form action="{% url 'administration:delete_multiple_therapy_box_template'%}" method="get">
+            {% csrf_token %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" name="all" id="select_all" onclick="checkAll()"></th>
+                        <th>Name</th>
+                        <th>Photo</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="catalog-list">
+                    {% for therapybox_template in object_list %}
+                        <tr>
+                            <td><input type="checkbox" name="{{therapybox_template.id}}" value="{{therapybox_template.id}}"></td>
+                            <td><a href="{% url 'administration:detail_therapy_box_template' therapybox_template.id%}">{{ therapybox_template.name }}</a></td>
+                            <td>{% cloudinary therapybox_template.image_1 format="jpg" width=120 height=80 crop="fill" %}</td>
+                            <td style="min-width:105px">
+                                <a href="{% url 'administration:delete_therapy_box_template' therapybox_template.id %}">Delete</a>
+                                <span> | </span>
+                                <a href="{% url 'administration:edit_therapy_box_template' therapybox_template.id %}">Edit</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td><input type="submit" value="delete"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+
+        {% include 'includes/pagination.html' %}
+        
+    {% else %}
+    <p class="text-center">No Therapy Boxes yet.</p>
+{% endif %}
+
 
 {% endblock %}

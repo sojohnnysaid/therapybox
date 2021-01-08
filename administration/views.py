@@ -108,6 +108,100 @@ class TherapyBoxTemplateDeleteMultiple(View):
             pass
         key_list = [item[0] for item in GET.items()]
         query_set = models.TherapyBoxTemplate.objects.filter(pk__in=key_list)
+        try:
+            query_set.delete()
+        except:
+            messages.error(self.request, f'You cannot a template with related invetory items. Delete related inventory first!')
+            return HttpResponseRedirect(self.success_url)
+        messages.success(self.request, f'Selected items deleted')
+        return HttpResponseRedirect(self.success_url)
+
+
+##############
+# TherapyBox #
+##############
+
+class TherapyBoxCreate(LoginAdminRequiredMixin, CreateView):
+    template_name = 'administration/therapy_box/create.html'
+    model = models.TherapyBox
+    fields = '__all__'
+    initial = {
+        'location': 'STORAGE',
+        'status': 'AVAILABLE',
+        'condition': 'GOOD',
+    }
+
+    def get_form(self):
+        '''add date picker in forms'''
+        from django.forms.widgets import SelectDateWidget
+        form = super(TherapyBoxCreate, self).get_form()
+        form.fields['due_back'].widget = SelectDateWidget()
+        return form
+
+
+class TherapyBoxEdit(LoginAdminRequiredMixin, UpdateView):
+    template_name = 'administration/therapy_box/edit.html'
+    model = models.TherapyBox
+    fields = '__all__'
+
+    def get_form(self):
+        '''add date picker in forms'''
+        from django.forms.widgets import SelectDateWidget
+        form = super(TherapyBoxEdit, self).get_form()
+        form.fields['due_back'].widget = SelectDateWidget()
+        return form
+
+
+class TherapyBoxInventory(LoginAdminRequiredMixin, PaginationMixin, ListView):
+    template_name = 'administration/therapy_box/list.html'
+    model = models.TherapyBox
+    paginate_by = 5
+
+
+class TherapyBoxDetail(LoginAdminRequiredMixin, DetailView):
+    template_name = 'administration/therapy_box/detail.html'
+    model = models.TherapyBox
+    fields = '__all__'
+    context_object_name = 'therapybox'
+
+
+class TherapyBoxDelete(DeleteView):
+    template_name = 'administration/therapy_box/delete.html'
+    model = models.TherapyBox
+    success_url = reverse_lazy('administration:inventory')
+
+    def get_success_url(self):
+        messages.success(self.request, f'{self.object} was deleted')
+        return super().get_success_url()
+
+
+class TherapyBoxDeleteMultiple(View):
+    template_name = 'administration/therapy_box/delete_multiple.html'
+    success_url = reverse_lazy('administration:inventory')
+
+    #confirm page
+    def get(self, request):
+        print(request.GET)
+        GET = request.GET.copy()
+        GET.pop('csrfmiddlewaretoken')
+        try:
+            GET.pop('all')
+        except:
+            pass
+        key_list = [item[0] for item in GET.items()]
+        query_set = models.TherapyBox.objects.filter(pk__in=key_list)
+        return TemplateResponse(request, self.template_name, {'object_list': query_set})
+
+    # deletes and redirects
+    def post(self, request):
+        GET = request.GET.copy()
+        GET.pop('csrfmiddlewaretoken')
+        try:
+            GET.pop('all')
+        except:
+            pass
+        key_list = [item[0] for item in GET.items()]
+        query_set = models.TherapyBox.objects.filter(pk__in=key_list)
         query_set.delete()
         messages.success(self.request, f'Selected items deleted')
         return HttpResponseRedirect(self.success_url)

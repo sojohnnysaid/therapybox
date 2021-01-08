@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.enums import Choices
 from django.urls import reverse
 
+
 from users.models import MyAbstractUser
 
 from cloudinary.models import CloudinaryField
@@ -85,3 +86,6 @@ class TherapyBox(models.Model):
     def __str__(self):
         string_id = str(self.id)
         return f"{string_id.rjust(3,'0')} {self.template.name}"
+
+    def get_absolute_url(self):
+        return reverse('administration:inventory')

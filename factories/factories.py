@@ -2,7 +2,7 @@ import factory
 from factory import Faker
 from django.contrib.auth.hashers import make_password
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.utils.safestring import mark_safe
+from django.utils.timezone import now
 
 class TherapyBoxTemplateFactory(factory.django.DjangoModelFactory):
     class Meta:
@@ -26,3 +26,10 @@ class TherapyBoxUserFactory(factory.django.DjangoModelFactory):
         kwargs['password'] = make_password(kwargs['password'])
         return super(TherapyBoxUserFactory, cls)._create(model_class, *args, **kwargs)
 
+
+class TherapyBoxFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = 'therapybox.TherapyBox'
+
+    due_back = now()
+    template = factory.SubFactory(TherapyBoxTemplateFactory)

@@ -1,0 +1,54 @@
+{% extends "administration/base.html" %}
+{% load cloudinary %}
+
+
+
+{% block content %}
+
+    <h1 class="text-center">{% block title %}Inventory{% endblock %}</h1>
+    
+    <div class="row">
+        <a class="mx-auto" href="{% url 'administration:create_therapy_box' %}">+ Add new item</a>
+    </div>
+
+    
+    {% if object_list.all %}
+        <form action="{% url 'administration:delete_multiple_therapy_box'%}" method="get">
+            {% csrf_token %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" name="all" id="select_all" onclick="checkAll()"></th>
+                        <th>Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="catalog-list">
+                    {% for therapybox in object_list %}
+                        <tr>
+                            <td><input type="checkbox" name="{{therapybox.id}}" value="{{therapybox.id}}"></td>
+                            <td><a href="{% url 'administration:detail_therapy_box' therapybox.id%}">{{ therapybox.template.name }}</a></td>
+                            <td style="min-width:105px">
+                                <a href="{% url 'administration:delete_therapy_box' therapybox.id %}">Delete</a>
+                                <span> | </span>
+                                <a href="{% url 'administration:edit_therapy_box' therapybox.id %}">Edit</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td><input type="submit" value="delete"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+
+       {% include 'includes/pagination.html'%}
+       
+    {% else %}
+    <p class="text-center">No Therapy Boxes yet.</p>
+{% endif %}
+
+
+{% endblock %}
