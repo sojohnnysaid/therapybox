@@ -46,5 +46,5 @@ class UsersPasswordResetRequestViewTest(BaseTestCase):
         mocked_services.send_password_reset_link.assert_called_once_with(request, self.user)
 
     def test_redirects_on_post_success(self):
-        response = Client().post(reverse('users:password_request_reset_link'), {'email': 'John@gmail.com'})
-        self.assertRedirects(response, str(conf_settings.MY_ABSTRACT_USER_SETTINGS['users_messages_page']))
+        response = Client().post(reverse('users:password_request_reset_link'), {'email': 'John@gmail.com'}, follow=True)
+        self.assertRedirects(response, str(conf_settings.LOGOUT_URL))

@@ -1,0 +1,32 @@
+{% extends "public/base.html" %}
+{% load cloudinary %}
+
+
+
+{% block content %}
+
+    <h1 class="text-center">{% block title %}Library{% endblock %}</h1>
+    
+    {% if object_list.all %}
+        <table class="table">
+            <tbody id="catalog-list">
+                {% for therapybox in object_list %}
+                    <tr>
+                        <td><a href="{% url 'therapybox:detail_library' therapybox.id%}">{{ therapybox.template.name }}</a></td>
+                        <td>{% cloudinary therapybox.template.image_1 format="jpg" width=120 height=80 crop="fill" %}</td>
+                        {% for tag in therapybox.template.tags %}
+                            {{tag}}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+       {% include 'includes/pagination.html'%}
+       
+    {% else %}
+    <p class="text-center">No Therapy Boxes yet.</p>
+{% endif %}
+
+
+{% endblock %}

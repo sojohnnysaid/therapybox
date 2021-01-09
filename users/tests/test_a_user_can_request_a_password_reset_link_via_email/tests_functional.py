@@ -106,7 +106,7 @@ class UserCanRequestPasswordResetLinkViaEmail(BaseFunctionalTest):
         # submits the form
         self.browser.find_elements(By.ID, 'form_submit_button_password_reset_request')[0].click()
 
-        # he is taken back to the homepage
+        # he is taken back to the library
         assert str(conf_settings.MY_ABSTRACT_USER_SETTINGS['users_messages_page']) in self.browser.current_url
 
         # the page tells him an email has been sent with a confirmation link

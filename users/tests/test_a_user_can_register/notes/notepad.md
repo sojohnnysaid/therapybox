@@ -16,12 +16,12 @@
 
 
 users perspective:
-    ✅ user goes to the homepage
+    ✅ user goes to the library
     ✅ if user not logged in they will see a register link
     ✅ user will click the link
     ✅ user will be brought to the register page
     user will fill out the form
-    on success user will be redirected to homepage
+    on success user will be redirected to library
     user will see a success message
 
 

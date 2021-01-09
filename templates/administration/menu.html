@@ -2,7 +2,7 @@
   <button class="navbar-toggler mr-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand ml-auto" href="{% url 'therapybox:homepage' %}">The Therapy Box</a>
+  <a class="navbar-brand ml-auto" href="{% url 'therapybox:list_library' %}">The Therapy Box</a>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav ml-auto">
         {% if user.is_authenticated %}
@@ -12,7 +12,7 @@
           <li class="nav-item"><a href="{% url 'administration:tag_list' %}" class="nav-link">Tags</a></li>
           <li class="nav-item"><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
         {% else %}
-            <li class="nav-item"><a href="{% url 'therapybox:homepage' %}" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="{% url 'therapybox:list_library' %}" class="nav-link">Home</a></li>
         {% endif %}
     </ul>
   </div>

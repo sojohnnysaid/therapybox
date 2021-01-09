@@ -20,8 +20,8 @@ users perspective:
     user enters username
     user enters password
     user clicks submit
-    user is taken to homepage
-    there is a message on the homepage letting them know they are successfully logged in
+    user is taken to library
+    there is a message on the library letting them know they are successfully logged in
 
 
 

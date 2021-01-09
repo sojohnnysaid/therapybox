@@ -79,7 +79,7 @@ class UserCanRequestAccountActivationLinkViaEmail(BaseFunctionalTest):
         # he submits the form
         self.browser.find_elements(By.ID, 'form_submit_button_account_activation_request')[0].click()
 
-        # John sees the page is now back to the homepage
+        # John sees the page is now back to the library
         assert str(conf_settings.MY_ABSTRACT_USER_SETTINGS['users_messages_page']) in self.browser.current_url
 
         # There is a message that says user activation link has been re-sent! Check your email

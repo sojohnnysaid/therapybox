@@ -50,7 +50,12 @@ nav {
     color: white !important;
 }
 
+.public-navbar {
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(72,9,101,1) 0%, rgba(222,0,220,1) 100%);
+}
+
 .public-navbar a, .nav-link{
-    color: rgb(43, 43, 43) !important;
+    color: white !important;
 }
 

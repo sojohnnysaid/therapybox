@@ -21,10 +21,10 @@ users perspective:
         'This account has not been activated. Click here to resend activation link.'
     user clicks the link
     user sees a form to enter their registered username (email)
-    user is redirected to the homepage with a message:
+    user is redirected to the library with a message:
         "Account activation link has been re-sent to your registered email"
     user clicks the email link
-    user is brough to the homepage with a message
+    user is brough to the library with a message
         "Your account has been activated you can now login!"
 
 

@@ -55,4 +55,4 @@ class UsersAccountActivationViewTest(BaseTestCase):
 
     def test_redirect(self):
         response = Client().get(self.link)
-        self.assertRedirects(response, conf_settings.MY_ABSTRACT_USER_SETTINGS['users_messages_page'])
+        self.assertRedirects(response, conf_settings.LOGOUT_URL)

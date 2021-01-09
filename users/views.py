@@ -32,7 +32,7 @@ class UsersRegisterView(CreateView):
 
 
 class UsersAccountActivationView(RedirectView):
-    url = conf_settings.MY_ABSTRACT_USER_SETTINGS['users_messages_page']
+    url = conf_settings.LOGOUT_URL
     def get(self, request, *args, **kwargs):
         services.activate_user(request)
         return super().get(request, *args, **kwargs)
@@ -78,7 +78,7 @@ class UsersAdminLoginView(LoginView):
 
 
 class UsersLogoutView(LogoutView):
-    next_page = conf_settings.MY_ABSTRACT_USER_SETTINGS['users_messages_page']
+    next_page = conf_settings.LOGOUT_URL
 
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):

@@ -145,4 +145,4 @@ from django.conf import settings as conf_settings
 from django.urls import reverse_lazy
 
 settings_login_redirect_url = conf_settings.MY_ABSTRACT_USER_SETTINGS['users_messages_page']
-expected_url = reverse_lazy('therapybox:homepage')
+expected_url = reverse_lazy('therapybox:library')

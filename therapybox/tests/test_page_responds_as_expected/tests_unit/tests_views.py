@@ -30,7 +30,7 @@ class ViewTest(BaseTestCase):
 
     # public routes
 
-    def test_homepage_returns_page_status_ok(self):
+    def test_library_returns_page_status_ok(self):
         url_name = 'debug'
         response = self.client.get(reverse(url_name))
         self.assertEqual(response.status_code, 200)

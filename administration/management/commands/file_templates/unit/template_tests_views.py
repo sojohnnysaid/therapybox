@@ -32,7 +32,7 @@ class BaseTestCase(TestCase):
 @skip
 class ViewTest(BaseTestCase):
 
-    def test_homepage_returns_page_status_ok(self):
+    def test_library_returns_page_status_ok(self):
         url_name = 'app:url_name'
         response = Client().get(reverse(url_name))
         self.assertEqual(response.status_code, 200)

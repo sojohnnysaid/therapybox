@@ -130,12 +130,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 AUTH_USER_MODEL = 'therapybox.TherapyBoxUser'
-LOGIN_REDIRECT_URL = reverse_lazy('therapybox:homepage')
-LOGOUT_URL = reverse_lazy('therapybox:homepage')
+LOGIN_REDIRECT_URL = reverse_lazy('therapybox:list_library')
+LOGOUT_URL = reverse_lazy('users:login')
 
 MY_ABSTRACT_USER_SETTINGS = {
-    'users_messages_page': reverse_lazy('therapybox:homepage'),
-    'admin_messages_page':reverse_lazy('therapybox:homepage'),
+    'users_messages_page': reverse_lazy('therapybox:list_library'),
+    'admin_messages_page':reverse_lazy('therapybox:list_library'),
     'templates': {
         'register': 'users/register.html',
         'account_activation_request': 'users/account_activation_request.html',
