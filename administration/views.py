@@ -75,9 +75,21 @@ class TherapyBoxTemplateDelete(DeleteView):
     template_name = 'administration/therapy_box_template/delete.html'
     success_url = reverse_lazy('administration:catalog')
 
-    def get_success_url(self):
-        messages.success(self.request, f'{self.object} was deleted')
-        return super().get_success_url()
+    def delete(self, request, *args, **kwargs):
+        """
+        Call the delete() method on the fetched object and then redirect to the
+        success URL.
+        """
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        try:
+            self.object.delete()
+        except:
+            messages.error(self.request, f'You cannot delete a template with related invetory items. Delete related inventory first!')
+            return HttpResponseRedirect(self.success_url)
+        messages.success(self.request, f'Selected items deleted')
+        return HttpResponseRedirect(self.success_url)
+
 
 
 class TherapyBoxTemplateDeleteMultiple(View):
@@ -111,7 +123,7 @@ class TherapyBoxTemplateDeleteMultiple(View):
         try:
             query_set.delete()
         except:
-            messages.error(self.request, f'You cannot a template with related invetory items. Delete related inventory first!')
+            messages.error(self.request, f'You cannot delete a template with related invetory items. Delete related inventory first!')
             return HttpResponseRedirect(self.success_url)
         messages.success(self.request, f'Selected items deleted')
         return HttpResponseRedirect(self.success_url)
