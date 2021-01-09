@@ -33,12 +33,22 @@ class TherapyBoxUser(MyAbstractUser):
 
 
 
+
+class Tag(models.Model):
+    name = models.CharField(max_length=40)
+    def __str__(self):
+        return self.name
+
+
+
+
 class TherapyBoxTemplate(models.Model):
     class Meta:
         ordering = ['-id']
 
     name = models.CharField(max_length=128)
     description = models.CharField(max_length=128, blank=True)
+    tags = models.ManyToManyField(Tag)
     image_1 = CloudinaryField('Image 1', blank=True)
     image_2 = CloudinaryField('Image 2', blank=True)
     image_3 = CloudinaryField('Image 3', blank=True)

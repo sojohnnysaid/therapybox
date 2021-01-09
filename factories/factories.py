@@ -4,12 +4,26 @@ from django.contrib.auth.hashers import make_password
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.timezone import now
 
+
+class TagFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = 'therapybox.Tag'
+
+    name = Faker('name')
+    
+
+
 class TherapyBoxTemplateFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = 'therapybox.TherapyBoxTemplate'
 
     name = Faker('name')
     image_1 = SimpleUploadedFile(name='test_image_1', content=open("static/test_uploads/test_image_1.png", 'rb').read(), content_type='image/png')
+
+    tags = factory.RelatedFactoryList(
+        TagFactory,
+        size=4
+    )
 
 
 class TherapyBoxUserFactory(factory.django.DjangoModelFactory):

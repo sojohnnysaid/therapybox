@@ -36,3 +36,17 @@ urlpatterns += [
     path('inventory/delete-multiple', TherapyBoxDeleteMultiple.as_view(),
          name='delete_multiple_therapy_box')
 ]
+
+urlpatterns += [
+    path('tags/', TagList.as_view(), name='tag_list'),
+    path('tags/<int:pk>', TagDetail.as_view(),
+         name='detail_tag'),
+    path('tags/create', TagCreate.as_view(),
+         name='create_tag'),
+    path('tags/delete/<int:pk>', TagDelete.as_view(),
+         name='delete_tag'),
+    path('tags/edit/<int:pk>', TagEdit.as_view(),
+         name='edit_tag'),
+    path('tags/delete-multiple', TagDeleteMultiple.as_view(),
+         name='delete_multiple_tag')
+]

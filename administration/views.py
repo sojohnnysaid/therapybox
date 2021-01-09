@@ -1,12 +1,13 @@
 from django.http.response import HttpResponseRedirect
-from django.template.response import SimpleTemplateResponse, TemplateResponse
+from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView, View
-from django.views.generic.edit import BaseFormView, CreateView, DeleteView, UpdateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from django.contrib import messages
+from django.forms.widgets import SelectDateWidget, Select
 
 from therapybox import models
 
@@ -50,11 +51,25 @@ class TherapyBoxTemplateCreate(LoginAdminRequiredMixin, CreateView):
     model = models.TherapyBoxTemplate
     fields = '__all__'
 
+    def get_form(self):
+        '''add date picker in forms'''
+        form = super(TherapyBoxTemplateCreate, self).get_form()
+        CHOICES = tuple( [(item.name.upper(), item.name) for item in models.Tag.objects.all()])
+        form.fields['tags'].widget = Select(choices=CHOICES)
+        return form
+
 
 class TherapyBoxTemplateEdit(LoginAdminRequiredMixin, UpdateView):
     template_name = 'administration/therapy_box_template/edit.html'
     model = models.TherapyBoxTemplate
     fields = '__all__'
+
+    def get_form(self):
+        '''add date picker in forms'''
+        form = super(TherapyBoxTemplateCreate, self).get_form()
+        CHOICES = tuple( [(item.name.upper(), item.name) for item in models.Tag.objects.all()])
+        form.fields['tags'].widget = Select(choices=CHOICES)
+        return form
 
 
 class TherapyBoxTemplateCatalog(LoginAdminRequiredMixin, PaginationMixin, ListView):
@@ -67,7 +82,7 @@ class TherapyBoxTemplateDetail(LoginAdminRequiredMixin, DetailView):
     template_name = 'administration/therapy_box_template/detail.html'
     model = models.TherapyBoxTemplate
     fields = '__all__'
-    context_object_name = 'therapybox'
+    context_object_name = 'therapybox_template'
 
 
 class TherapyBoxTemplateDelete(DeleteView):
@@ -145,7 +160,6 @@ class TherapyBoxCreate(LoginAdminRequiredMixin, CreateView):
 
     def get_form(self):
         '''add date picker in forms'''
-        from django.forms.widgets import SelectDateWidget
         form = super(TherapyBoxCreate, self).get_form()
         form.fields['due_back'].widget = SelectDateWidget()
         return form
@@ -158,7 +172,6 @@ class TherapyBoxEdit(LoginAdminRequiredMixin, UpdateView):
 
     def get_form(self):
         '''add date picker in forms'''
-        from django.forms.widgets import SelectDateWidget
         form = super(TherapyBoxEdit, self).get_form()
         form.fields['due_back'].widget = SelectDateWidget()
         return form
@@ -214,6 +227,80 @@ class TherapyBoxDeleteMultiple(View):
             pass
         key_list = [item[0] for item in GET.items()]
         query_set = models.TherapyBox.objects.filter(pk__in=key_list)
+        query_set.delete()
+        messages.success(self.request, f'Selected items deleted')
+        return HttpResponseRedirect(self.success_url)
+
+
+
+
+##############
+# Tags #
+##############
+
+class TagCreate(LoginAdminRequiredMixin, CreateView):
+    template_name = 'administration/tag/create.html'
+    model = models.Tag
+    fields = '__all__'
+    success_url = reverse_lazy('administration:tag_list')
+
+
+class TagEdit(LoginAdminRequiredMixin, UpdateView):
+    template_name = 'administration/tag/edit.html'
+    model = models.Tag
+    fields = '__all__'
+
+
+class TagList(LoginAdminRequiredMixin, PaginationMixin, ListView):
+    template_name = 'administration/tag/list.html'
+    model = models.Tag
+    paginate_by = 5
+
+
+class TagDetail(LoginAdminRequiredMixin, DetailView):
+    template_name = 'administration/tag/detail.html'
+    model = models.Tag
+    fields = '__all__'
+    context_object_name = 'tag'
+
+
+class TagDelete(DeleteView):
+    template_name = 'administration/tag/delete.html'
+    model = models.Tag
+    success_url = reverse_lazy('administration:tag_list')
+
+    def get_success_url(self):
+        messages.success(self.request, f'{self.object} was deleted')
+        return super().get_success_url()
+
+
+class TagDeleteMultiple(View):
+    template_name = 'administration/tag/delete_multiple.html'
+    success_url = reverse_lazy('administration:inventory')
+
+    #confirm page
+    def get(self, request):
+        print(request.GET)
+        GET = request.GET.copy()
+        GET.pop('csrfmiddlewaretoken')
+        try:
+            GET.pop('all')
+        except:
+            pass
+        key_list = [item[0] for item in GET.items()]
+        query_set = models.Tags.objects.filter(pk__in=key_list)
+        return TemplateResponse(request, self.template_name, {'object_list': query_set})
+
+    # deletes and redirects
+    def post(self, request):
+        GET = request.GET.copy()
+        GET.pop('csrfmiddlewaretoken')
+        try:
+            GET.pop('all')
+        except:
+            pass
+        key_list = [item[0] for item in GET.items()]
+        query_set = models.Tags.objects.filter(pk__in=key_list)
         query_set.delete()
         messages.success(self.request, f'Selected items deleted')
         return HttpResponseRedirect(self.success_url)

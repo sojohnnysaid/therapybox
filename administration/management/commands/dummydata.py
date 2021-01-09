@@ -14,8 +14,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         spinner = Halo(text='Loading', spinner='dots')
         spinner.start()
-        TherapyBoxTemplateFactory.create_batch(15)
-        TherapyBoxUserFactory.create_batch(15)
-        TherapyBoxFactory.create_batch(15)
+        TherapyBoxUserFactory.create_batch(12)
+        TherapyBoxFactory.create_batch(12)
         spinner.stop()
         print('🔥 Dummy data added!')

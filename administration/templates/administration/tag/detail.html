@@ -1,0 +1,13 @@
+{% extends "administration/base.html" %}
+
+
+{% block content %}
+
+    <h1 class="text-center">{% block title %}Detail: {{tag.name}}{% endblock %}</h1>
+
+    <ul>
+        <li>{{ tag.name }}</li>
+    </ul>
+
+
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "administration/base.html" %}
+
+
+{% block content %}
+
+    <h1 class="text-center">{% block title %}Create a Tag{% endblock %}</h1>
+    
+    {% include "includes/forms/post_multipart.html" with button_text='create' button_id='tag' %}
+
+{% endblock %}
