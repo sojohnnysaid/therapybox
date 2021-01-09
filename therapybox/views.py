@@ -21,6 +21,7 @@ class LoginMemberRequiredMixin(LoginRequiredMixin):
 class LibraryList(LoginMemberRequiredMixin, ListView):
     model = therapybox_models.TherapyBox
     template_name = 'therapybox/library/list.html'
+    paginate_by = 5
 
 
 class LibraryDetail(LoginMemberRequiredMixin, DetailView):
