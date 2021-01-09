@@ -66,7 +66,7 @@ class TherapyBoxTemplateEdit(LoginAdminRequiredMixin, UpdateView):
 
     def get_form(self):
         '''add date picker in forms'''
-        form = super(TherapyBoxTemplateCreate, self).get_form()
+        form = super(TherapyBoxTemplateEdit, self).get_form()
         CHOICES = tuple( [(item.name.upper(), item.name) for item in models.Tag.objects.all()])
         form.fields['tags'].widget = Select(choices=CHOICES)
         return form
@@ -276,7 +276,7 @@ class TagDelete(DeleteView):
 
 class TagDeleteMultiple(View):
     template_name = 'administration/tag/delete_multiple.html'
-    success_url = reverse_lazy('administration:inventory')
+    success_url = reverse_lazy('administration:tag_list')
 
     #confirm page
     def get(self, request):
@@ -288,7 +288,7 @@ class TagDeleteMultiple(View):
         except:
             pass
         key_list = [item[0] for item in GET.items()]
-        query_set = models.Tags.objects.filter(pk__in=key_list)
+        query_set = models.Tag.objects.filter(pk__in=key_list)
         return TemplateResponse(request, self.template_name, {'object_list': query_set})
 
     # deletes and redirects
@@ -300,7 +300,7 @@ class TagDeleteMultiple(View):
         except:
             pass
         key_list = [item[0] for item in GET.items()]
-        query_set = models.Tags.objects.filter(pk__in=key_list)
+        query_set = models.Tag.objects.filter(pk__in=key_list)
         query_set.delete()
         messages.success(self.request, f'Selected items deleted')
         return HttpResponseRedirect(self.success_url)
