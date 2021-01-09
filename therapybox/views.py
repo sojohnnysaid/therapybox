@@ -9,6 +9,9 @@ from therapybox import models as therapybox_models
 
 # Create your views here.
 
+######################
+# CustomMixins #
+######################
 class LoginMemberRequiredMixin(LoginRequiredMixin):
     login_url = reverse_lazy('users:login')
 
@@ -17,6 +20,13 @@ class LoginMemberRequiredMixin(LoginRequiredMixin):
             return HttpResponseRedirect(self.login_url)
         user = get_user_model().objects.get(email=request.user.email)
         return super().dispatch(request, *args, **kwargs)
+
+class PaginationMixin:
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_page'] = int(self.request.GET.get('page', 1))
+        return context
+
 
 class LibraryList(LoginMemberRequiredMixin, ListView):
     model = therapybox_models.TherapyBox

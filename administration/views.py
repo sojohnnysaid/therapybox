@@ -31,10 +31,7 @@ class LoginAdminRequiredMixin(LoginRequiredMixin):
 class PaginationMixin:
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        try:
-            context['current_page'] = int(self.request.GET.get('page'))
-        except:
-            pass
+        context['current_page'] = int(self.request.GET.get('page', 1))
         return context
 
 
@@ -55,7 +52,11 @@ class TherapyBoxTemplateCreate(LoginAdminRequiredMixin, CreateView):
         '''add date picker in forms'''
         form = super(TherapyBoxTemplateCreate, self).get_form()
         CHOICES = tuple( [(item.name.upper(), item.name) for item in models.Tag.objects.all()])
-        form.fields['tags'].widget = Select(choices=CHOICES)
+        form.fields['tags'].widget = Select(choices=CHOICES, attrs={
+            'class': 'js-example-basic-multiple',
+            'name': 'states[]',
+            'multiple': 'multiple'
+        })
         return form
 
 
@@ -68,7 +69,11 @@ class TherapyBoxTemplateEdit(LoginAdminRequiredMixin, UpdateView):
         '''add date picker in forms'''
         form = super(TherapyBoxTemplateEdit, self).get_form()
         CHOICES = tuple( [(item.name.upper(), item.name) for item in models.Tag.objects.all()])
-        form.fields['tags'].widget = Select(choices=CHOICES)
+        form.fields['tags'].widget = Select(choices=CHOICES, attrs={
+            'class': 'js-example-basic-multiple',
+            'name': 'states[]',
+            'multiple': 'multiple'
+        })
         return form
 
 
