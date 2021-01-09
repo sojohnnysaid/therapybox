@@ -33,6 +33,8 @@ class TherapyBoxUserFactory(factory.django.DjangoModelFactory):
     email = Faker('email')
     password = 'password'
     is_active = True
+    facility_name = factory.Sequence(lambda n: "facility_%d" % n)
+
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):

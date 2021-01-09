@@ -7,7 +7,7 @@
     <h1 class="text-center">{% block title %}Detail: {{therapybox.template.name}}{% endblock %}</h1>
 
     <ul>
-        <li>{{ therapybox.template.name }}</li>
+        <li>{{ therapybox.template.name }} | ID: {{therapybox.id|stringformat:"04d"}}</li>
         {% cloudinary therapybox.template.image_1 format="jpg" width=120 height=80 crop="fill" %}
     </ul>
 

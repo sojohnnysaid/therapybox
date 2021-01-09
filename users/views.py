@@ -1,12 +1,13 @@
 from django.contrib.auth.views import PasswordResetConfirmView, LoginView, LogoutView
+from django.forms.models import model_to_dict
 from django.http import HttpResponseRedirect
 from django.http.response import HttpResponse
 from django.utils.safestring import mark_safe
 from django.views.generic.base import RedirectView
-from django.views.generic.edit import CreateView, FormView
+from django.views.generic.edit import CreateView, FormView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.contrib.auth import get_user_model, login, logout
+from django.contrib.auth import get_user, get_user_model, login, logout
 from django.contrib.auth import logout as auth_logout
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
@@ -27,6 +28,26 @@ class UsersRegisterView(CreateView):
         self.object = form.save()
         services.send_user_activation_link(self.request, self.object)
         return HttpResponseRedirect(self.get_success_url())
+
+
+
+
+# Create your views here.
+class UsersProfileView(UpdateView):
+    model = get_user_model()
+    template_name = conf_settings.MY_ABSTRACT_USER_SETTINGS['templates']['profile']
+    success_url = "/"
+    fields = [
+        'facility_name', 
+        'company_name', 
+        'phone_number', 
+        'point_of_contact', 
+        'address_line_1', 
+        'address_line_2', 
+        'suburb', 
+        'city', 
+        'postcode', 
+        'shipping_region']
 
 
 

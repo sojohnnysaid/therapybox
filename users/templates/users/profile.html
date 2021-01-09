@@ -1,0 +1,10 @@
+{% extends "public/base.html" %}
+
+
+{% block content %}
+
+    <h1 class="text-center">{% block title %}Profile{% endblock %}</h1>
+    
+    {% include "includes/forms/post.html" with button_text='Update' button_id='profile'%}
+
+{% endblock %}

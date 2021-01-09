@@ -18,7 +18,7 @@ class TherapyBoxUser(MyAbstractUser):
         REGION_1 = 'REGION_1', 'Region 1'
         REGION_2 = 'REGION_2', 'Region 2'
 
-    facility_name = models.CharField(max_length=128, blank=True)
+    facility_name = models.CharField(max_length=128, blank=True, unique=True)
     company_name = models.CharField(max_length=128, blank=True)
     phone_number = models.CharField(max_length=128, blank=True)
     point_of_contact = models.CharField(max_length=128, blank=True)
