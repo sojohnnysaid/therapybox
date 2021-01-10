@@ -77,9 +77,6 @@ class TherapyBoxTemplate(models.Model):
 
 
 
-
-
-
 class TherapyBox(models.Model):
     class Locations(models.TextChoices):
         STORAGE = 'STORAGE', 'Storage'
