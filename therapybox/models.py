@@ -103,6 +103,7 @@ class TherapyBox(models.Model):
     due_back = models.DateField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
 
+
     class Meta:
         ordering = ['due_back']
 
