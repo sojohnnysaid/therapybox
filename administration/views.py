@@ -190,6 +190,10 @@ class TherapyBoxInventory(LoginAdminRequiredMixin, PaginationMixin, ListView):
     template_name = 'administration/therapy_box/list.html'
     model = models.TherapyBox
     paginate_by = 5
+    
+    def get_queryset(self):
+        new_context = self.model.objects.filter().order_by('-id')
+        return new_context
 
 
 class TherapyBoxDetail(LoginAdminRequiredMixin, DetailView):

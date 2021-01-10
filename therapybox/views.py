@@ -34,6 +34,13 @@ class LibraryList(LoginMemberRequiredMixin, ListView):
     template_name = 'therapybox/library/list.html'
     paginate_by = 5
 
+    def get_queryset(self):
+        new_context = self.model.objects.filter(
+            status='AVAILABLE',
+        ).order_by('template__id').distinct('template__id')
+        return new_context
+    
+
 
 class LibraryDetail(LoginMemberRequiredMixin, DetailView):
     model = therapybox_models.TherapyBox

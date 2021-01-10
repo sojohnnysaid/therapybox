@@ -80,10 +80,13 @@ class TherapyBoxTemplate(models.Model):
 class TherapyBox(models.Model):
     class Locations(models.TextChoices):
         STORAGE = 'STORAGE', 'Storage'
+        CUSTOMER_FACILITY = 'CUSTOMER_FACILITY', 'Customer Facility'
 
     class Status(models.TextChoices):
         AVAILABLE = 'AVAILABLE', 'Available'
+        BORROWED = 'BORROWED', 'Borrowed'
         BLOCKED = 'REGION_2', 'Region 2'
+
 
     class Condition(models.TextChoices):
         GOOD = 'GOOD', 'Good'

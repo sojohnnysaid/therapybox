@@ -9,10 +9,18 @@ DEBUG = True
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'django_db',
+        'USER': 'admin',
+        'PASSWORD': 'password',
+        'HOST': '',
+        'POST': ''
     }
 }
+
+# psql -h localhost
+# DROP DATABASE django_db; CREATE DATABASE django_db;
+# \q
 
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
