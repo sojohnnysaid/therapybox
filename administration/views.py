@@ -7,7 +7,7 @@ from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from django.contrib import messages
-from django.forms.widgets import SelectDateWidget, Select
+from django.forms.widgets import SelectDateWidget, SelectMultiple
 
 from therapybox import models
 
@@ -52,7 +52,7 @@ class TherapyBoxTemplateCreate(LoginAdminRequiredMixin, CreateView):
         '''add date picker in forms'''
         form = super(TherapyBoxTemplateCreate, self).get_form()
         CHOICES = tuple( [(item.name.upper(), item.name) for item in models.Tag.objects.all()])
-        form.fields['tags'].widget = Select(choices=CHOICES, attrs={
+        form.fields['tags'].widget = SelectMultiple(choices=CHOICES, attrs={
             'class': 'js-example-basic-multiple',
             'name': 'states[]',
             'multiple': 'multiple'
@@ -66,16 +66,22 @@ class TherapyBoxTemplateEdit(LoginAdminRequiredMixin, UpdateView):
     fields = '__all__'
 
     def get_form(self):
-        '''add date picker in forms'''
         form = super(TherapyBoxTemplateEdit, self).get_form()
-        CHOICES = tuple( [(item.name.upper(), item.name) for item in models.Tag.objects.all()])
-        form.fields['tags'].widget = Select(choices=CHOICES, attrs={
+        CHOICES = tuple( [(item.id, item.name) for item in models.Tag.objects.all()])
+        form.fields['tags'].widget = SelectMultiple(choices=CHOICES, attrs={
             'class': 'js-example-basic-multiple',
-            'name': 'states[]',
-            'multiple': 'multiple'
         })
         form.fields['description'].widget.attrs = {'rows': 5, 'cols': 35}
         return form
+
+    def form_invalid(self, form):
+        print(form.data)
+        return super().form_invalid(form)
+
+    def form_valid(self, form):
+        print(form.data)
+        messages.success(self.request, f'Edit on {form.data["name"]} complete!')
+        return super().form_valid(form)
 
 
 class TherapyBoxTemplateCatalog(LoginAdminRequiredMixin, PaginationMixin, ListView):

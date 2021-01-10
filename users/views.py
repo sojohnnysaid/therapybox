@@ -80,6 +80,8 @@ class UsersLoginView(LoginView):
 
     def form_valid(self, form):
         messages.success(self.request, f'Welcome back {form.user_cache.email}! You are logged in!')
+        cart = {'items': []}
+        self.request.session['cart'] = cart
         return super().form_valid(form)
 
 

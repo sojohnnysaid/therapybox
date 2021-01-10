@@ -11,34 +11,25 @@ function checkAll(){
 }
 
 
+
+
+
+
+
+function set_cookie(key, value){
+    return `${key}=${value}`
+}
+
+function get_cookie(key){
+    return document.cookie.split('; ').find(row=>row.startsWith(key)).split('=')[1];
+}
+
+
+
+
 function addToCart(id){
-    if (!'cart' in localStorage){
-        console.log('creating new cart...')
-        cart = {'items': []}
-        localStorage.cart = JSON.stringify(cart)
-        console.log(localStorage.cart)
-    }
-
-    try {
-        console.log('trying to add to cart...')
-
-        cart = JSON.parse(localStorage.cart)
-
-        itemFound = cart['items'].find(element => element == id)
-        if (!itemFound){
-            cart['items'].push(id)
-            localStorage.cart = JSON.stringify(cart)
-            console.log('added to cart!')
-            console.log(localStorage.cart)
-        } else{
-            console.log('item already in cart!')
-        }
-    } catch (error) {
-        console.log('cart json invalid, creating new cart and adding ID...')
-        cart = {'items': []}
-        localStorage.cart = JSON.stringify(cart)
-        
-        addToCart(id)
-    }
-
+    cart = get_cookie('cart')
+    console.log(cart)
+    cart = {'items': []}
+    document.cookie = `cart=${JSON.stringify(cart)}`
 }

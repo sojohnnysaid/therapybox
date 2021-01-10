@@ -13,7 +13,18 @@
         <div class="col-6">
                 <p><b>ID:</b> {{therapybox.id|stringformat:"04d"}}</p>
                 <p><b>Description: </b>{{ therapybox.template.description }}</p>
-                <button class="btn btn-info" onclick="addToCart({{therapybox.id}})">Add to Cart</button>
+                <ul class="pb-4">
+                    <b>Tags:</b>
+                    {% for tag in therapybox.template.tags.all %}
+                        <li>{{tag.name}}</li>
+                    {% endfor %}
+                </ul>
+
+                <form style="padding: 0px; margin: 0px" action="{% url 'therapybox:add_to_cart' therapybox.id%}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-info" onclick="addToCart({{therapybox.id}})">Add to Cart</button>
+                </form>
+                
         </div>
     </div>
 
