@@ -3,8 +3,9 @@
 
 {% block content %}
 
-    <h1 class="text-center">{% block title %}Edit a Therapy Box Template{% endblock %}</h1>
+    <h1 class="text-center">{% block title %}Edit a Therapy Box{% endblock %}</h1>
+    <p class="text-center"><a href="{% url 'administration:edit_therapy_box_template' therapybox.template.id %}">click here to edit template</a></p>
     
-    {% include "includes/forms/post_multipart.html" with button_text='edit' button_id='edit_therapy_box_template' %}
+    {% include "includes/forms/post.html" with button_text='edit' button_id='edit_therapy_box_template' %}
 
 {% endblock %}

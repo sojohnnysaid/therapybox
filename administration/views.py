@@ -74,6 +74,7 @@ class TherapyBoxTemplateEdit(LoginAdminRequiredMixin, UpdateView):
             'name': 'states[]',
             'multiple': 'multiple'
         })
+        form.fields['description'].widget.attrs = {'rows': 5, 'cols': 35}
         return form
 
 
@@ -168,6 +169,8 @@ class TherapyBoxCreate(LoginAdminRequiredMixin, CreateView):
         form = super(TherapyBoxCreate, self).get_form()
         form.fields['due_back'].widget = SelectDateWidget()
         return form
+    
+    
 
 
 class TherapyBoxEdit(LoginAdminRequiredMixin, UpdateView):
@@ -179,6 +182,7 @@ class TherapyBoxEdit(LoginAdminRequiredMixin, UpdateView):
         '''add date picker in forms'''
         form = super(TherapyBoxEdit, self).get_form()
         form.fields['due_back'].widget = SelectDateWidget()
+        form.fields['borrower'].disabled = True
         return form
 
 

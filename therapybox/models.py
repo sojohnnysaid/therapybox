@@ -10,6 +10,17 @@ from cloudinary.models import CloudinaryField
 
 # Create your models here.
 
+class Tag(models.Model):
+    name = models.CharField(max_length=40)
+    def __str__(self):
+        return self.name
+
+
+
+
+
+
+
 class TherapyBoxUser(MyAbstractUser):
 
     REQUIRED_FIELDS = []
@@ -34,10 +45,6 @@ class TherapyBoxUser(MyAbstractUser):
 
 
 
-class Tag(models.Model):
-    name = models.CharField(max_length=40)
-    def __str__(self):
-        return self.name
 
 
 
@@ -47,7 +54,6 @@ class TherapyBoxTemplate(models.Model):
         ordering = ['-id']
 
     name = models.CharField(max_length=128)
-    description = models.CharField(max_length=128, blank=True)
     tags = models.ManyToManyField(Tag)
     image_1 = CloudinaryField('Image 1', blank=True)
     image_2 = CloudinaryField('Image 2', blank=True)
@@ -57,15 +63,21 @@ class TherapyBoxTemplate(models.Model):
     height = models.CharField(max_length=128, help_text='Approx mm', blank=True)
     depth = models.CharField(max_length=128, help_text='Approx mm', blank=True)
     weight = models.CharField(max_length=128, help_text='Approx kg', blank=True)
-
-
-
+    description = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
         return reverse('administration:catalog')
+
+
+
+
+
+
+
+
 
 
 class TherapyBox(models.Model):
@@ -83,12 +95,13 @@ class TherapyBox(models.Model):
         UNDER_DEVELOPMENT = 'UNDER_DEVELOPMENT', 'Under development'
         WAITING_FOR_PART = 'WAITING_FOR_PART', 'Waiting for a part'
 
+    borrower = models.ForeignKey(TherapyBoxUser, on_delete=models.SET_NULL, null=True, blank=True)
     template = models.ForeignKey('TherapyBoxTemplate', on_delete=models.RESTRICT)
-    location = models.CharField(max_length=40, choices=Locations.choices, blank=True)
-    status = models.CharField(max_length=40, choices=Status.choices, blank=True)
-    condition = models.CharField(max_length=40, choices=Condition.choices, blank=True)
+    location = models.CharField(max_length=40, choices=Locations.choices, blank=True, default='STORAGE')
+    status = models.CharField(max_length=40, choices=Status.choices, blank=True, default='AVAILABLE')
+    condition = models.CharField(max_length=40, choices=Condition.choices, blank=True, default='GOOD')
     due_back = models.DateField(null=True, blank=True)
-    notes = models.TextField()
+    notes = models.TextField(null=True, blank=True)
 
     class Meta:
         ordering = ['due_back']

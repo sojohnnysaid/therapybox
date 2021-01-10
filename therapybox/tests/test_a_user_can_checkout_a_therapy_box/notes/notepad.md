@@ -28,6 +28,20 @@ users perspective:
 
 
 
+
+
+
+
+from django.test import Client
+from django.contrib.auth import get_user_model
+user = get_user_model().objects.get(email='admin@gmail.com')
+c = Client()
+c.force_login(user)
+from django.urls import reverse
+res = c.get(reverse('administration:edit_therapy_box', args=[1]))
+inspect(res)
+
+
 framework perspective:
 
     [] service

@@ -30,6 +30,7 @@ class PaginationMixin:
 
 class LibraryList(LoginMemberRequiredMixin, ListView):
     model = therapybox_models.TherapyBox
+    ordering = '-id'
     template_name = 'therapybox/library/list.html'
     paginate_by = 5
 
