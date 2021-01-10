@@ -15,20 +15,25 @@ class BaseTestCase(TestCase):
         super().setUp()
         data = {
             'email': 'john@gmail.com',
-            'password1': 'p@assW0rd',
-            'password2': 'p@assW0rd',
             'facility_name': 'foo',
             'company_name': 'foo',
             'phone_number': 'foo',
             'point_of_contact': 'foo',
-            'address_line_1': 'foo',
-            'address_line_2': 'foo',
-            'suburb': 'foo',
-            'city': 'foo',
-            'postcode': 'foo',
+            'billing_address_line_1': 'foo',
+            'billing_address_line_2': 'foo',
+            'billing_suburb': 'foo',
+            'billing_city': 'foo',
+            'billing_postcode': 'foo',
+            'shipping_address_line_1': 'foo',
+            'shipping_address_line_2': 'foo',
+            'shipping_suburb': 'foo',
+            'shipping_city': 'foo',
+            'shipping_postcode': 'foo',
             'shipping_region': 'REGION_1',
             'agreed_to_terms_and_conditions': 'True',
-            }
+            'password1': 'p@assW0rd',
+            'password2': 'p@assW0rd',
+        }
 
         response = Client().post(reverse_lazy('users:register'), data, follow=True)
         

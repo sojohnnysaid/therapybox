@@ -1,3 +1,6 @@
+import datetime
+import datedelta
+
 from django.http.response import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
@@ -7,9 +10,10 @@ from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from django.contrib import messages
-from django.forms.widgets import SelectDateWidget, SelectMultiple
+from django.forms.widgets import SelectDateWidget, SelectMultiple, DateInput
 
 from therapybox import models
+from therapybox import services
 
 # Create your views here.
 
@@ -173,7 +177,8 @@ class TherapyBoxCreate(LoginAdminRequiredMixin, CreateView):
     def get_form(self):
         '''add date picker in forms'''
         form = super(TherapyBoxCreate, self).get_form()
-        form.fields['due_back'].widget = SelectDateWidget()
+        form.fields['due_back'].widget = DateInput(attrs={'type': 'date'})
+        form.fields['borrower'].disabled = True
         return form
     
     
@@ -187,9 +192,11 @@ class TherapyBoxEdit(LoginAdminRequiredMixin, UpdateView):
     def get_form(self):
         '''add date picker in forms'''
         form = super(TherapyBoxEdit, self).get_form()
-        form.fields['due_back'].widget = SelectDateWidget()
+        form.fields['due_back'].widget = DateInput(attrs={'type': 'date'})
         form.fields['borrower'].disabled = True
         return form
+
+
 
 
 class TherapyBoxInventory(LoginAdminRequiredMixin, PaginationMixin, ListView):

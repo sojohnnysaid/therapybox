@@ -70,5 +70,16 @@ class AddToCart(BaseFormView):
         cart = {'items': updated_items}
         request.session['cart'] = cart
         print(request.session['cart'])
-        messages.success(request, mark_safe('Item added to cart! <a href="#">Checkout now</a>'))
+        shopping_cart = reverse_lazy('therapybox:shopping_cart')
+        messages.success(request, mark_safe(f'Item added to cart! <a href="{shopping_cart}">Checkout now</a>'))
+        return redirect(request.META['HTTP_REFERER'])
+
+class RemoveFromCart(BaseFormView):
+    def post(self, request, *args, **kwargs):
+        items = request.session['cart']['items']
+        items.remove(kwargs['pk'])
+        cart = {'items': items}
+        request.session['cart'] = cart
+        print(request.session['cart'])
+        messages.success(request, 'Item removed from cart!')
         return redirect(request.META['HTTP_REFERER'])

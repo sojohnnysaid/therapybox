@@ -11,10 +11,20 @@ from django.contrib.auth import get_user, get_user_model, login, logout
 from django.contrib.auth import logout as auth_logout
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from users import forms, services
 
 from django.conf import settings as conf_settings
+
+class LoginMemberRequiredMixin(LoginRequiredMixin):
+    login_url = reverse_lazy('users:login')
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(self.login_url)
+        user = get_user_model().objects.get(email=request.user.email)
+        return super().dispatch(request, *args, **kwargs)
 
 
 # Create your views here.
@@ -33,21 +43,16 @@ class UsersRegisterView(CreateView):
 
 
 # Create your views here.
-class UsersProfileView(UpdateView):
+class UsersProfileView(LoginMemberRequiredMixin, UpdateView):
     model = get_user_model()
     template_name = conf_settings.MY_ABSTRACT_USER_SETTINGS['templates']['profile']
     success_url = "/"
-    fields = [
-        'facility_name', 
-        'company_name', 
-        'phone_number', 
-        'point_of_contact', 
-        'address_line_1', 
-        'address_line_2', 
-        'suburb', 
-        'city', 
-        'postcode', 
-        'shipping_region']
+    form_class = forms.UsersProfileForm
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Profile updated!')
+        return super().form_valid(form)
+    
 
 
 

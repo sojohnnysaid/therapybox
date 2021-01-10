@@ -1,4 +1,10 @@
-A customer can view a list of therapy boxes
+A user can submit an order
+
+    user sees checkout page
+        they click ready to borrow items
+    
+    user sees submit order page
+        shows readonly address with edit button
 
 
 paypal:

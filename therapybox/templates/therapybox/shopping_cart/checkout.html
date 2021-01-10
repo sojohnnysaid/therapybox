@@ -1,19 +1,35 @@
 {% extends "public/base.html" %}
+{% load cloudinary %}
 
 
 
 {% block content %}
 
-    <h1 class="text-center">{% block title %}Checkout{% endblock %}</h1>
+    <h1 class="text-center pb-4">{% block title %}Cart{% endblock %}</h1>
     
-    
-    {% for item in object_list %}
-        <ul class="py-3">
-            <li>template name: {{item.template.name}}</li>
-            <li>therapybox id: {{item.id}}</li>
-        </ul>
-    {% endfor %}
+    {% if object_list.all %}
+        <table class="table table-bordered">
+            <tbody id="catalog-list">
+                {% for therapybox in object_list %}
+                    <tr>
+                        <td>{% cloudinary therapybox.template.image_1 format="jpg" width=120 height=80 crop="fill" %}</td>
+                        <td><a href="{% url 'therapybox:detail_library' therapybox.id%}">{{ therapybox.template.name }} | ID: {{therapybox.id|stringformat:"04d"}}</a></td>
+                        <td>
+                            <form style="padding: 0px; margin: 0px" action="{% url 'therapybox:remove_from_cart' therapybox.id%}" method="post">
+                                {% csrf_token %}
+                                <button class="btn btn-danger">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
+       {% include 'includes/pagination.html'%}
+       
+    {% else %}
+    <p class="text-center">No items in your cart yet.</p>
+{% endif %}
 
 
 {% endblock %}

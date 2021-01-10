@@ -12,8 +12,8 @@
             <tbody id="catalog-list">
                 {% for therapybox in object_list %}
                     <tr>
-                        <td><a href="{% url 'therapybox:detail_library' therapybox.id%}">{{ therapybox.template.name }} | ID: {{therapybox.id|stringformat:"04d"}}</a></td>
                         <td>{% cloudinary therapybox.template.image_1 format="jpg" width=120 height=80 crop="fill" %}</td>
+                        <td><a href="{% url 'therapybox:detail_library' therapybox.id%}">{{ therapybox.template.name }} | ID: {{therapybox.id|stringformat:"04d"}}</a></td>
                     </tr>
                 {% endfor %}
             </tbody>

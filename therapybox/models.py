@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.enums import Choices
+from django.forms import widgets
 from django.urls import reverse
 
 
@@ -12,6 +13,10 @@ from cloudinary.models import CloudinaryField
 
 class Tag(models.Model):
     name = models.CharField(max_length=40, unique=True)
+
+    def get_absolute_url(self):
+        return reverse('administration:detail_tag', args=[self.pk])
+
     
     def __str__(self):
         return self.name
@@ -30,17 +35,33 @@ class TherapyBoxUser(MyAbstractUser):
         REGION_1 = 'REGION_1', 'Region 1'
         REGION_2 = 'REGION_2', 'Region 2'
 
+
+    # general
     facility_name = models.CharField(max_length=128, blank=True, unique=True)
     company_name = models.CharField(max_length=128, blank=True)
     phone_number = models.CharField(max_length=128, blank=True)
     point_of_contact = models.CharField(max_length=128, blank=True)
-    address_line_1 = models.CharField(max_length=128, blank=True)
-    address_line_2 = models.CharField(max_length=128, blank=True)
-    suburb = models.CharField(max_length=128, blank=True)
-    city = models.CharField(max_length=128, blank=True)
-    postcode = models.CharField(max_length=128, blank=True)
+
+    # billing
+    billing_address_line_1 = models.CharField(max_length=128, blank=True)
+    billing_address_line_2 = models.CharField(max_length=128, blank=True)
+    billing_suburb = models.CharField(max_length=128, blank=True)
+    billing_city = models.CharField(max_length=128, blank=True)
+    billing_postcode = models.CharField(max_length=128, blank=True)
+    
+    # shipping
+    shipping_address_line_1 = models.CharField(max_length=128, blank=True)
+    shipping_address_line_2 = models.CharField(max_length=128, blank=True)
+    shipping_suburb = models.CharField(max_length=128, blank=True)
+    shipping_city = models.CharField(max_length=128, blank=True)
+    shipping_postcode = models.CharField(max_length=128, blank=True)
     shipping_region = models.CharField(max_length=40, choices=ShippingRegions.choices, blank=True)
+
+
+    # contract
     agreed_to_terms_and_conditions = models.BooleanField(default=False, blank=True)
+    
+    # status
     is_approved = models.BooleanField(default=False, blank=True)
 
 

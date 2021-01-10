@@ -5,6 +5,60 @@
 
     <h1 class="text-center">{% block title %}Profile{% endblock %}</h1>
     
-    {% include "includes/forms/post.html" with button_text='Update' button_id='profile'%}
+    <form method="post"  action="">
+        {% csrf_token %}
+        <table>
+            {% for field in form.visible_fields %}
+
+                {% if field.name == 'facility_name' %}
+                        <tr class="text-center">
+                            <th colspan="2" class="py-3">
+                                <b>Contact Info:</b>
+                                <hr>
+                            </th>
+                        </tr>
+                {% endif %}
+
+                {% if field.name == 'shipping_address_line_1' %}
+                        <tr class="text-center">
+                            <th colspan="2" class="py-3">
+                                    <b>Shipping:</b>
+                                <hr>
+                                <button type="button" class="btn btn-info" onclick="billingToShipping()">Shipping same as Billing</button>
+                            </th>
+                        </tr>
+                {% endif %}
+
+                {% if field.name == 'billing_address_line_1' %}
+                        <tr class="text-center">
+                            <th colspan="2" class="py-3">
+                                <b>Billing:</b>
+                                <hr>
+                            </th>
+                        </tr>
+                {% endif %}
+
+                {% if field.name == 'agreed_to_terms_and_conditions' %}
+                        <tr class="text-center">
+                            <th colspan="2" class="py-3">
+                                <hr>
+                            </th>
+                        </tr>
+                {% endif %}
+
+                <tr>
+                    <th>
+                        {{ field.label_tag }}
+                    </th>
+                    <td>
+                        {{ field }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <div class="text-center mt-3">
+            <input type="submit" value="Update" id="form_submit_button_profile" class="btn btn-primary">
+        </div>
+    </form>
 
 {% endblock %}
