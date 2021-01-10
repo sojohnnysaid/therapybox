@@ -122,4 +122,4 @@ class UsersProfileForm(ErrorListMixin, forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = '__all__'
-        exclude = ['password', 'groups', 'last_login', 'user_permissions', 'is_admin', 'is_active', 'is_staff', 'is_superuser', 'email']
+        exclude = ['password', 'groups', 'last_login', 'user_permissions', 'is_admin', 'is_active', 'is_staff', 'is_superuser', 'is_approved', 'email']
