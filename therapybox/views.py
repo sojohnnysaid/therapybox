@@ -4,10 +4,11 @@ from django.http.response import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView, View
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import BaseFormView, ProcessFormView
+from django.views.generic.edit import BaseFormView
 from django.views.generic.list import ListView
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.utils.safestring import mark_safe
 
 
 from therapybox import models as therapybox_models
@@ -69,5 +70,5 @@ class AddToCart(BaseFormView):
         cart = {'items': updated_items}
         request.session['cart'] = cart
         print(request.session['cart'])
-        messages.success(request, 'Item added to cart!')
+        messages.success(request, mark_safe('Item added to cart! <a href="#">Checkout now</a>'))
         return redirect(request.META['HTTP_REFERER'])
