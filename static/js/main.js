@@ -13,19 +13,32 @@ function checkAll(){
 
 function addToCart(id){
     if (!'cart' in localStorage){
+        console.log('creating new cart...')
         cart = {'items': []}
-        localStorage.cart = JSON.stringify(cart)
-    }
-
-    try {
-        cart = JSON.parse(localStorage.cart)
-        cart['items'].push(id)
-    } catch (error) {
-        cart = {'items': []}
-        localStorage.cart = JSON.stringify(cart)
-        cart = JSON.parse(localStorage.cart)
-        cart['items'].push(id)
         localStorage.cart = JSON.stringify(cart)
         console.log(localStorage.cart)
     }
+
+    try {
+        console.log('trying to add to cart...')
+
+        cart = JSON.parse(localStorage.cart)
+
+        itemFound = cart['items'].find(element => element == id)
+        if (!itemFound){
+            cart['items'].push(id)
+            localStorage.cart = JSON.stringify(cart)
+            console.log('added to cart!')
+            console.log(localStorage.cart)
+        } else{
+            console.log('item already in cart!')
+        }
+    } catch (error) {
+        console.log('cart json invalid, creating new cart and adding ID...')
+        cart = {'items': []}
+        localStorage.cart = JSON.stringify(cart)
+        
+        addToCart(id)
+    }
+
 }

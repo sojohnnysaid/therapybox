@@ -12,6 +12,7 @@ function checkAll(){
 
 
 function addToCart(id){
+    console.log(id)
     if (!'cart' in localStorage){
         cart = {'items': []}
         localStorage.cart = JSON.stringify(cart)
