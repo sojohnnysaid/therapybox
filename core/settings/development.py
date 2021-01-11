@@ -14,7 +14,7 @@ DATABASES = {
         'USER': 'admin',
         'PASSWORD': 'password',
         'HOST': '',
-        'POST': ''
+        'PORT': ''
     }
 }
 
