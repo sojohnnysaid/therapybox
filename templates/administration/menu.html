@@ -5,14 +5,15 @@
   <a class="navbar-brand ml-auto" href="{% url 'therapybox:list_library' %}">The Therapy Box</a>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav ml-auto">
-        {% if user.is_authenticated %}
+        {% if user.is_admin %}
           <li class="nav-item"><a href="{% url 'administration:dashboard' %}" class="nav-link">Dashboard</a></li>
+          <li class="nav-item"><a href="{% url 'administration:order_list' %}" class="nav-link">Orders</a></li>
           <li class="nav-item"><a href="{% url 'administration:catalog' %}" class="nav-link">Catalog</a></li>
           <li class="nav-item"><a href="{% url 'administration:inventory' %}" class="nav-link">Inventory</a></li>
           <li class="nav-item"><a href="{% url 'administration:tag_list' %}" class="nav-link">Tags</a></li>
           <li class="nav-item"><a href="{% url 'users:logout' %}" class="nav-link">Logout</a></li>
         {% else %}
-            <li class="nav-item"><a href="{% url 'therapybox:list_library' %}" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="{% url 'therapybox:list_library' %}" class="nav-link">Library</a></li>
         {% endif %}
     </ul>
   </div>

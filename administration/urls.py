@@ -50,3 +50,11 @@ urlpatterns += [
     path('tags/delete-multiple', TagDeleteMultiple.as_view(),
          name='delete_multiple_tag')
 ]
+
+urlpatterns += [
+    path('orders/', OrderList.as_view(), name='order_list'),
+    path('orders/<int:pk>', OrderDetail.as_view(),
+         name='detail_order'),
+    path('orders/edit/<int:pk>', OrderEdit.as_view(),
+         name='edit_order'),
+]

@@ -6,30 +6,69 @@
 {% block content %}
 
     <h1 class="text-center pb-4">{% block title %}Cart{% endblock %}</h1>
-    
-    {% if object_list.all %}
-        <table class="table table-bordered">
+
+    <div class="row">
+        <div class="col-6">
+            <address>
+                <b>Billing:</b>
+                <p>
+                    {{user.point_of_contact}}<br>
+                    {{user.billing_address_line_1}}<br>
+                    {{user.billing_address_line_2}}<br>
+                    {{user.billing_suburb}}<br>
+                    {{user.billing_city}}<br>
+                    {{user.billing_postcode}}<br>
+                </p>
+            </address>
+
+            <address>
+                <b>Shipping:</b>
+                <p>{{user.shipping_address_line_1}}<br>
+                {{user.shipping_address_line_2}}<br>
+                {{user.shipping_suburb}}<br>
+                {{user.shipping_city}}<br>
+                {{user.shipping_postcode}}<br>
+                {{user.shipping_region}}</p>
+            </address>
+        </div>
+        <div class="col-6 pt-4">
+            <table class="table table-bordered">
             <tbody id="catalog-list">
                 {% for therapybox in object_list %}
                     <tr>
-                        <td>{% cloudinary therapybox.template.image_1 format="jpg" width=120 height=80 crop="fill" %}</td>
-                        <td><a href="{% url 'therapybox:detail_library' therapybox.id%}">{{ therapybox.template.name }} | ID: {{therapybox.id|stringformat:"04d"}}</a></td>
                         <td>
+                            <small>{{ therapybox.template.name }} | ID: {{therapybox.id|stringformat:"04d"}}</small>
+                        </td>
+                        <td class="text-right">
                             <form style="padding: 0px; margin: 0px" action="{% url 'therapybox:remove_from_cart' therapybox.id%}" method="post">
                                 {% csrf_token %}
-                                <button class="btn btn-danger">Remove</button>
+                                <button class="btn btn-sm btn-danger">Remove</button>
                             </form>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
-        </table>
+            </table>
+        </div>
+        </div>
+    
+    </div>
+    <div class="row">
+        <div class="col-12 text-right">
+            <form action="{% url 'therapybox:submit_order' %}" method="post">
+                {% csrf_token %}
+                <input class="btn btn-success" type="submit" value="Submit Order">
+            </form>
+        </div>
+    </div>
+    
 
-       {% include 'includes/pagination.html'%}
+
+
        
-    {% else %}
-    <p class="text-center">No items in your cart yet.</p>
-{% endif %}
+
+
+
 
 
 {% endblock %}

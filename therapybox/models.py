@@ -12,6 +12,9 @@ from cloudinary.models import CloudinaryField
 # Create your models here.
 
 class Tag(models.Model):
+    class Meta:
+        ordering = ['-id']
+        
     name = models.CharField(max_length=40, unique=True)
 
     def get_absolute_url(self):

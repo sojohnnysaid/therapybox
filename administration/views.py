@@ -15,6 +15,8 @@ from django.forms.widgets import SelectDateWidget, SelectMultiple, DateInput
 from therapybox import models
 from therapybox import services
 
+from administration.models import Order
+
 # Create your views here.
 
 ######################
@@ -330,3 +332,32 @@ class TagDeleteMultiple(View):
         query_set.delete()
         messages.success(self.request, f'Selected items deleted')
         return HttpResponseRedirect(self.success_url)
+
+
+
+
+
+
+
+##############
+# Orders #
+##############
+
+
+class OrderEdit(LoginAdminRequiredMixin, UpdateView):
+    template_name = 'administration/order/edit.html'
+    model = Order
+    fields = '__all__'
+
+
+class OrderList(LoginAdminRequiredMixin, PaginationMixin, ListView):
+    template_name = 'administration/order/list.html'
+    model = Order
+    paginate_by = 5
+
+
+class OrderDetail(LoginAdminRequiredMixin, DetailView):
+    template_name = 'administration/order/detail.html'
+    model = Order
+    fields = '__all__'
+    context_object_name = 'order'

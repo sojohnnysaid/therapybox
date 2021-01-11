@@ -19,7 +19,8 @@
                 <thead>
                     <tr>
                         <th><input type="checkbox" name="all" id="select_all" onclick="checkAll()"></th>
-                        <th>Name</th>
+                        <th>ID</th>
+                        <th>Template</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -27,6 +28,7 @@
                     {% for therapybox in object_list %}
                         <tr>
                             <td><input type="checkbox" name="{{therapybox.id}}" value="{{therapybox.id}}"></td>
+                            <td>{{therapybox.id|stringformat:"03d"}}</td>
                             <td><a href="{% url 'administration:detail_therapy_box' therapybox.id%}">{{ therapybox.template.name }}</a></td>
                             <td style="min-width:105px">
                                 <a href="{% url 'administration:delete_therapy_box' therapybox.id %}">Delete</a>
@@ -36,9 +38,7 @@
                         </tr>
                     {% endfor %}
                     <tr>
-                        <td><input type="submit" value="delete"></td>
-                        <td></td>
-                        <td></td>
+                        <td colspan="4"><input class="btn btn-outline-danger btn-sm" type="submit" value="delete selected"></td>
                     </tr>
                 </tbody>
             </table>

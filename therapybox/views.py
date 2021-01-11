@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.urls.base import reverse
 from django.views.generic.base import TemplateView, View
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import BaseFormView
@@ -12,6 +13,7 @@ from django.utils.safestring import mark_safe
 
 
 from therapybox import models as therapybox_models
+from therapybox import services
 
 # Create your views here.
 
@@ -43,7 +45,7 @@ class LibraryList(LoginMemberRequiredMixin, ListView):
     def get_queryset(self):
         new_context = self.model.objects.filter(
             status='AVAILABLE',
-        ).order_by('template__id').distinct('template__id')
+        ).order_by('-template__id').distinct('template__id')
         return new_context
     
 
@@ -56,7 +58,7 @@ class LibraryDetail(LoginMemberRequiredMixin, DetailView):
 
 
 class ShoppingCart(TemplateView):
-    template_name = 'therapybox/shopping_cart/checkout.html'
+    template_name = 'therapybox/shopping_cart/shopping_cart.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -83,3 +85,24 @@ class RemoveFromCart(BaseFormView):
         print(request.session['cart'])
         messages.success(request, 'Item removed from cart!')
         return redirect(request.META['HTTP_REFERER'])
+
+
+
+
+class Checkout(TemplateView):
+    template_name = 'therapybox/shopping_cart/checkout.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object_list'] = therapybox_models.TherapyBox.objects.filter(pk__in=self.request.session['cart']['items'])
+        context['user'] = get_user_model().objects.get(email=self.request.user.email)
+        return context
+
+
+    
+class SubmitOrder(BaseFormView):
+    success_url = reverse_lazy('therapybox:list_library')
+
+    def post(self, request, *args, **kwargs):
+        services.create_new_order(request)
+        return HttpResponseRedirect(self.success_url)

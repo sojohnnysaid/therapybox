@@ -1,0 +1,42 @@
+{% extends "administration/base.html" %}
+{% load cloudinary %}
+
+
+
+{% block content %}
+
+    <h1 class="text-center">{% block title %}Orders{% endblock %}</h1>
+
+    
+    {% if object_list.all %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Order#</th>
+                        <th>Facility</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="catalog-list">
+                    {% for order in object_list %}
+                        <tr>
+                            <td>{{ order.get_status_display }}</td>
+                            <td><a href="{% url 'administration:detail_order' order.id%}">Order#{{ order.id }}</a></td>
+                            <td>{{ order.user.facility_name }}</td>
+                            <td style="min-width:105px">
+                                <a href="{% url 'administration:edit_order' order.id %}">Edit</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+       {% include 'includes/pagination.html'%}
+       
+    {% else %}
+    <p class="text-center">No Tags.</p>
+{% endif %}
+
+
+{% endblock %}
