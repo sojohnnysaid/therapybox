@@ -10,6 +10,9 @@ DEBUG = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'TEST': {
+            'ENGINE': 'django.db.backends.sqlite3',
+        },
         'NAME': 'django_db',
         'USER': 'admin',
         'PASSWORD': 'password',

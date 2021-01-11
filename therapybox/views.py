@@ -56,8 +56,7 @@ class LibraryDetail(LoginMemberRequiredMixin, DetailView):
     context_object_name = 'therapybox'
 
 
-
-class ShoppingCart(TemplateView):
+class ShoppingCart(LoginMemberRequiredMixin, TemplateView):
     template_name = 'therapybox/shopping_cart/shopping_cart.html'
 
     def get_context_data(self, **kwargs):
@@ -65,7 +64,8 @@ class ShoppingCart(TemplateView):
         context['object_list'] = therapybox_models.TherapyBox.objects.filter(pk__in=self.request.session['cart']['items'])
         return context
 
-class AddToCart(BaseFormView):
+
+class AddToCart(LoginMemberRequiredMixin, BaseFormView):
     def post(self, request, *args, **kwargs):
         items = request.session['cart']['items']
         updated_items = list(set(items + [kwargs['pk']]))
@@ -76,7 +76,7 @@ class AddToCart(BaseFormView):
         messages.success(request, mark_safe(f'Item added to cart! <a href="{shopping_cart}">Checkout now</a>'))
         return redirect(request.META['HTTP_REFERER'])
 
-class RemoveFromCart(BaseFormView):
+class RemoveFromCart(LoginMemberRequiredMixin, BaseFormView):
     def post(self, request, *args, **kwargs):
         items = request.session['cart']['items']
         items.remove(kwargs['pk'])
@@ -87,9 +87,7 @@ class RemoveFromCart(BaseFormView):
         return redirect(request.META['HTTP_REFERER'])
 
 
-
-
-class Checkout(TemplateView):
+class Checkout(LoginMemberRequiredMixin, TemplateView):
     template_name = 'therapybox/shopping_cart/checkout.html'
 
     def get_context_data(self, **kwargs):
@@ -99,8 +97,7 @@ class Checkout(TemplateView):
         return context
 
 
-    
-class SubmitOrder(BaseFormView):
+class SubmitOrder(LoginMemberRequiredMixin, BaseFormView):
     success_url = reverse_lazy('therapybox:list_library')
 
     def post(self, request, *args, **kwargs):

@@ -3,6 +3,8 @@ import time
 
 from unittest.case import skip
 
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -14,6 +16,8 @@ from django.test import LiveServerTestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.conf import settings as conf_settings
+
+from factories.factories import TagFactory
 
 
 class BaseFunctionalTest(LiveServerTestCase):
@@ -27,6 +31,8 @@ class BaseFunctionalTest(LiveServerTestCase):
         self.email = 'test@gmail.com'
         self.password = 'password'
         self.user = get_user_model().objects.create_superuser(self.email, self.password)
+
+        self.tag = TagFactory()
 
     def tearDown(self):
         
@@ -114,8 +120,10 @@ class AdminLogsInAndCreatesTherapyBoxInstance(BaseFunctionalTest):
         input.send_keys(f'{conf_settings.BASE_DIR}/static/test_uploads/test_image_1.png')
 
         # tags
-        input = self.browser.find_elements(By.NAME, 'tags')[0]
-        input.send_keys('test_tags')
+        input = self.browser.find_element_by_class_name(
+            'select2-search__field')
+        input.send_keys(self.tag.name)
+        input.send_keys(Keys.ENTER)
 
         # length
         input = self.browser.find_elements(By.NAME, 'length')[0]
@@ -139,4 +147,5 @@ class AdminLogsInAndCreatesTherapyBoxInstance(BaseFunctionalTest):
         self.browser.find_elements(By.ID, 'form_submit_button_create_therapy_box_template')[0].click()
 
         # John is back on the catalog page
-        assert 'Catalog' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
+        assert 'Create a Therapy Box Template' in self.browser.find_elements(
+            By.TAG_NAME, 'h1')[0].text

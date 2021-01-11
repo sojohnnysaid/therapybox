@@ -36,7 +36,7 @@ class UserRegistration(BaseFunctionalTest):
         self.browser.get(self.live_server_url + reverse('users:register'))
 
         # he is greeted by the registration header
-        assert 'Register' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
+        assert 'Registration' in self.browser.find_elements(By.TAG_NAME, 'h1')[0].text
 
         # John starts filling out the registration form...
 
@@ -68,25 +68,55 @@ class UserRegistration(BaseFunctionalTest):
         input = self.browser.find_elements(By.NAME, 'point_of_contact')[0]
         input.send_keys('point_of_contact')
 
-        # address_line_1
-        input = self.browser.find_elements(By.NAME, 'address_line_1')[0]
+
+
+        # billing
+        # billing_address_line_1
+        input = self.browser.find_elements(By.NAME, 'billing_address_line_1')[0]
+        input.send_keys('billing_address_line_1')
+
+        # billing_address_line_2
+        input = self.browser.find_elements(By.NAME, 'billing_address_line_2')[0]
+        input.send_keys('billing_address_line_2')
+
+        # billing_suburb
+        input = self.browser.find_elements(By.NAME, 'billing_suburb')[0]
+        input.send_keys('billing_suburb')
+
+        # billing_city
+        input = self.browser.find_elements(By.NAME, 'billing_city')[0]
+        input.send_keys('billing_city')
+
+        # billing_postcode
+        input = self.browser.find_elements(By.NAME, 'billing_postcode')[0]
+        input.send_keys('billing_postcode')
+
+
+
+
+        # shipping_address_line_1
+        input = self.browser.find_elements(By.NAME, 'shipping_address_line_1')[0]
         input.send_keys('address_line_1')
 
-        # address_line_2
-        input = self.browser.find_elements(By.NAME, 'address_line_2')[0]
+        # shipping_address_line_2
+        input = self.browser.find_elements(By.NAME, 'shipping_address_line_2')[0]
         input.send_keys('address_line_2')
 
-        # suburb
-        input = self.browser.find_elements(By.NAME, 'suburb')[0]
+        # shipping_suburb
+        input = self.browser.find_elements(By.NAME, 'shipping_suburb')[0]
         input.send_keys('suburb')
 
-        # city
-        input = self.browser.find_elements(By.NAME, 'city')[0]
+        # shipping_city
+        input = self.browser.find_elements(By.NAME, 'shipping_city')[0]
         input.send_keys('city')
 
-        # postcode
-        input = self.browser.find_elements(By.NAME, 'postcode')[0]
+        # shipping_postcode
+        input = self.browser.find_elements(By.NAME, 'shipping_postcode')[0]
         input.send_keys('postcode')
+
+
+
+
 
         # shipping_region
         input = self.browser.find_element_by_xpath("//select[@name='shipping_region']/option[text()='Region 1']")

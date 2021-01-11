@@ -47,15 +47,29 @@ class BaseFunctionalTest(LiveServerTestCase):
         input.send_keys('phone_number')
         input = self.browser.find_elements(By.NAME, 'point_of_contact')[0]
         input.send_keys('point_of_contact')
-        input = self.browser.find_elements(By.NAME, 'address_line_1')[0]
+
+        #billing
+        input = self.browser.find_elements(By.NAME, 'billing_address_line_1')[0]
         input.send_keys('address_line_1')
-        input = self.browser.find_elements(By.NAME, 'address_line_2')[0]
+        input = self.browser.find_elements(By.NAME, 'billing_address_line_2')[0]
         input.send_keys('address_line_2')
-        input = self.browser.find_elements(By.NAME, 'suburb')[0]
+        input = self.browser.find_elements(By.NAME, 'billing_suburb')[0]
         input.send_keys('suburb')
-        input = self.browser.find_elements(By.NAME, 'city')[0]
+        input = self.browser.find_elements(By.NAME, 'billing_city')[0]
         input.send_keys('city')
-        input = self.browser.find_elements(By.NAME, 'postcode')[0]
+        input = self.browser.find_elements(By.NAME, 'billing_postcode')[0]
+        input.send_keys('postcode')
+
+        # shipping
+        input = self.browser.find_elements(By.NAME, 'shipping_address_line_1')[0]
+        input.send_keys('address_line_1')
+        input = self.browser.find_elements(By.NAME, 'shipping_address_line_2')[0]
+        input.send_keys('address_line_2')
+        input = self.browser.find_elements(By.NAME, 'shipping_suburb')[0]
+        input.send_keys('suburb')
+        input = self.browser.find_elements(By.NAME, 'shipping_city')[0]
+        input.send_keys('city')
+        input = self.browser.find_elements(By.NAME, 'shipping_postcode')[0]
         input.send_keys('postcode')
         input = self.browser.find_element_by_xpath("//select[@name='shipping_region']/option[text()='Region 1']")
         input.click()

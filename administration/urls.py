@@ -57,4 +57,6 @@ urlpatterns += [
          name='detail_order'),
     path('orders/edit/<int:pk>', OrderEdit.as_view(),
          name='edit_order'),
+    path('tags/generate-shipping-labels', OrderGenerateShippingLabels.as_view(),
+         name='delete_multiple_tag')
 ]

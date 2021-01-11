@@ -361,3 +361,35 @@ class OrderDetail(LoginAdminRequiredMixin, DetailView):
     model = Order
     fields = '__all__'
     context_object_name = 'order'
+
+
+class OrderGenerateShippingLabels(View):
+    template_name = 'administration/order/generate_shipping_labels.html'
+    success_url = reverse_lazy('administration:order_list')
+
+    #confirm page
+    def get(self, request):
+        print(request.GET)
+        GET = request.GET.copy()
+        GET.pop('csrfmiddlewaretoken')
+        try:
+            GET.pop('all')
+        except:
+            pass
+        key_list = [item[0] for item in GET.items()]
+        query_set = models.Tag.objects.filter(pk__in=key_list)
+        return TemplateResponse(request, self.template_name, {'object_list': query_set})
+
+    # deletes and redirects
+    def post(self, request):
+        GET = request.GET.copy()
+        GET.pop('csrfmiddlewaretoken')
+        try:
+            GET.pop('all')
+        except:
+            pass
+        key_list = [item[0] for item in GET.items()]
+        query_set = models.Tag.objects.filter(pk__in=key_list)
+        query_set.delete()
+        messages.success(self.request, f'Selected items deleted')
+        return HttpResponseRedirect(self.success_url)

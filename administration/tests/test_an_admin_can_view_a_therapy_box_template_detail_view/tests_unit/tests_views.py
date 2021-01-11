@@ -33,8 +33,10 @@ class ViewTest(BaseTestCase):
 
 
     def test_detail_page_shows_a_single_therapy_box(self):
-        TherapyBoxTemplateFactory(name='a new therapy box template')
+        object = TherapyBoxTemplateFactory(name='a new therapy box template')
         self.login_admin()
-        response = self.client.get(reverse('administration:detail_therapy_box_template', kwargs={'pk':1}), follow=True)
+        response = self.client.get(reverse('administration:detail_therapy_box_template', kwargs={'pk':object.id}), follow=True)
+        from rich import inspect
+        inspect(object)
         assert 'Detail: a new therapy box template' in response.rendered_content
-        assert 'a new therapy box template' in response.rendered_content
+        
