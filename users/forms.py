@@ -128,3 +128,5 @@ class UsersProfileForm(ErrorListMixin, forms.ModelForm):
        super(UsersProfileForm, self).__init__(*args, **kwargs)
        self.fields['email'].widget.attrs['readonly'] = True
        self.fields['email'].widget.attrs['class'] = 'form-control form-control-sm'
+       self.fields['facility_name'].widget.attrs['readonly'] = True
+       self.fields['facility_name'].widget.attrs['class'] = 'form-control form-control-sm'

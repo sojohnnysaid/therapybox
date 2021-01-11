@@ -11,7 +11,7 @@
             {% cloudinary therapybox.template.image_1 format="jpg" width=200 crop="fill" %} 
         </div>
         <div class="col-6">
-                <p><b>ID:</b> {{therapybox.id|stringformat:"04d"}}</p>
+                <p><b>ID:</b> {{therapybox.id|stringformat:"03d"}}</p>
                 <p><b>Description: </b>{{ therapybox.template.description }}</p>
                 <ul class="pb-4">
                     <b>Tags:</b>
