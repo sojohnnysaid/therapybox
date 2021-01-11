@@ -53,7 +53,18 @@ def create_new_order(request):
     product_id_list = ','.join(map(str, items))
     Order.objects.create(
         product_id_list=product_id_list,
-        user=user
+        user=user,
+        billing_address_line_1 = user.billing_address_line_1,
+        billing_address_line_2 = user.billing_address_line_2,
+        billing_suburb = user.billing_suburb,
+        billing_city = user.billing_city,
+        billing_postcode = user.billing_postcode,
+        shipping_address_line_1 = user.shipping_address_line_1,
+        shipping_address_line_2 = user.shipping_address_line_2,
+        shipping_suburb = user.shipping_suburb,
+        shipping_city = user.shipping_city,
+        shipping_postcode = user.shipping_postcode,
+        shipping_region = user.shipping_region
     )
 
     #empty the cart

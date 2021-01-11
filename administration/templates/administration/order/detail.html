@@ -3,10 +3,13 @@
 
 {% block content %}
 
-    <h1 class="text-center">{% block title %}Detail: {{order.id}}{% endblock %}</h1>
+    <h1 class="text-center">{% block title %}Order# {{order.id}}{% endblock %}</h1>
 
     <ul>
-        <li>{{ tag.name }}</li>
+        <li>Order Submitted: {{ order.date_submitted }}</li>
+        <li>Items ordered: {{ order.product_id_list }}</li>
+        <li>Shipping Address 1: {{ order.user.shipping_address_line_1}}</li>
+        {% for item in order.product_id_list %}{{item}}{% endfor %}
     </ul>
 
 
