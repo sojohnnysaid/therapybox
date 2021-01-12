@@ -1,0 +1,2307 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "ParcelLabel API",
+    "version": "3.0.0"
+  },
+  "host": "api.nzpost.co.nz",
+  "basePath": "/parcellabel/v3",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/labels": {
+      "x-amf-displayName": "Request Label- Domestic",
+      "post": {
+        "description": "Returns Domestic Labels for Courierpost and Pace",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "client_id",
+            "description": "Identifies you as a licensed user of this API. Your client_id is your application's client_id, provided when you register to use the API.",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "description": "The Authroized Bearer token you get from your Initial OAuth Call",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "Content-Type",
+            "description": "It specifies waht type of content you are dealing with",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "user_name",
+            "description": "Specifies the Client user name (if existing).",
+            "required": false,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "x-amf-mediaType": "application/json",
+            "in": "body",
+            "name": "generated",
+            "schema": {
+              "$ref": "#/definitions/default"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "$ref": "#/definitions/default_1"
+            }
+          },
+          "400": {
+            "description": "Bad request, missing or invalid parameters.",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "value": {
+                  "success": false,
+                  "message_id": "ded71a90-0e36-11e5-aa3a-02b923c21ef3",
+                  "errors": [
+                    {
+                      "code": "400002",
+                      "message": "Invalid parameter(s)",
+                      "details": "For domestic parcels , the field /delivery_address/street must have a value."
+                    }
+                  ]
+                }
+              },
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "404": {
+            "description": "Entity not found.",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "success": false,
+                "message_id": "ded71a90-0e36-11e5-aa3a-02b923c21ef3",
+                "errors": [
+                  {
+                    "code": 404,
+                    "message": "Resource not found",
+                    "details": "The resource you are looking for does not exist, please consult the API documentation if in doubt"
+                  }
+                ]
+              },
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "success": false,
+                "message_id": "ded71a90-0e36-11e5-aa3a-02b923c21ef3",
+                "errors": [
+                  {
+                    "code": 500,
+                    "message": "Internal Server Error",
+                    "details": ""
+                  }
+                ]
+              },
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth_2_0": []
+          }
+        ]
+      }
+    },
+    "/ labels": {
+      "x-amf-displayName": "Request Label - International",
+      "post": {
+        "description": "Return an International labels including eParcel Labels",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "x-amf-mediaType": "application/json",
+            "in": "body",
+            "name": "generated",
+            "schema": {
+              "$ref": "#/definitions/default_2"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "$ref": "#/definitions/default_3"
+            }
+          },
+          "400": {
+            "description": "Bad request, missing or invalid parameters.",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "value": {
+                  "success": false,
+                  "message_id": "ded71a90-0e36-11e5-aa3a-02b923c21ef3",
+                  "errors": [
+                    {
+                      "code": "400002",
+                      "message": "Invalid parameter(s)",
+                      "details": "For domestic parcels , the field /delivery_address/street must have a value."
+                    }
+                  ]
+                }
+              },
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "404": {
+            "description": "Entity not found.",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "success": false,
+                "message_id": "ded71a90-0e36-11e5-aa3a-02b923c21ef3",
+                "errors": [
+                  {
+                    "code": 404,
+                    "message": "Resource not found",
+                    "details": "The resource you are looking for does not exist, please consult the API documentation if in doubt"
+                  }
+                ]
+              },
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "success": false,
+                "message_id": "ded71a90-0e36-11e5-aa3a-02b923c21ef3",
+                "errors": [
+                  {
+                    "code": 500,
+                    "message": "Internal Server Error",
+                    "details": ""
+                  }
+                ]
+              },
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth_2_0": []
+          }
+        ]
+      }
+    },
+    "/labels/{consignment_id}/status": {
+      "x-amf-displayName": "Get Label Status",
+      "get": {
+        "description": "Download the label",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "description": "The index of the image to return, required if PNG format is specified.",
+            "required": false,
+            "in": "query",
+            "default": 1,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 99
+          },
+          {
+            "name": "format",
+            "description": "The format of the label to return. Valid values are PDF and PNG. This defaults to pdf for labels, or png if page is specified",
+            "required": false,
+            "in": "query",
+            "default": "PDF",
+            "enum": [
+              "PDF",
+              "PNG",
+              "JSON"
+            ],
+            "type": "string"
+          },
+          {
+            "name": "base64",
+            "description": "Encode the response as base64 and return a JSON payload. Only applicable to PNG.",
+            "required": false,
+            "in": "query",
+            "default": false,
+            "type": "boolean"
+          },
+          {
+            "name": "consignment_id",
+            "description": "This is the consignment_id returned when the label was requested",
+            "required": true,
+            "in": "path",
+            "type": "string",
+            "pattern": "^[(a-z|A-Z|0-9)]{6}$",
+            "minLength": 6,
+            "maxLength": 6
+          },
+          {
+            "name": "client_id",
+            "description": "Identifies you as a licensed user of this API. Your client_id is your application's client_id, provided when you register to use the API.",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "description": "The Authroized Bearer token you get from your Initial OAuth Call",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "Content-Type",
+            "description": "It specifies waht type of content you are dealing with",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "user_name",
+            "description": "Specifies the Client user name (if existing).",
+            "required": false,
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "$ref": "#/definitions/default_4"
+            }
+          },
+          "400": {
+            "description": "Bad request, missing or invalid parameters.",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "value": {
+                  "success": false,
+                  "message_id": "ded71a90-0e36-11e5-aa3a-02b923c21ef3",
+                  "errors": [
+                    {
+                      "code": "400002",
+                      "message": "Invalid parameter(s)",
+                      "details": "For domestic parcels , the field /delivery_address/street must have a value."
+                    }
+                  ]
+                }
+              },
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "404": {
+            "description": "Entity not found.",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "success": false,
+                "message_id": "ded71a90-0e36-11e5-aa3a-02b923c21ef3",
+                "errors": [
+                  {
+                    "code": 404,
+                    "message": "Resource not found",
+                    "details": "The resource you are looking for does not exist, please consult the API documentation if in doubt"
+                  }
+                ]
+              },
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "success": false,
+                "message_id": "ded71a90-0e36-11e5-aa3a-02b923c21ef3",
+                "errors": [
+                  {
+                    "code": 500,
+                    "message": "Internal Server Error",
+                    "details": ""
+                  }
+                ]
+              },
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth_2_0": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "default": {
+      "example": {
+        "value": {
+          "carrier": "COURIERPOST",
+          "orientation": "LANDSCAPE",
+          "format": "PDF",
+          "logo_id_": "B8D51C2B-5606-4B30-B2CD-2EAA9F4DD29F",
+          "notification_endpoint": "http://my.endpoint.com/status",
+          "job_number": 9999,
+          "sender_reference_1": "Order123",
+          "sender_reference_2": "CC 52",
+          "paper_dimensions": {
+            "width_cm": 17.4,
+            "height_cm": 10,
+            "stationery_size": "A4"
+          },
+          "sender_details": {
+            "name": "Joe Sender",
+            "phone": "6490000001",
+            "email": "joe.sender@nzpost.co.nz",
+            "company_name": "Sender ltd",
+            "site_code": 44111
+          },
+          "pickup_address": {
+            "company_name": "Sender ltd",
+            "building_name": "Sender Building",
+            "unit_type": "Unit",
+            "unit_value": "5",
+            "floor": "3",
+            "street_number": "151",
+            "street": "Victoria Street West",
+            "suburb": "Auckland Central",
+            "city": "Auckland",
+            "country_code": "NZ",
+            "postcode": "1010"
+          },
+          "receiver_details": {
+            "name": "Joe Receiver",
+            "phone": "6490000002",
+            "email": "joe.receiver@nzpost.co.nz"
+          },
+          "delivery_address": {
+            "is_collection": false,
+            "company_name": "Receiver ltd",
+            "building_name": "Receiver Building",
+            "unit_type": "Suite",
+            "unit_value": "4",
+            "floor": "L2",
+            "street_number": "42C",
+            "street": "Tawa Drive",
+            "suburb": "Albany",
+            "city": "Auckland",
+            "country_code": "NZ",
+            "postcode": "0632",
+            "instructions": "Ring the doorbell"
+          },
+          "parcel_details": [
+            {
+              "service_code": "CPOLP",
+              "return_indicator": "OUTBOUND",
+              "description": "LARGE",
+              "dimensions": {
+                "length_cm": 15.8,
+                "width_cm": 10.4,
+                "height_cm": 15,
+                "diameter_cm": 35,
+                "weight_kg": 10
+              }
+            },
+            {
+              "service_code": "CPOLE",
+              "return_indicator": "RETURN",
+              "description": "MEDIUM",
+              "dimensions": {
+                "length_cm": 5.5,
+                "width_cm": 10.4,
+                "height_cm": 15,
+                "weight_kg": 5
+              }
+            }
+          ]
+        }
+      },
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "sender_details",
+        "pickup_address",
+        "receiver_details",
+        "delivery_address",
+        "parcel_details"
+      ],
+      "properties": {
+        "carrier": {
+          "description": "Indicates the carrier - COURIERPOST, PACE or PARCELPOST, e.g. PACE",
+          "enum": [
+            "COURIERPOST",
+            "PACE"
+          ],
+          "type": "string"
+        },
+        "orientation": {
+          "description": "Print orientation - PORTRAIT or LANDSCAPE, e.g. PORTRAIT",
+          "enum": [
+            "PORTRAIT",
+            "LANDSCAPE"
+          ],
+          "type": "string"
+        },
+        "format": {
+          "description": "Indicates the format the label should be produced in. E.g. pdf",
+          "enum": [
+            "PDF",
+            "PNG"
+          ],
+          "type": "string"
+        },
+        "logo_id": {
+          "description": "Unique identifier for merchants logo. E.g. AC37BFDB-187C-4691-BB7B-0BB2F8791FB7",
+          "type": "string"
+        },
+        "notification_endpoint": {
+          "description": "Indicates the merchants webhook URL to receive notification when the label has been generated. E.g. https://yourendpoint.co.nz/labels/status",
+          "type": "string",
+          "maxLength": 2048
+        },
+        "job_number": {
+          "description": "Indicates the Pace Job Booking Number. E.g. 8265",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 999999
+        },
+        "delivery_choice_type": {
+          "description": "Additional service requested for the delivery. E.g. 1",
+          "enum": [
+            "1",
+            "2"
+          ],
+          "type": "string"
+        },
+        "sender_reference_1": {
+          "description": "Sender's reference for the consignment. Will be printed on the label. E.g. Order123",
+          "type": "string",
+          "maxLength": 35
+        },
+        "sender_reference_2": {
+          "description": "Sender's reference (e.g. cost center number for CP manifesting). Will not be printed on the label. E.g. CC52",
+          "type": "string",
+          "maxLength": 35
+        },
+        "paper_dimensions": {
+          "description": "This object allows the merchant to specify the paper size upon which to print the label.",
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "width_cm": {
+              "description": "Width the label will be printed to. E.g. 17.4",
+              "type": "number",
+              "minimum": 0.0,
+              "exclusiveMinimum": true
+            },
+            "height_cm": {
+              "description": "Height the label will be printed to. E.g. 10",
+              "type": "number",
+              "minimum": 0.0,
+              "exclusiveMinimum": true
+            },
+            "stationery_size": {
+              "description": "Allows merchants to specify the paper size upon which to print the label. E.g. A5",
+              "enum": [
+                "A4",
+                "A5"
+              ],
+              "type": "string"
+            }
+          }
+        },
+        "sender_details": {
+          "description": "An object containing sender information.",
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "name",
+            "site_code"
+          ],
+          "properties": {
+            "name": {
+              "description": "Indicates the name of the sender. E.g. Joe Sender",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            },
+            "phone": {
+              "description": "Indicates the phone number of the sender. E.g. +64-27-111-1111",
+              "type": "string",
+              "maxLength": 20
+            },
+            "email": {
+              "description": "Indicates the email address of the sender. E.g. joe.sender@acme.axx.nz",
+              "type": "string",
+              "maxLength": 254
+            },
+            "fax": {
+              "description": "Contact fax number of the sending party. E.g. +64-27-222-2222",
+              "type": "string",
+              "maxLength": 26
+            },
+            "company_name": {
+              "description": "Indicates the company name of the sender as it should appear on the label. E.g. Acme Products",
+              "type": "string",
+              "maxLength": 40
+            },
+            "site_code": {
+              "description": "Indicates the site code assigned to the address where the parcel will be picked up by the courier. ?This address is also used for the NZ Post manifest process. E.g. 12345",
+              "type": "integer"
+            },
+            "customs_code": {
+              "description": "Customs code of the sender. E.g. HGB321547",
+              "type": "string",
+              "maxLength": 15
+            },
+            "signatory": {
+              "description": "Contact name of person signing the parcel. E.g. Stephen Signatory",
+              "type": "string",
+              "maxLength": 40
+            },
+            "freepost_number": {
+              "description": "For ParcelPost Domestic Return labels this is FreePost number of the sender. E.g. 106",
+              "type": "string",
+              "maxLength": 25
+            }
+          }
+        },
+        "pickup_address": {
+          "description": "An object containing the pick up address.",
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "street",
+            "suburb",
+            "city",
+            "country_code",
+            "postcode"
+          ],
+          "properties": {
+            "address_id": {
+              "description": "Indicates the Address ID for the pick up address sourced from the ParcelAddress API. E.g. 198024",
+              "type": "integer",
+              "minimum": 1
+            },
+            "dpid": {
+              "description": "Indicates the Address ID for the pickup address sourced from the ParcelAddress API. E.g. 12345",
+              "type": "integer",
+              "minimum": 1
+            },
+            "site_code": {
+              "description": "Specifies the parcel source address printed on the label and can be different from the pickup address. E.g. 12345",
+              "type": "integer",
+              "minimum": 1
+            },
+            "company_name": {
+              "description": "The name of company sending the parcel. E.g. Acme Products",
+              "type": "string",
+              "maxLength": 40
+            },
+            "building_name": {
+              "description": "The building name. E.g. Acme Products House",
+              "type": "string",
+              "maxLength": 40
+            },
+            "unit_type": {
+              "description": "Indicates the type of unit. E.g. Flat",
+              "type": "string",
+              "maxLength": 40
+            },
+            "unit_value": {
+              "description": "Indicates the value of the unit type. E.g. 2",
+              "type": "string",
+              "maxLength": 10
+            },
+            "floor": {
+              "description": "Indicates the floor of the address. E.g. 2",
+              "type": "string",
+              "maxLength": 10
+            },
+            "street_number": {
+              "description": "Indicates the street number. E.g. 245",
+              "type": "string",
+              "maxLength": 10
+            },
+            "street": {
+              "description": "Name and number of the street. E.g. 151 Victoria Street West",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            },
+            "suburb": {
+              "description": "The name of the suburb. E.g. East Tamaki",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            },
+            "city": {
+              "description": "The name of the city. E.g. Auckland",
+              "type": "string",
+              "maxLength": 40
+            },
+            "state": {
+              "description": "Regional, provincial or county name that the sending party?s address belongs to. E.g. NI",
+              "type": "string",
+              "maxLength": 35
+            },
+            "locality_code": {
+              "description": "Country subdivision code identifier that the sending party?s address belongs to. E.g. WA",
+              "type": "string",
+              "maxLength": 9
+            },
+            "country_code": {
+              "description": "Two letter country code. E.g. NZ",
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 2
+            },
+            "postcode": {
+              "description": "Postal or zip code of the sender. E.g. 1411",
+              "type": "string",
+              "minLength": 4,
+              "maxLength": 17
+            },
+            "lobby_location": {
+              "description": "An object containing a PO Box or Private Bag pick up location.",
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "number",
+                "lobby",
+                "city",
+                "postcode"
+              ],
+              "properties": {
+                "type": {
+                  "description": "The location type - POBOX or PRIVATEBAG, e.g. POBOX",
+                  "enum": [
+                    "POBOX",
+                    "PRIVATEBAG"
+                  ],
+                  "type": "string"
+                },
+                "name": {
+                  "description": "The name of the recipient. E.g. Smith Industries",
+                  "type": "string",
+                  "maxLength": 40
+                },
+                "number": {
+                  "description": "For ParcelPost Domestic Return labels this is Post Box or Private Bag number of that the parcel will be delivered to. E.g. 12345",
+                  "type": "string",
+                  "maxLength": 15
+                },
+                "lobby": {
+                  "description": "The lobby name. E.g. Auckland PostShop",
+                  "type": "string",
+                  "maxLength": 40
+                },
+                "city": {
+                  "description": "The name of the city. E.g. Auckland",
+                  "type": "string",
+                  "maxLength": 40
+                },
+                "postcode": {
+                  "description": "Postal or zip code of the Box or Bag location. E.g. 1142",
+                  "type": "string",
+                  "minLength": 4,
+                  "maxLength": 17
+                }
+              }
+            }
+          }
+        },
+        "receiver_details": {
+          "description": "An object containing receiver information.",
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "description": "Named person to receive the parcel. E.g. Jack Receiver",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            },
+            "phone": {
+              "description": "Contact phone number of person receiving the parcel. E.g. +64-27-111-1111",
+              "type": "string",
+              "maxLength": 20
+            },
+            "email": {
+              "description": "Indicates the email address of the receiver. E.g. j.receiver@beta.xx.nz",
+              "type": "string",
+              "maxLength": 254
+            },
+            "fax": {
+              "description": "Addressee?s contact fax number. E.g. +64-27-222-2222",
+              "type": "string",
+              "maxLength": 26
+            },
+            "vat_number": {
+              "description": "The VAT or GST number of the consignee. E.g. 747-11-8051",
+              "type": "string",
+              "maxLength": 25
+            },
+            "registration_number": {
+              "description": "Registration number of the consumer required for Delivery Location Options. E.g. XY54",
+              "type": "string",
+              "maxLength": 30
+            }
+          }
+        },
+        "delivery_address": {
+          "description": "An object containing the delivery address.",
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "street",
+            "suburb",
+            "city",
+            "country_code",
+            "postcode"
+          ],
+          "properties": {
+            "location_type": {
+              "description": "Type of delivery requested for the item. E.g. SHP",
+              "type": "string",
+              "maxLength": 3
+            },
+            "address_id": {
+              "description": "Indicates the Address ID for the delivery address sourced from the ParcelAddress API. E.g. 198024",
+              "type": "integer",
+              "minimum": 1
+            },
+            "dpid": {
+              "description": "Indicates the Address ID for the delivery address sourced from the ParcelAddress API. E.g. 12345",
+              "type": "integer",
+              "minimum": 1
+            },
+            "site_code": {
+              "description": "Specifies the parcel delivery address printed on the label. E.g. 12345",
+              "type": "integer",
+              "minimum": 1
+            },
+            "is_collection": {
+              "description": "Indicates whether the delivery address is a NZ Post collection point. E.g. false",
+              "type": "boolean"
+            },
+            "building_name": {
+              "description": "The building name. E.g. Beta Company House",
+              "type": "string",
+              "maxLength": 40
+            },
+            "company_name": {
+              "description": "The name of company the parcel is being delivered to. E.g. Beta Company",
+              "type": "string",
+              "maxLength": 40
+            },
+            "unit_type": {
+              "description": "Indicates the type of unit. E.g. Suite",
+              "type": "string",
+              "maxLength": 40
+            },
+            "unit_value": {
+              "description": "Indicates the value of the unit type. E.g. 5",
+              "type": "string",
+              "maxLength": 10
+            },
+            "floor": {
+              "description": "Indicates the floor of the delivery address. E.g. 3",
+              "type": "string",
+              "maxLength": 10
+            },
+            "street_number": {
+              "description": "Indicates the fstreet number. E.g. 245",
+              "type": "string",
+              "maxLength": 10
+            },
+            "street": {
+              "description": "Name and number of the street. E.g. 1600 Pennsylvania Avenue",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            },
+            "suburb": {
+              "description": "The name of the suburb. E.g. Washington Central",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            },
+            "city": {
+              "description": "The name of the city. E.g. Washington",
+              "type": "string",
+              "maxLength": 40
+            },
+            "state": {
+              "description": "State the delivery city is in. ?If no state, enter country. E.g. Delaware",
+              "type": "string",
+              "maxLength": 35
+            },
+            "locality_code": {
+              "description": "The code that represents the region,province or county. E.g. DE",
+              "type": "string",
+              "maxLength": 9
+            },
+            "country_code": {
+              "description": "Two letter country code. E.g. NZ",
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 2
+            },
+            "postcode": {
+              "description": "Postal or zip code of the receiver. E.g. 89102",
+              "type": "string",
+              "minLength": 4,
+              "maxLength": 17
+            },
+            "instructions": {
+              "description": "Delivery instructions for courier. E.g. Ring doorbell",
+              "type": "string",
+              "maxLength": 255
+            },
+            "lobby_location": {
+              "description": "An object containing a PO Box or Private Bag pick up location.",
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "type",
+                "number",
+                "lobby",
+                "city",
+                "postcode"
+              ],
+              "properties": {
+                "type": {
+                  "description": "The location type - POBOX or PRIVATEBAG, e.g. POBOX",
+                  "enum": [
+                    "POBOX",
+                    "PRIVATEBAG"
+                  ],
+                  "type": "string"
+                },
+                "name": {
+                  "description": "The name of the recipient. E.g. Smith Industries",
+                  "type": "string",
+                  "maxLength": 40
+                },
+                "number": {
+                  "description": "For ParcelPost Domestic Return labels this is Post Box or Private Bag number of that the parcel will be delivered to. E.g. 12345",
+                  "type": "string",
+                  "maxLength": 15
+                },
+                "lobby": {
+                  "description": "The lobby name. E.g. Auckland PostShop",
+                  "type": "string",
+                  "maxLength": 40
+                },
+                "city": {
+                  "description": "The name of the city. E.g. Auckland",
+                  "type": "string",
+                  "maxLength": 40
+                },
+                "postcode": {
+                  "description": "Postal or zip code of the Box or Bag location. E.g. 1142",
+                  "type": "string",
+                  "minLength": 4,
+                  "maxLength": 17
+                }
+              }
+            }
+          }
+        },
+        "parcel_details": {
+          "description": "An object containing the label details for each label in the consignment.",
+          "type": "array",
+          "maxItems": 99,
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+              "service_code",
+              "return_indicator",
+              "dimensions"
+            ],
+            "properties": {
+              "service_code": {
+                "description": " Code to represent a delivery service. E.g. CPOLP",
+                "type": "string",
+                "maxLength": 15
+              },
+              "return_indicator": {
+                "description": "This is used to indicate if the label generated is used for returning items. E.g. OUTBOUND",
+                "enum": [
+                  "OUTBOUND",
+                  "RETURN"
+                ],
+                "type": "string"
+              },
+              "receiver_charging_arrangement": {
+                "description": "The duty and tax payment method as it applies to the item. E.g. DDU",
+                "enum": [
+                  "DDP",
+                  "DDU"
+                ],
+                "type": "string"
+              },
+              "undeliverable_instructions": {
+                "description": "Instructions in case of non-delivery. E.g. NONE",
+                "enum": [
+                  "NONE",
+                  "RETURN",
+                  "DESTROY"
+                ],
+                "type": "string"
+              },
+              "add_ons": {
+                "description": "Contains an array of ancillary codes. E.g. CPSR",
+                "type": "array",
+                "minItems": 0,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "cms_codes": {
+                "description": "Array of codes that will be translated to a NetDespatch service code. E.g. PCMXT25",
+                "type": "array",
+                "minItems": 0,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "indicia_number": {
+                "description": "The NetDespatch Indicia Number. E.g. 123456",
+                "type": "string",
+                "maxLength": 6
+              },
+              "description": {
+                "description": "The box size name on the label for the dispatching person to choose the correct box for packing. E.g. LARGE",
+                "type": "string",
+                "maxLength": 20
+              },
+              "insurance_required": {
+                "description": "Indicates whether insurance is required for the parcel. E.g. true",
+                "type": "boolean"
+              },
+              "nature_of_transaction_code": {
+                "description": "Category of goods that appears on the CN23 form. E.g. 21",
+                "type": "string",
+                "maxLength": 3
+              },
+              "postage_paid_amount": {
+                "description": "Monetary value of postage that sender has paid. E.g. 23.45",
+                "type": "number",
+                "minimum": 0.0,
+                "exclusiveMinimum": true
+              },
+              "additional_fee_amount": {
+                "description": "Monetary value of other fees that sender has paid. E.g. 12.5",
+                "type": "number",
+                "minimum": 0.0
+              },
+              "insured_value_amount": {
+                "description": "Monetary value the parcel items are insured for. E.g. 70",
+                "type": "number",
+                "minimum": 0.0
+              },
+              "currency": {
+                "description": "The currency code for the parcel. E.g. AUD",
+                "type": "string",
+                "maxLength": 3
+              },
+              "dimensions": {
+                "description": "An object containing dimension details for this parcel.",
+                "type": "object",
+                "additionalProperties": true,
+                "required": [
+                  "length_cm",
+                  "width_cm",
+                  "height_cm",
+                  "weight_kg"
+                ],
+                "properties": {
+                  "length_cm": {
+                    "description": "Length of parcel. E.g. 16.5",
+                    "type": "number",
+                    "minimum": 0.0,
+                    "exclusiveMinimum": true
+                  },
+                  "width_cm": {
+                    "description": "Width of parcel. E.g. 24",
+                    "type": "number",
+                    "minimum": 0.0,
+                    "exclusiveMinimum": true
+                  },
+                  "height_cm": {
+                    "description": "Height of parcel. E.g. 15",
+                    "type": "number",
+                    "minimum": 0.0,
+                    "exclusiveMinimum": true
+                  },
+                  "diameter_cm": {
+                    "description": "Diameter of parcel. E.g. 30",
+                    "type": "number",
+                    "minimum": 0.0,
+                    "exclusiveMinimum": true
+                  },
+                  "volume_m3": {
+                    "description": "Indicates the volume of the item being sent. E.g. 0.025",
+                    "type": "number",
+                    "minimum": 0.0,
+                    "exclusiveMinimum": true
+                  },
+                  "weight_kg": {
+                    "description": "The physical weight of the parcel in kilograms. E.g. 2.55",
+                    "type": "number",
+                    "minimum": 0.0,
+                    "exclusiveMinimum": true
+                  }
+                }
+              },
+              "dangerous_goods": {
+                "description": "This object contains hazard identification information.",
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                  "hazard_class": {
+                    "description": "Classification of dangerous items. E.g. 38",
+                    "type": "string",
+                    "maxLength": 4
+                  },
+                  "type_code": {
+                    "description": "Indicates the United Nations Dangerous Goods identification code for dangerous items. E.g. 5231",
+                    "type": "string",
+                    "minLength": 4,
+                    "maxLength": 4
+                  }
+                }
+              },
+              "parcel_contents": {
+                "description": "Contains an array of parcel contents",
+                "type": "array",
+                "maxItems": 20,
+                "minItems": 0,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": [
+                    "content_number",
+                    "description",
+                    "quantity",
+                    "weight_kg",
+                    "value"
+                  ],
+                  "properties": {
+                    "content_number": {
+                      "description": "The number specifying an item in the shipment. E.g. 3",
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 20
+                    },
+                    "description": {
+                      "description": "Human readable description of the parcel contents. E.g. Light bulb",
+                      "type": "string",
+                      "maxLength": 35
+                    },
+                    "harmonised_system_tariff": {
+                      "description": "Indicates the internationally standardized name and number of the classification of the parcel (applies to all parcel contents). E.g. 12121212",
+                      "type": "string",
+                      "maxLength": 18
+                    },
+                    "quantity": {
+                      "description": "The quantity of units within the parcel. E.g. 2",
+                      "type": "integer",
+                      "minimum": 0,
+                      "exclusiveMinimum": true
+                    },
+                    "weight_kg": {
+                      "description": "The combined weight of each item in the parcel. E.g. 1.2",
+                      "type": "number",
+                      "minimum": 0.0,
+                      "exclusiveMinimum": true
+                    },
+                    "value": {
+                      "description": "The dollar value total of each item within the parcel. E.g. 5.1",
+                      "type": "number",
+                      "minimum": 0.0,
+                      "exclusiveMinimum": true
+                    },
+                    "country_code": {
+                      "description": "Country code of the location in which the content piece was produced or manufactured. E.g. CN",
+                      "type": "string",
+                      "minLength": 2,
+                      "maxLength": 2
+                    }
+                  }
+                }
+              },
+              "accompanying_documents": {
+                "description": "Contains an array of documents",
+                "type": "array",
+                "maxItems": 9,
+                "minItems": 0,
+                "items": {
+                  "description": "This object contains information about a document within the parcel.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "type": {
+                      "description": "The document type. Value must be one of LIC, 811, 911. See description from UPU code list 184. E.g. 911",
+                      "type": "string",
+                      "maxLength": 3
+                    },
+                    "identifier": {
+                      "description": "The value entered on the CN23 license box. E.g. ?",
+                      "type": "string",
+                      "maxLength": 35
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "default_1": {
+      "example": {
+        "success": true,
+        "message_id": "05f8d155-e71d-478e-8dc7-1593811277d4",
+        "consignment_id": "X63CC2"
+      },
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "success",
+        "message_id",
+        "consignment_id"
+      ],
+      "properties": {
+        "success": {
+          "description": "Flag indicating success or failure of the request. Values are true or false.",
+          "type": "boolean"
+        },
+        "message_id": {
+          "description": "A unique message ID for the API call. E.g. 52fe9dca-7672-4938-a648-a75e272b4136",
+          "type": "string"
+        },
+        "consignment_id": {
+          "description": "Unique identifier for all of the labels in the consignment. E.g. X6CC2",
+          "type": "string"
+        }
+      }
+    },
+    "default_2": {
+      "example": {
+        "value": {
+          "carrier": "PARCELPOST",
+          "orientation": "LANDSCAPE",
+          "format": "PDF",
+          "sender_reference_1": "reference_1",
+          "sender_reference_2": "reference_2",
+          "paper_dimensions": {
+            "width_cm": 21.0,
+            "height_cm": 29.7,
+            "stationery_size": "A4"
+          },
+          "sender_details": {
+            "name": "Sender Name",
+            "phone": "6490000001",
+            "email": "sender@example.co.nz",
+            "company_name": "Test Sender Company"
+          },
+          "pickup_address": {
+            "company_name": "Test Pickup Address Company",
+            "building_name": "Test Pickup Address Building",
+            "unit_type": "Unit",
+            "unit_value": "2",
+            "floor": "Floor 5",
+            "street": "151 Victoria Street West",
+            "suburb": "Auckland Central",
+            "city": "Auckland",
+            "country_code": "NZ",
+            "postcode": "1010"
+          },
+          "receiver_details": {
+            "name": "Receiver Name",
+            "phone": "6490000002",
+            "email": "receiver@example.co.nz"
+          },
+          "delivery_address": {
+            "street": "15 Wanhe St",
+            "suburb": "Wulumuqi Shi",
+            "city": "Xinjiang Weiwuerzizhiqu",
+            "country_code": "CN",
+            "postcode": "831400"
+          },
+          "parcel_details": [
+            {
+              "service_code": "TIAS",
+              "undeliverable_instructions": "RETURN",
+              "indicia_number": "200003",
+              "insurance_required": false,
+              "nature_of_transaction_code": "32",
+              "postage_paid_amount": 0.01,
+              "currency": "NZD",
+              "dimensions": {
+                "length_cm": 30,
+                "width_cm": 30,
+                "height_cm": 30,
+                "weight_kg": 1
+              },
+              "parcel_contents": [
+                {
+                  "content_number": 1,
+                  "description": "Package Desc",
+                  "quantity": 1,
+                  "weight_kg": 1,
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "orientation",
+        "sender_details",
+        "pickup_address",
+        "receiver_details",
+        "delivery_address",
+        "parcel_details"
+      ],
+      "properties": {
+        "carrier": {
+          "description": "Indicates the carrier - PARCELPOST",
+          "enum": [
+            "PARCELPOST"
+          ],
+          "type": "string"
+        },
+        "orientation": {
+          "description": "Print orientation - PORTRAIT or LANDSCAPE, e.g. PORTRAIT",
+          "enum": [
+            "PORTRAIT",
+            "LANDSCAPE"
+          ],
+          "type": "string"
+        },
+        "format": {
+          "description": "Indicates the format the label should be produced in. E.g. pdf",
+          "enum": [
+            "PDF",
+            "PNG"
+          ],
+          "type": "string"
+        },
+        "logo_id": {
+          "description": "Unique identifier for merchants logo. E.g. AC37BFDB-187C-4691-BB7B-0BB2F8791FB7",
+          "type": "string"
+        },
+        "notification_endpoint": {
+          "description": "Indicates the merchants webhook URL to receive notification when the label has been generated. E.g. https://yourendpoint.co.nz/labels/status",
+          "type": "string",
+          "maxLength": 2048
+        },
+        "job_number": {
+          "description": "Indicates the Pace Job Booking Number. E.g. 8265",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 999999
+        },
+        "delivery_choice_type": {
+          "description": "Additional service requested for the delivery. E.g. 1",
+          "enum": [
+            "1",
+            "2"
+          ],
+          "type": "string"
+        },
+        "sender_reference_1": {
+          "description": "Sender's reference for the consignment. Will be printed on the label. E.g. Order123",
+          "type": "string",
+          "maxLength": 35
+        },
+        "sender_reference_2": {
+          "description": "Sender's reference (e.g. cost center number for CP manifesting). Will not be printed on the label. E.g. CC52",
+          "type": "string",
+          "maxLength": 35
+        },
+        "paper_dimensions": {
+          "description": "This object allows the merchant to specify the paper size upon which to print the label.",
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "width_cm": {
+              "description": "Width the label will be printed to. E.g. 17.4",
+              "type": "number",
+              "minimum": 0.0,
+              "exclusiveMinimum": true
+            },
+            "height_cm": {
+              "description": "Height the label will be printed to. E.g. 10",
+              "type": "number",
+              "minimum": 0.0,
+              "exclusiveMinimum": true
+            },
+            "stationery_size": {
+              "description": "Allows merchants to specify the paper size upon which to print the label. E.g. A5",
+              "enum": [
+                "A4",
+                "A5"
+              ],
+              "type": "string"
+            }
+          }
+        },
+        "sender_details": {
+          "description": "An object containing sender information.",
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "description": "Indicates the name of the sender. E.g. Joe Sender",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            },
+            "phone": {
+              "description": "Indicates the phone number of the sender. E.g. +64-27-111-1111",
+              "type": "string",
+              "maxLength": 20
+            },
+            "email": {
+              "description": "Indicates the email address of the sender. E.g. joe.sender@acme.axx.nz",
+              "type": "string",
+              "maxLength": 254
+            },
+            "fax": {
+              "description": "Contact fax number of the sending party. E.g. +64-27-222-2222",
+              "type": "string",
+              "maxLength": 26
+            },
+            "company_name": {
+              "description": "Indicates the company name of the sender as it should appear on the label. E.g. Acme Products",
+              "type": "string",
+              "maxLength": 40
+            },
+            "site_code": {
+              "description": "Indicates the site code assigned to the address where the parcel will be picked up by the courier. ?This address is also used for the NZ Post manifest process. E.g. 12345",
+              "type": "integer"
+            },
+            "customs_code": {
+              "description": "Customs code of the sender. E.g. HGB321547",
+              "type": "string",
+              "maxLength": 15
+            },
+            "signatory": {
+              "description": "Contact name of person signing the parcel. E.g. Stephen Signatory",
+              "type": "string",
+              "maxLength": 40
+            },
+            "freepost_number": {
+              "description": "For ParcelPost Domestic Return labels this is FreePost number of the sender. E.g. 106",
+              "type": "string",
+              "maxLength": 25
+            }
+          }
+        },
+        "pickup_address": {
+          "description": "An object containing the pick up address.",
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "street",
+            "city",
+            "country_code",
+            "postcode"
+          ],
+          "properties": {
+            "address_id": {
+              "description": "Indicates the Address ID for the pick up address sourced from the ParcelAddress API. E.g. 198024",
+              "type": "integer",
+              "minimum": 1
+            },
+            "dpid": {
+              "description": "Indicates the Address ID for the pickup address sourced from the ParcelAddress API. E.g. 12345",
+              "type": "integer",
+              "minimum": 1
+            },
+            "site_code": {
+              "description": "Specifies the parcel source address printed on the label and can be different from the pickup address. E.g. 12345",
+              "type": "integer",
+              "minimum": 1
+            },
+            "company_name": {
+              "description": "The name of company sending the parcel. E.g. Acme Products",
+              "type": "string",
+              "maxLength": 40
+            },
+            "building_name": {
+              "description": "The building name. E.g. Acme Products House",
+              "type": "string",
+              "maxLength": 40
+            },
+            "unit_type": {
+              "description": "Indicates the type of unit. E.g. Flat",
+              "type": "string",
+              "maxLength": 40
+            },
+            "unit_value": {
+              "description": "Indicates the value of the unit type. E.g. 2",
+              "type": "string",
+              "maxLength": 10
+            },
+            "floor": {
+              "description": "Indicates the floor of the address. E.g. 2",
+              "type": "string",
+              "maxLength": 10
+            },
+            "street_number": {
+              "description": "Indicates the street number. E.g. 245",
+              "type": "string",
+              "maxLength": 10
+            },
+            "street": {
+              "description": "Name and number of the street. E.g. 151 Victoria Street West",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            },
+            "suburb": {
+              "description": "The name of the suburb. E.g. East Tamaki",
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 40
+            },
+            "city": {
+              "description": "The name of the city. E.g. Auckland",
+              "type": "string",
+              "maxLength": 40
+            },
+            "state": {
+              "description": "Regional, provincial or county name that the sending party?s address belongs to. E.g. NI",
+              "type": "string",
+              "maxLength": 35
+            },
+            "locality_code": {
+              "description": "Country subdivision code identifier that the sending party?s address belongs to. E.g. WA",
+              "type": "string",
+              "maxLength": 9
+            },
+            "country_code": {
+              "description": "Two letter country code. E.g. NZ",
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 2
+            },
+            "postcode": {
+              "description": "Postal or zip code of the sender. E.g. 1411",
+              "type": "string",
+              "minLength": 4,
+              "maxLength": 17
+            },
+            "lobby_location": {
+              "description": "An object containing a PO Box or Private Bag pick up location.",
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "type",
+                "number",
+                "lobby",
+                "city",
+                "postcode"
+              ],
+              "properties": {
+                "type": {
+                  "description": "The location type - POBOX or PRIVATEBAG, e.g. POBOX",
+                  "enum": [
+                    "POBOX",
+                    "PRIVATEBAG"
+                  ],
+                  "type": "string"
+                },
+                "name": {
+                  "description": "The name of the recipient. E.g. Smith Industries",
+                  "type": "string",
+                  "maxLength": 40
+                },
+                "number": {
+                  "description": "For ParcelPost Domestic Return labels this is Post Box or Private Bag number of that the parcel will be delivered to. E.g. 12345",
+                  "type": "string",
+                  "maxLength": 15
+                },
+                "lobby": {
+                  "description": "The lobby name. E.g. Auckland PostShop",
+                  "type": "string",
+                  "maxLength": 40
+                },
+                "city": {
+                  "description": "The name of the city. E.g. Auckland",
+                  "type": "string",
+                  "maxLength": 40
+                },
+                "postcode": {
+                  "description": "Postal or zip code of the Box or Bag location. E.g. 1142",
+                  "type": "string",
+                  "minLength": 4,
+                  "maxLength": 17
+                }
+              }
+            }
+          }
+        },
+        "receiver_details": {
+          "description": "An object containing receiver information.",
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "description": "Named person to receive the parcel. E.g. Jack Receiver",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            },
+            "phone": {
+              "description": "Contact phone number of person receiving the parcel. E.g. +64-27-111-1111",
+              "type": "string",
+              "maxLength": 20
+            },
+            "email": {
+              "description": "Indicates the email address of the receiver. E.g. j.receiver@beta.xx.nz",
+              "type": "string",
+              "maxLength": 254
+            },
+            "fax": {
+              "description": "Addressee?s contact fax number. E.g. +64-27-222-2222",
+              "type": "string",
+              "maxLength": 26
+            },
+            "vat_number": {
+              "description": "The VAT or GST number of the consignee. E.g. 747-11-8051",
+              "type": "string",
+              "maxLength": 25
+            },
+            "registration_number": {
+              "description": "Registration number of the consumer required for Delivery Location Options. E.g. XY54",
+              "type": "string",
+              "maxLength": 30
+            }
+          }
+        },
+        "delivery_address": {
+          "description": "An object containing the delivery address.",
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "street",
+            "city",
+            "country_code",
+            "postcode"
+          ],
+          "properties": {
+            "location_type": {
+              "description": "Type of delivery requested for the item. E.g. SHP",
+              "type": "string",
+              "maxLength": 3
+            },
+            "address_id": {
+              "description": "Indicates the Address ID for the delivery address sourced from the ParcelAddress API. E.g. 198024",
+              "type": "integer",
+              "minimum": 1
+            },
+            "dpid": {
+              "description": "Indicates the Address ID for the delivery address sourced from the ParcelAddress API. E.g. 12345",
+              "type": "integer",
+              "minimum": 1
+            },
+            "site_code": {
+              "description": "Specifies the parcel delivery address printed on the label. E.g. 12345",
+              "type": "integer",
+              "minimum": 1
+            },
+            "is_collection": {
+              "description": "Indicates whether the delivery address is a NZ Post collection point. E.g. false",
+              "type": "boolean"
+            },
+            "building_name": {
+              "description": "The building name. E.g. Beta Company House",
+              "type": "string",
+              "maxLength": 40
+            },
+            "company_name": {
+              "description": "The name of company the parcel is being delivered to. E.g. Beta Company",
+              "type": "string",
+              "maxLength": 40
+            },
+            "unit_type": {
+              "description": "Indicates the type of unit. E.g. Suite",
+              "type": "string",
+              "maxLength": 40
+            },
+            "unit_value": {
+              "description": "Indicates the value of the unit type. E.g. 5",
+              "type": "string",
+              "maxLength": 10
+            },
+            "floor": {
+              "description": "Indicates the floor of the delivery address. E.g. 3",
+              "type": "string",
+              "maxLength": 10
+            },
+            "street_number": {
+              "description": "Indicates the fstreet number. E.g. 245",
+              "type": "string",
+              "maxLength": 10
+            },
+            "street": {
+              "description": "Name and number of the street. E.g. 1600 Pennsylvania Avenue",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            },
+            "suburb": {
+              "description": "The name of the suburb. E.g. Washington Central",
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 40
+            },
+            "city": {
+              "description": "The name of the city. E.g. Washington",
+              "type": "string",
+              "maxLength": 40
+            },
+            "state": {
+              "description": "State the delivery city is in. ?If no state, enter country. E.g. Delaware",
+              "type": "string",
+              "maxLength": 35
+            },
+            "locality_code": {
+              "description": "The code that represents the region,province or county. E.g. DE",
+              "type": "string",
+              "maxLength": 9
+            },
+            "country_code": {
+              "description": "Two letter country code. E.g. NZ",
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 2
+            },
+            "postcode": {
+              "description": "Postal or zip code of the receiver. E.g. 89102",
+              "type": "string",
+              "minLength": 4,
+              "maxLength": 17
+            },
+            "instructions": {
+              "description": "Delivery instructions for courier. E.g. Ring doorbell",
+              "type": "string",
+              "maxLength": 255
+            },
+            "lobby_location": {
+              "description": "An object containing a PO Box or Private Bag pick up location.",
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "type",
+                "number",
+                "lobby",
+                "city",
+                "postcode"
+              ],
+              "properties": {
+                "type": {
+                  "description": "The location type - POBOX or PRIVATEBAG, e.g. POBOX",
+                  "enum": [
+                    "POBOX",
+                    "PRIVATEBAG"
+                  ],
+                  "type": "string"
+                },
+                "name": {
+                  "description": "The name of the recipient. E.g. Smith Industries",
+                  "type": "string",
+                  "maxLength": 40
+                },
+                "number": {
+                  "description": "For ParcelPost Domestic Return labels this is Post Box or Private Bag number of that the parcel will be delivered to. E.g. 12345",
+                  "type": "string",
+                  "maxLength": 15
+                },
+                "lobby": {
+                  "description": "The lobby name. E.g. Auckland PostShop",
+                  "type": "string",
+                  "maxLength": 40
+                },
+                "city": {
+                  "description": "The name of the city. E.g. Auckland",
+                  "type": "string",
+                  "maxLength": 40
+                },
+                "postcode": {
+                  "description": "Postal or zip code of the Box or Bag location. E.g. 1142",
+                  "type": "string",
+                  "minLength": 4,
+                  "maxLength": 17
+                }
+              }
+            }
+          }
+        },
+        "parcel_details": {
+          "description": "An object containing the label details for each label in the consignment.",
+          "type": "array",
+          "maxItems": 99,
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+              "service_code",
+              "undeliverable_instructions",
+              "nature_of_transaction_code",
+              "postage_paid_amount",
+              "dimensions"
+            ],
+            "properties": {
+              "service_code": {
+                "description": " Code to represent a delivery service. E.g. TIAS, TIEC",
+                "type": "string"
+              },
+              "return_indicator": {
+                "description": "This is used to indicate if the label generated is used for returning items. E.g. OUTBOUND",
+                "enum": [
+                  "OUTBOUND",
+                  "RETURN"
+                ],
+                "type": "string"
+              },
+              "receiver_charging_arrangement": {
+                "description": "The duty and tax payment method as it applies to the item. E.g. DDU",
+                "enum": [
+                  "DDP",
+                  "DDU"
+                ],
+                "type": "string"
+              },
+              "undeliverable_instructions": {
+                "description": "Instructions in case of non-delivery. E.g. NONE",
+                "enum": [
+                  "NONE",
+                  "RETURN",
+                  "DESTROY"
+                ],
+                "type": "string"
+              },
+              "add_ons": {
+                "description": "Contains an array of ancillary codes. E.g. CPSR",
+                "type": "array",
+                "minItems": 0,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "cms_codes": {
+                "description": "Array of codes that will be translated to a NetDespatch service code. E.g. PCMXT25",
+                "type": "array",
+                "minItems": 0,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "indicia_number": {
+                "description": "The NetDespatch Indicia Number. E.g. 123456",
+                "type": "string",
+                "maxLength": 6
+              },
+              "description": {
+                "description": "The box size name on the label for the dispatching person to choose the correct box for packing. E.g. LARGE",
+                "type": "string",
+                "maxLength": 20
+              },
+              "insurance_required": {
+                "description": "Indicates whether insurance is required for the parcel. E.g. true",
+                "type": "boolean"
+              },
+              "nature_of_transaction_code": {
+                "description": "Category of goods that appears on the CN23 form. E.g. 21",
+                "type": "string",
+                "maxLength": 3
+              },
+              "postage_paid_amount": {
+                "description": "Monetary value of postage that sender has paid. E.g. 23.45",
+                "type": "number",
+                "minimum": 0.0,
+                "exclusiveMinimum": true
+              },
+              "additional_fee_amount": {
+                "description": "Monetary value of other fees that sender has paid. E.g. 12.5",
+                "type": "number",
+                "minimum": 0.0
+              },
+              "insured_value_amount": {
+                "description": "Monetary value the parcel items are insured for. E.g. 70",
+                "type": "number",
+                "minimum": 0.0
+              },
+              "currency": {
+                "description": "The currency code for the parcel. E.g. AUD",
+                "type": "string",
+                "maxLength": 3
+              },
+              "dimensions": {
+                "description": "An object containing dimension details for this parcel.",
+                "type": "object",
+                "additionalProperties": true,
+                "required": [
+                  "length_cm",
+                  "width_cm",
+                  "height_cm",
+                  "weight_kg"
+                ],
+                "properties": {
+                  "length_cm": {
+                    "description": "Length of parcel. E.g. 16.5",
+                    "type": "number",
+                    "minimum": 0.0,
+                    "exclusiveMinimum": true
+                  },
+                  "width_cm": {
+                    "description": "Width of parcel. E.g. 24",
+                    "type": "number",
+                    "minimum": 0.0,
+                    "exclusiveMinimum": true
+                  },
+                  "height_cm": {
+                    "description": "Height of parcel. E.g. 15",
+                    "type": "number",
+                    "minimum": 0.0,
+                    "exclusiveMinimum": true
+                  },
+                  "diameter_cm": {
+                    "description": "Diameter of parcel. E.g. 30",
+                    "type": "number",
+                    "minimum": 0.0,
+                    "exclusiveMinimum": true
+                  },
+                  "volume_m3": {
+                    "description": "Indicates the volume of the item being sent. E.g. 0.025",
+                    "type": "number",
+                    "minimum": 0.0,
+                    "exclusiveMinimum": true
+                  },
+                  "weight_kg": {
+                    "description": "The physical weight of the parcel in kilograms. E.g. 2.55",
+                    "type": "number",
+                    "minimum": 0.0,
+                    "exclusiveMinimum": true
+                  }
+                }
+              },
+              "dangerous_goods": {
+                "description": "This object contains hazard identification information.",
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                  "hazard_class": {
+                    "description": "Classification of dangerous items. E.g. 38",
+                    "type": "string",
+                    "maxLength": 4
+                  },
+                  "type_code": {
+                    "description": "Indicates the United Nations Dangerous Goods identification code for dangerous items. E.g. 5231",
+                    "type": "string",
+                    "minLength": 4,
+                    "maxLength": 4
+                  }
+                }
+              },
+              "parcel_contents": {
+                "description": "Contains an array of parcel contents",
+                "type": "array",
+                "maxItems": 20,
+                "minItems": 0,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": [
+                    "content_number",
+                    "description",
+                    "quantity",
+                    "weight_kg",
+                    "value"
+                  ],
+                  "properties": {
+                    "content_number": {
+                      "description": "The number specifying an item in the shipment. E.g. 3",
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 20
+                    },
+                    "description": {
+                      "description": "Human readable description of the parcel contents. E.g. Light bulb",
+                      "type": "string",
+                      "maxLength": 35
+                    },
+                    "harmonised_system_tariff": {
+                      "description": "Indicates the internationally standardized name and number of the classification of the parcel (applies to all parcel contents). E.g. 12121212",
+                      "type": "string",
+                      "maxLength": 18
+                    },
+                    "quantity": {
+                      "description": "The quantity of units within the parcel. E.g. 2",
+                      "type": "integer",
+                      "minimum": 0,
+                      "exclusiveMinimum": true
+                    },
+                    "weight_kg": {
+                      "description": "The combined weight of each item in the parcel. E.g. 1.2",
+                      "type": "number",
+                      "minimum": 0.0,
+                      "exclusiveMinimum": true
+                    },
+                    "value": {
+                      "description": "The dollar value total of each item within the parcel. E.g. 5.1",
+                      "type": "number",
+                      "minimum": 0.0,
+                      "exclusiveMinimum": true
+                    },
+                    "country_code": {
+                      "description": "Country code of the location in which the content piece was produced or manufactured. E.g. CN",
+                      "type": "string",
+                      "minLength": 2,
+                      "maxLength": 2
+                    }
+                  }
+                }
+              },
+              "accompanying_documents": {
+                "description": "Contains an array of documents",
+                "type": "array",
+                "maxItems": 9,
+                "minItems": 0,
+                "items": {
+                  "description": "This object contains information about a document within the parcel.",
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "type": {
+                      "description": "The document type. Value must be one of LIC, 811, 911. See description from UPU code list 184. E.g. 911",
+                      "type": "string",
+                      "maxLength": 3
+                    },
+                    "identifier": {
+                      "description": "The value entered on the CN23 license box. E.g. ?",
+                      "type": "string",
+                      "maxLength": 35
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "default_3": {
+      "example": {
+        "success": true,
+        "message_id": "05f8d155-e71d-478e-8dc7-1593811277d4",
+        "consignment_id": "X63CC2"
+      },
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "success",
+        "message_id",
+        "consignment_id"
+      ],
+      "properties": {
+        "success": {
+          "description": "Flag indicating success or failure of the request. Values are true or false.",
+          "type": "boolean"
+        },
+        "message_id": {
+          "description": "A unique message ID for the API call. E.g. 52fe9dca-7672-4938-a648-a75e272b4136",
+          "type": "string"
+        },
+        "consignment_id": {
+          "description": "Unique identifier for all of the labels in the consignment. E.g. X6CC2",
+          "type": "string"
+        }
+      }
+    },
+    "default_4": {
+      "example": {
+        "consignment_id": "GKLUHV",
+        "consignment_status": "Complete",
+        "consignment_url": "https://api.nzpost.co.nz/parcellabel/v3/labels/GKLUHV?format=PDF",
+        "errors": [],
+        "expiry_date_utc": "2020-08-30T12:00:00Z",
+        "labels": [
+          {
+            "errors": [],
+            "label_generation_status": "Complete",
+            "label_id": "GKLUHV-1",
+            "tracking_reference": "LX022120977NZ"
+          }
+        ],
+        "message_id": "fb6ffb00-5dc2-11ea-9caf-0696cc385b96",
+        "page_urls": [
+          "https://api.nzpost.co.nz/parcellabel/v3/labels/GKLUHV?format=PNG&page=1"
+        ],
+        "success": true
+      },
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "success",
+        "message_id",
+        "consignment_id",
+        "consignment_status"
+      ],
+      "properties": {
+        "success": {
+          "description": "Flag indicating success or failure of the request. Values are true or false.",
+          "type": "boolean"
+        },
+        "message_id": {
+          "description": "A unique message ID for the API call. E.g. 52fe9dca-7672-4938-a648-a75e272b4136",
+          "type": "string"
+        },
+        "consignment_id": {
+          "description": "Unique identifier for all of the labels in the consignment. E.g. X6CC2",
+          "type": "string"
+        },
+        "consignment_status": {
+          "description": "The status of the consignment. Values are Complete or Failed.",
+          "type": "string"
+        },
+        "consignment_url": {
+          "description": "The download URL for the consignment, as PDF",
+          "type": "string"
+        },
+        "page_urls": {
+          "description": "The download URLs for each page in the consignment",
+          "type": "array",
+          "items": {
+            "description": "The download URL for the page, as PNG",
+            "type": "string"
+          }
+        },
+        "expiry_date_utc": {
+          "description": "The date the label expires in UTC format. E.g. 2016-01-24T11:00:00",
+          "type": "string"
+        },
+        "labels": {
+          "description": "An object containing the label status for each label in the consignment.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+              "label_id",
+              "label_generation_status"
+            ],
+            "properties": {
+              "label_id": {
+                "description": "Unique identifier for the label. E.g. X6CC2-1",
+                "type": "string"
+              },
+              "tracking_reference": {
+                "description": "Label tracking reference. E.g. 8441112185059601AKL020AS",
+                "type": "string"
+              },
+              "label_generation_status": {
+                "description": "Generation status of the label. E.g. Complete",
+                "type": "string"
+              },
+              "errors": {
+                "description": "Error object with error details",
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": [
+                    "code",
+                    "message",
+                    "details"
+                  ],
+                  "properties": {
+                    "code": {
+                      "description": "Error code where first 3 digits are http status code, last three digits identify error type, e.g. 400002",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "description": "Description of error code, e.g. Invalid parameter(s)",
+                      "type": "string"
+                    },
+                    "details": {
+                      "description": "Description of specific error, e.g. Email address must be present for delivery confirmations",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "errors": {
+          "description": "Error object with error details",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+              "code",
+              "message",
+              "details"
+            ],
+            "properties": {
+              "code": {
+                "description": "Error code where first 3 digits are http status code, last three digits identify error type, e.g. 400002",
+                "type": "integer"
+              },
+              "message": {
+                "description": "Description of error code, e.g. Invalid parameter(s)",
+                "type": "string"
+              },
+              "details": {
+                "description": "Description of specific error, e.g. Email address must be present for delivery confirmations",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "oauth_2_0": {
+      "type": "oauth2",
+      "description": "This API supports OAuth 2.0 for authenticating all API requests.",
+      "x-amf-describedBy": {
+        "headers": {
+          "Authorization?": {
+            "description": "Used to send a valid OAuth 2 access token. Do not use with the \"access_token\" query\nstring parameter.\n",
+            "type": "string"
+          }
+        },
+        "queryParameters": {
+          "access_token?": {
+            "description": "Used to send a valid OAuth 2 access token. Do not use together with the \"Authorization\"\nheader\n",
+            "type": "string"
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Bad or expired token. This can happen if the user or the API revoked or expired an\naccess token. To fix, you should re-authenticate the user.\n"
+          },
+          "403": {
+            "description": "Bad OAuth request (wrong consumer key, bad nonce, expired timestamp...). Unfortunately,\nre-authenticating the user won't help here.\n"
+          }
+        }
+      },
+      "authorizationUrl": "https://oauth.nzpost.co.nz/as/authorization.oauth2",
+      "tokenUrl": "https://oauth.nzpost.co.nz/as/token.oauth2",
+      "scopes": {
+        "*": ""
+      },
+      "x-amf-settings": {
+        "authorizationGrants": [
+          "client_credentials"
+        ]
+      }
+    },
+    "params": {
+      "type": "oauth2",
+      "description": "This API supports query parameters for authenticating label download requests.",
+      "x-amf-describedBy": {
+        "queryParameters": {
+          "client_id": {
+            "description": "client_id to use when requesting labels",
+            "required": true,
+            "type": "string"
+          },
+          "client_secret": {
+            "description": "client_secret to use when requesting labels",
+            "required": true,
+            "type": "string"
+          },
+          "user_name": {
+            "description": "user_name to use when requesting labels",
+            "required": false,
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
