@@ -1,10 +1,17 @@
 import datetime
 import datedelta
+import os
 from django.contrib import messages
 from django.forms.widgets import DateInput
+from django.http.response import HttpResponseRedirect
 
 from therapybox.models import TherapyBox, TherapyBoxUser
 from administration.models import Order
+
+from paypalrestsdk import Payment
+
+from dotenv import load_dotenv
+load_dotenv()
 
 # def get_min_calendar_date(): # this function will get you the closest Tuesday to ship something out
 #     today = datetime.date.today()
@@ -78,3 +85,60 @@ def create_new_order(request):
     return messages.success(
             request, 
             f'Thank you for your order! Your receipt will be emailed to {request.user.email}.')
+
+
+
+def create_payment(request):
+    from paypalcheckoutsdk.core import PayPalHttpClient, SandboxEnvironment
+
+
+    # Creating Access Token for Sandbox
+    client_id = os.getenv("PAYPAL_CLIENT_ID")
+    client_secret = os.getenv("PAYPAL_SECRET_ID")
+    # Creating an environment
+    environment = SandboxEnvironment(client_id=client_id, client_secret=client_secret)
+    client = PayPalHttpClient(environment)
+
+    from paypalcheckoutsdk.orders import OrdersCreateRequest
+    from paypalhttp import HttpError
+    # Construct a request object and set desired parameters
+    # Here, OrdersCreateRequest() creates a POST request to /v2/checkout/orders
+    request = OrdersCreateRequest()
+
+    request.prefer('return=representation')
+
+    request.request_body (
+        {
+            "intent": "CAPTURE",
+            "purchase_units": [
+                {
+                    "amount": {
+                        "currency_code": "USD",
+                        "value": "100.00"
+                    }
+                }
+            ]
+        }
+    )
+
+    try:
+        # Call API with your client and get a response for your call
+        response = client.execute(request)
+        print('Order With Complete Payload:')
+        print('Status Code:', response.status_code)
+        print('Status:', response.result.status)
+        print('Order ID:', response.result.id)
+        print('Intent:', response.result.intent)
+        print('Links:')
+        for link in response.result.links:
+            print('\t{}: {}\tCall Type: {}'.format(link.rel, link.href, link.method))
+            print('Total Amount: {} {}').format(response.result.purchase_units[0].amount.currency_code,
+            response.result.purchase_units[0].amount.value)
+            # If call returns body in response, you can get the deserialized version from the result attribute of the response
+            order = response.result
+            print(order)
+    except IOError as ioe:
+        print(ioe)
+        if isinstance(ioe, HttpError):
+            # Something went wrong server-side
+            print(ioe.status_code)

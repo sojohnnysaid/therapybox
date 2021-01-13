@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models.fields.related import ForeignKey
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.urls.base import reverse
@@ -10,6 +11,7 @@ from django.views.generic.list import ListView
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.utils.safestring import mark_safe
+from django.db.models import Sum
 
 
 from therapybox import models as therapybox_models
@@ -92,14 +94,39 @@ class Checkout(LoginMemberRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['price'] = therapybox_models.TherapyBox.objects.filter(pk__in=self.request.session['cart']['items']).aggregate(Sum('template__price'))
         context['object_list'] = therapybox_models.TherapyBox.objects.filter(pk__in=self.request.session['cart']['items'])
         context['user'] = get_user_model().objects.get(email=self.request.user.email)
         return context
 
 
-class SubmitOrder(LoginMemberRequiredMixin, BaseFormView):
+
+
+class SendToPaypal(BaseFormView):
+    success_url = reverse_lazy('therapybox:checkout')
+
+    def post(self, request, *args, **kwargs):
+        services.create_payment(request)
+        print('sending user to paypal')
+        return HttpResponseRedirect(self.success_url)
+
+
+
+
+class SubmitOrderFromPaypal(LoginMemberRequiredMixin, BaseFormView):
     success_url = reverse_lazy('therapybox:list_library')
 
     def post(self, request, *args, **kwargs):
         services.create_new_order(request)
         return HttpResponseRedirect(self.success_url)
+
+
+
+
+class PaypalProcess(BaseFormView):
+    print('processing paypal')
+
+
+
+class PaypalCancel(BaseFormView):
+    print('processing cancel')
