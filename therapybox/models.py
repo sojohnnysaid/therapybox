@@ -88,6 +88,7 @@ class TherapyBoxTemplate(models.Model):
     depth = models.CharField(max_length=128, help_text='Approx mm', blank=True)
     weight = models.CharField(max_length=128, help_text='Approx kg', blank=True)
     description = models.TextField(null=True, blank=True)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
 
     def __str__(self):
         return self.name

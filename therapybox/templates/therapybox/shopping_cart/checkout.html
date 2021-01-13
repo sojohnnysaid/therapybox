@@ -53,16 +53,25 @@
         </div>
     
     </div>
-    <div class="row">
-        <div class="col-12 text-right">
-            <form action="{% url 'therapybox:submit_order' %}" method="post">
-                {% csrf_token %}
-                <input class="btn btn-success" type="submit" value="Submit Order">
-            </form>
-        </div>
-    </div>
-    
 
+    {% if True %}
+        <div class="row">
+            <div class="col-12 text-right">
+                {% include 'includes/paypal_button.html' %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if False %}
+        <div class="row">
+            <div class="col-12 text-right">
+                <form action="{% url 'therapybox:submit_order' %}" method="post">
+                    {% csrf_token %}
+                    <input class="btn btn-success" type="submit" value="Submit Order">
+                </form>
+            </div>
+        </div>
+    {% endif %}
 
 
        
