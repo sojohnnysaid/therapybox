@@ -34,7 +34,8 @@ SECRET_KEY = os.getenv('django_framework_secret_key')
 
 
 ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost', 'testserver']
-
+CSRF_COOKIE_DOMAIN = "paypal.com"
+CSRF_TRUSTED_ORIGINS = ['https://www.paypal.com/ipn']
 
 # Application definition
 

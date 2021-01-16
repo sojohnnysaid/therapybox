@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models.fields.related import ForeignKey
-from django.http.response import HttpResponseRedirect
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.urls.base import reverse
 from django.views.generic.base import TemplateView, View
@@ -12,6 +12,8 @@ from django.shortcuts import redirect
 from django.contrib import messages
 from django.utils.safestring import mark_safe
 from django.db.models import Sum
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 
 from therapybox import models as therapybox_models
@@ -102,31 +104,13 @@ class Checkout(LoginMemberRequiredMixin, TemplateView):
 
 
 
-class SendToPaypal(BaseFormView):
-    success_url = reverse_lazy('therapybox:checkout')
+class PaypalInstantPaymentNotification(BaseFormView):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        services.create_payment(request)
-        print('sending user to paypal')
-        return HttpResponseRedirect(self.success_url)
-
-
-
-
-class SubmitOrderFromPaypal(LoginMemberRequiredMixin, BaseFormView):
-    success_url = reverse_lazy('therapybox:list_library')
-
-    def post(self, request, *args, **kwargs):
-        services.create_new_order(request)
-        return HttpResponseRedirect(self.success_url)
-
-
-
-
-class PaypalProcess(BaseFormView):
-    print('processing paypal')
-
-
-
-class PaypalCancel(BaseFormView):
-    print('processing cancel')
+        print('HELLO POST')
+        print(request.POST)
+        return HttpResponse(status=200)
