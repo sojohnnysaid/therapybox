@@ -33,7 +33,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = os.getenv('django_framework_secret_key')
 
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost', 'testserver']
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost', 'testserver', '624e6eb63ddf.ngrok.io']
 CSRF_COOKIE_DOMAIN = "paypal.com"
 CSRF_TRUSTED_ORIGINS = ['https://www.paypal.com/ipn']
 

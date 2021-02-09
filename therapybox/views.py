@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models.fields.related import ForeignKey
+from django.http.request import QueryDict
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.urls.base import reverse
@@ -111,6 +112,14 @@ class PaypalInstantPaymentNotification(BaseFormView):
         return super().dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
+        post = QueryDict('', mutable=True)
+        querydict = QueryDict('', mutable=True)
+
+        for key in request.POST:
+            postlist = post[key].split(',')
+            querydict.setlist(key, postlist)
+
+        print('POSTLIST:', querydict)
         print('HELLO POST')
-        print(request.POST)
-        return HttpResponse(status=200)
+        # print(request.POST)
+        return HttpResponse('')
